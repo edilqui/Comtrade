@@ -1,0 +1,50 @@
+﻿<UserControl x:Class="Axon.UI.Components.Buttons.PrimaryButton"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Axon.UI.Components.Buttons"
+             mc:Ignorable="d" 
+             d:DesignHeight="32" d:DesignWidth="100">
+    <UserControl.Resources>
+        <Style x:Key="PrimaryButtonStyle" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Border" 
+                                CornerRadius="6"
+                                Background="{DynamicResource PrimaryBrush}"
+                                BorderThickness="1"
+                                BorderBrush="Transparent">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                            VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Border" Property="Background" 
+                                        Value="{DynamicResource PrimaryHoverBrush}"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="Border" Property="Background" 
+                                        Value="{DynamicResource PrimaryPressedBrush}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+
+        <Button x:Name="MainButton" 
+            Style="{StaticResource PrimaryButtonStyle}"
+            Height="32"
+            Width="100"
+            />
+        <Button  
+            Style="{StaticResource PrimaryButtonStyle}"
+            Height="32"
+            Width="100"
+            />
+    </StackPanel>
+</UserControl>

@@ -1,0 +1,86 @@
+## Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+## Build results
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+*.log
+
+## NuGet
+*.nupkg
+*.snupkg
+*.nuspec
+packages/
+# Si usas PackageReference y quieres conservar solo `packages.config`
+!packages.config
+
+## Rider
+.idea/
+
+## ReSharper
+*.DotSettings.user
+_ReSharper*/
+*.[Rr]e[Ss]harper
+
+## Visual Studio Code
+.vscode/
+
+## Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+## Otros archivos temporales
+*.tmp
+*.bak
+*.cache
+*.swp
+
+## Archivos de publicación
+*.publish.xml
+*.pubxml
+*.publishproj
+
+## Configuración local de usuario
+*.dbmdl
+*.pfx
+*.key
+*.tlog
+*.ilk
+*.iobj
+
+## Archivos de pruebas
+TestResults/
+*.trx
+*.coverage
+*.coveragexml
+
+## Archivos generados por herramientas
+Generated_Code/
+
+## Archivos de diseño de WPF
+*.g.cs
+*.g.i.cs
+*.baml
+
+## Archivos de documentación XML
+*.xml
+
+## Archivos de configuración de depuración
+*.vshost.*
+*.psess
+*.vsp
+*.vspx
+*.sap
+
+## Dumps y crashes
+*.dmp
+
+## Otros
+*.orig
+*.rej

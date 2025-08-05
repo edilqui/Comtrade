@@ -1,0 +1,99 @@
+﻿<!-- MyApp.Resources/Themes/Dark/Theme.xaml - CORREGIDO -->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- Incluir tokens base -->
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/Axon.Resources;component/Themes/DesignTokens.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+
+    <!-- =================================== -->
+    <!-- SEMANTIC COLORS - DARK THEME -->
+    <!-- =================================== -->
+
+    <!-- Primary Colors - Usar DynamicResource para evitar errores de orden -->
+    <SolidColorBrush x:Key="PrimaryBrush" Color="{DynamicResource ColorBrandBackground}"/>
+    <SolidColorBrush x:Key="PrimaryHoverBrush" Color="{DynamicResource ColorBrandBackgroundHover}"/>
+    <SolidColorBrush x:Key="PrimaryPressedBrush" Color="{DynamicResource ColorBrandBackgroundPressed}"/>
+    <SolidColorBrush x:Key="PrimarySelectedBrush" Color="{DynamicResource ColorBrandBackgroundSelected}"/>
+
+    <!-- Secondary Colors -->
+    <SolidColorBrush x:Key="SecondaryBrush" Color="{DynamicResource ColorNeutralBackground2}"/>
+    <SolidColorBrush x:Key="SecondaryHoverBrush" Color="{DynamicResource ColorNeutralBackground2Hover}"/>
+    <SolidColorBrush x:Key="SecondaryPressedBrush" Color="{DynamicResource ColorNeutralBackground2Pressed}"/>
+    <SolidColorBrush x:Key="SecondarySelectedBrush" Color="{DynamicResource ColorNeutralBackground2Selected}"/>
+
+    <!-- Background Colors -->
+    <SolidColorBrush x:Key="BackgroundBrush" Color="{DynamicResource ColorNeutralBackground1}"/>
+    <SolidColorBrush x:Key="SurfaceBrush" Color="{DynamicResource ColorNeutralBackground2}"/>
+    <SolidColorBrush x:Key="CardBrush" Color="{DynamicResource ColorNeutralBackground3}"/>
+    <SolidColorBrush x:Key="OverlayBrush" Color="{DynamicResource ColorNeutralBackground4}"/>
+
+    <!-- Text Colors -->
+    <SolidColorBrush x:Key="TextPrimaryBrush" Color="{DynamicResource ColorNeutralForeground1}"/>
+    <SolidColorBrush x:Key="TextSecondaryBrush" Color="{DynamicResource ColorNeutralForeground2}"/>
+    <SolidColorBrush x:Key="TextTertiaryBrush" Color="{DynamicResource ColorNeutralForeground3}"/>
+    <SolidColorBrush x:Key="TextQuaternaryBrush" Color="{DynamicResource ColorNeutralForeground4}"/>
+    <SolidColorBrush x:Key="TextDisabledBrush" Color="{DynamicResource ColorNeutralForegroundDisabled}"/>
+
+    <!-- Border Colors -->
+    <SolidColorBrush x:Key="BorderBrush" Color="{DynamicResource ColorNeutralStroke1}"/>
+    <SolidColorBrush x:Key="BorderSubtleBrush" Color="{DynamicResource ColorNeutralStroke2}"/>
+    <SolidColorBrush x:Key="BorderFocusBrush" Color="{DynamicResource ColorBrandStroke1}"/>
+
+    <!-- Interactive States -->
+    <SolidColorBrush x:Key="HoverBrush" Color="{DynamicResource ColorSubtleBackgroundHover}"/>
+    <SolidColorBrush x:Key="PressedBrush" Color="{DynamicResource ColorSubtleBackgroundPressed}"/>
+    <SolidColorBrush x:Key="SelectedBrush" Color="{DynamicResource ColorSubtleBackgroundSelected}"/>
+
+    <!-- Status Colors -->
+    <SolidColorBrush x:Key="SuccessBrush" Color="{DynamicResource ColorStatusSuccessBackground3}"/>
+    <SolidColorBrush x:Key="WarningBrush" Color="{DynamicResource ColorStatusWarningBackground3}"/>
+    <SolidColorBrush x:Key="DangerBrush" Color="{DynamicResource ColorStatusDangerBackground3}"/>
+
+    <SolidColorBrush x:Key="SuccessTextBrush" Color="{DynamicResource ColorStatusSuccessForeground1}"/>
+    <SolidColorBrush x:Key="WarningTextBrush" Color="{DynamicResource ColorStatusWarningForeground1}"/>
+    <SolidColorBrush x:Key="DangerTextBrush" Color="{DynamicResource ColorStatusDangerForeground1}"/>
+
+    <!-- =================================== -->
+    <!-- CONTROL SPECIFIC BRUSHES -->
+    <!-- =================================== -->
+
+    <!-- Button Brushes -->
+    <SolidColorBrush x:Key="ButtonPrimaryBackground" Color="{DynamicResource ColorBrandBackground}"/>
+    <SolidColorBrush x:Key="ButtonPrimaryBackgroundHover" Color="{DynamicResource ColorBrandBackgroundHover}"/>
+    <SolidColorBrush x:Key="ButtonPrimaryBackgroundPressed" Color="{DynamicResource ColorBrandBackgroundPressed}"/>
+    <SolidColorBrush x:Key="ButtonPrimaryForeground" Color="{DynamicResource ColorNeutralForeground1}"/>
+
+    <SolidColorBrush x:Key="ButtonSecondaryBackground" Color="{DynamicResource ColorNeutralBackground2}"/>
+    <SolidColorBrush x:Key="ButtonSecondaryBackgroundHover" Color="{DynamicResource ColorNeutralBackground2Hover}"/>
+    <SolidColorBrush x:Key="ButtonSecondaryBackgroundPressed" Color="{DynamicResource ColorNeutralBackground2Pressed}"/>
+    <SolidColorBrush x:Key="ButtonSecondaryForeground" Color="{DynamicResource ColorNeutralForeground1}"/>
+
+    <!-- Input Brushes -->
+    <SolidColorBrush x:Key="InputBackground" Color="{DynamicResource ColorNeutralBackground2}"/>
+    <SolidColorBrush x:Key="InputBackgroundHover" Color="{DynamicResource ColorNeutralBackground2Hover}"/>
+    <SolidColorBrush x:Key="InputBackgroundFocused" Color="{DynamicResource ColorNeutralBackground2Selected}"/>
+    <SolidColorBrush x:Key="InputForeground" Color="{DynamicResource ColorNeutralForeground1}"/>
+    <SolidColorBrush x:Key="InputBorder" Color="{DynamicResource ColorNeutralStroke1}"/>
+    <SolidColorBrush x:Key="InputBorderFocused" Color="{DynamicResource ColorBrandStroke1}"/>
+
+    <!-- Card Brushes -->
+    <SolidColorBrush x:Key="CardBackground" Color="{DynamicResource ColorNeutralBackground3}"/>
+    <SolidColorBrush x:Key="CardBackgroundHover" Color="{DynamicResource ColorNeutralBackground3Hover}"/>
+    <SolidColorBrush x:Key="CardBorder" Color="{DynamicResource ColorNeutralStroke2}"/>
+
+    <!-- Navigation Brushes -->
+    <SolidColorBrush x:Key="NavigationBackground" Color="{DynamicResource ColorNeutralBackground2}"/>
+    <SolidColorBrush x:Key="NavigationItemForeground" Color="{DynamicResource ColorNeutralForeground2}"/>
+    <SolidColorBrush x:Key="NavigationItemForegroundSelected" Color="{DynamicResource ColorNeutralForeground1}"/>
+    <SolidColorBrush x:Key="NavigationItemBackgroundSelected" Color="{DynamicResource ColorSubtleBackgroundSelected}"/>
+
+    <!-- Table/DataGrid Brushes -->
+    <SolidColorBrush x:Key="TableHeaderBackground" Color="{DynamicResource ColorNeutralBackground3}"/>
+    <SolidColorBrush x:Key="TableRowBackground" Color="{DynamicResource ColorNeutralBackground1}"/>
+    <SolidColorBrush x:Key="TableRowBackgroundAlternate" Color="{DynamicResource ColorNeutralBackground1Hover}"/>
+    <SolidColorBrush x:Key="TableRowBackgroundSelected" Color="{DynamicResource ColorSubtleBackgroundSelected}"/>
+    <SolidColorBrush x:Key="TableBorder" Color="{DynamicResource ColorNeutralStroke2}"/>
+
+</ResourceDictionary>

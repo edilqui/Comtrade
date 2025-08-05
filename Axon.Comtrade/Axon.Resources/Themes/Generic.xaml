@@ -1,0 +1,20 @@
+﻿<!-- MyApp.Resources/Themes/Generic.xaml -->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ResourceDictionary.MergedDictionaries>
+        <!-- Design Tokens Base -->
+        <ResourceDictionary Source="pack://application:,,,/Axon.Resources;component/Themes/DesignTokens.xaml"/>
+
+        <!-- Default Theme (Dark) -->
+        <ResourceDictionary Source="pack://application:,,,/Axon.Resources;component/Themes/Dark/Theme.xaml"/>
+
+        <!-- Component Styles -->
+        <ResourceDictionary Source="pack://application:,,,/Axon.Resources;component/Styles/ButtonStyles.xaml"/>
+        <!--<ResourceDictionary Source="pack://application:,,,/Axon.Resources;component/Styles/InputStyles.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Axon.Resources;component/Styles/NavigationStyles.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Axon.Resources;component/Styles/TableStyles.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Axon.Resources;component/Styles/CardStyles.xaml"/>-->
+    </ResourceDictionary.MergedDictionaries>
+
+</ResourceDictionary>

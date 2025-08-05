@@ -1,0 +1,124 @@
+﻿<Window x:Class="Axon.Comtrade.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:nav="clr-namespace:Axon.UI.Components.Navigation;assembly=Axon.UI.Components"
+        xmlns:local="clr-namespace:Axon.Comtrade" xmlns:buttons="clr-namespace:Axon.UI.Components.Buttons;assembly=Axon.UI.Components"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- SIDEBAR NAVIGATION -->
+        <nav:SidebarNavigation x:Name="MainNavigation" Background="Red"
+                              Grid.Column="0"
+                              Title=""
+                              SelectedItem="devices"
+                              ItemSelected="MainNavigation_ItemSelected">
+
+            <!-- Logo -->
+            
+
+            <!-- Header Actions -->
+            <!--<nav:SidebarNavigation.HeaderActions>
+                <Button Style="{StaticResource IconButtonStyle}" ToolTip="Configuración">
+                    <Viewbox Height="16" Width="16">
+                        <Path Data="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2Z" 
+                          Fill="{StaticResource TextSecondaryBrush}" Width="24" Height="24"/>
+                    </Viewbox>
+                </Button>
+            </nav:SidebarNavigation.HeaderActions>-->
+
+            <!-- Footer -->
+            <!--<nav:SidebarNavigation.Footer>
+                <Button Content="Configuración" 
+                        Style="{StaticResource GhostButtonStyle}"
+                        HorizontalAlignment="Stretch" 
+                        Margin="8,4"/>
+            </nav:SidebarNavigation.Footer>-->
+
+            <nav:NavigationItem Id="devices" Text="Dispositivos" IsSelected="True" Tooltip ="Dispositivos" >
+                <nav:NavigationItem.Icon>
+                    <Viewbox Height="24" Width="24">                        
+                        <Path Data="M20,18H4V8H20M20,6H12L10,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V8C22,6.89 21.1,6 20,6Z" 
+                          Fill="{StaticResource TextSecondaryBrush}" Width="24" Height="24"/>
+                    </Viewbox>
+                </nav:NavigationItem.Icon>
+                <nav:NavigationItem.HomeFilledIcon>
+                    <Viewbox Height="24" Width="24">
+                        <Path Data="M10,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V8C22,6.89 21.1,6 20,6H12L10,4Z" 
+                          Fill="{StaticResource BrandForeground1Brush}" Width="24" Height="24"/>
+                    </Viewbox>
+                </nav:NavigationItem.HomeFilledIcon>
+            </nav:NavigationItem>
+            <nav:NavigationItem Id="archivado" Text="Archivado" IsSelected="False">
+                <nav:NavigationItem.Icon>
+                    <Viewbox Height="24" Width="24">
+                        <Path Data="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z" 
+                          Fill="{StaticResource TextSecondaryBrush}" Width="24" Height="24"/>
+                    </Viewbox>
+                </nav:NavigationItem.Icon>
+                <nav:NavigationItem.HomeFilledIcon>
+                    <Viewbox Height="24" Width="24">
+                        <Path Data="M13,9V3.5L18.5,9M6,2C4.89,2 4,2.89 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2H6Z" 
+                          Fill="{StaticResource BrandForeground1Brush}" Width="24" Height="24"/>
+                    </Viewbox>
+                </nav:NavigationItem.HomeFilledIcon>
+            </nav:NavigationItem>
+            <nav:NavigationItem Id="renombrado" Text="Renombrado" IsSelected="False">
+                <nav:NavigationItem.Icon>
+                    <Viewbox Height="24" Width="24">
+                        <Path Data="M17,7H22V17H17V19A1,1 0 0,0 18,20H20V22H17.5C16.95,22 16,21.55 16,21C16,21.55 15.05,22 14.5,22H12V20H14A1,1 0 0,0 15,19V5A1,1 0 0,0 14,4H12V2H14.5C15.05,2 16,2.45 16,3C16,2.45 16.95,2 17.5,2H20V4H18A1,1 0 0,0 17,5V7M2,7H13V9H4V15H13V17H2V7M20,15V9H17V15H20Z" 
+                          Fill="{StaticResource TextSecondaryBrush}" Width="24" Height="24"/>
+                    </Viewbox>
+                </nav:NavigationItem.Icon>
+                <nav:NavigationItem.HomeFilledIcon>
+                    <Viewbox Height="24" Width="24">
+                        <Path Data="M17,7H22V17H17V19A1,1 0 0,0 18,20H20V22H17.5C16.95,22 16,21.55 16,21C16,21.55 15.05,22 14.5,22H12V20H14A1,1 0 0,0 15,19V5A1,1 0 0,0 14,4H12V2H14.5C15.05,2 16,2.45 16,3C16,2.45 16.95,2 17.5,2H20V4H18A1,1 0 0,0 17,5V7M2,7H13V9H4V15H13V17H2V7M20,15V9H17V15H20Z" 
+                          Fill="{StaticResource BrandForeground1Brush}" Width="24" Height="24"/>
+                    </Viewbox>
+                </nav:NavigationItem.HomeFilledIcon>
+            </nav:NavigationItem>
+            <nav:NavigationItem Id="analisis" Text="Análisis de falla" IsSelected="False">
+                <nav:NavigationItem.Icon>
+                    <Viewbox Height="24" Width="24">
+                        <Path Data="M5,2H15L11.5,9H15L8,22V14H5V2M7,4V12H10V14.66L12,11H8.24L11.76,4M17,15H19V17H17V15M17,7H19V13H17V7Z" 
+                          Fill="{StaticResource TextSecondaryBrush}" Width="24" Height="24"/>
+                    </Viewbox>
+                </nav:NavigationItem.Icon>
+                <nav:NavigationItem.HomeFilledIcon>
+                    <Viewbox Height="24" Width="24">
+                        <Path Data="M5,2V13H8V22L15,10H11L15,2M17,15H19V17H17V15M17,7H19V13H17V7Z" 
+                          Fill="{StaticResource BrandForeground1Brush}" Width="24" Height="24"/>
+                    </Viewbox>
+                </nav:NavigationItem.HomeFilledIcon>
+            </nav:NavigationItem>            
+            <nav:NavigationSeparator/>
+            <!--<nav:NavigationSectionTitle Text="ANÁLISIS"/>-->
+            <nav:NavigationItem Id="Configuracion" Text="Configuracion" IsSelected="False">
+                <nav:NavigationItem.Icon>
+                    <Viewbox Height="24" Width="24">
+                        <Path Data="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z" 
+                          Fill="{StaticResource TextSecondaryBrush}" Width="24" Height="24"/>
+                    </Viewbox>
+                </nav:NavigationItem.Icon>
+                <nav:NavigationItem.HomeFilledIcon>
+                    <Viewbox Height="24" Width="24">
+                        <Path Data="M13,9V3.5L18.5,9M6,2C4.89,2 4,2.89 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2H6Z" 
+                          Fill="{StaticResource BrandForeground1Brush}" Width="24" Height="24"/>
+                    </Viewbox>
+                </nav:NavigationItem.HomeFilledIcon>
+            </nav:NavigationItem>
+
+        </nav:SidebarNavigation>
+
+        <!-- CONTENT AREA -->
+        <Border Grid.Column="1" Background="{StaticResource BackgroundBrush}">
+            <ContentPresenter x:Name="MainContentPresenter"/>
+        </Border>
+    </Grid>
+</Window>
