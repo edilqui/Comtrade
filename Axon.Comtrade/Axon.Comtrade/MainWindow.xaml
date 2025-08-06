@@ -4,12 +4,28 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:nav="clr-namespace:Axon.UI.Components.Navigation;assembly=Axon.UI.Components"
-        xmlns:local="clr-namespace:Axon.Comtrade" xmlns:buttons="clr-namespace:Axon.UI.Components.Buttons;assembly=Axon.UI.Components"
+        xmlns:tree="clr-namespace:Axon.UI.Components.TreeNode;assembly=Axon.UI.Components"
+    xmlns:local="clr-namespace:Axon.Comtrade" xmlns:buttons="clr-namespace:Axon.UI.Components.Buttons;assembly=Axon.UI.Components"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+    <Window.Resources>
+        <!-- Importar los estilos del TreeView -->
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/Axon.UI.Components;component/TreeNode/TreeViewStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <!-- Registrar el converter -->
+            <tree:NodeTypeToIconConverter x:Key="NodeTypeToIconConverter"/>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Window.DataContext>
+        <tree:TreeViewModel/>
+    </Window.DataContext>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="300"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
@@ -115,9 +131,78 @@
             </nav:NavigationItem>
 
         </nav:SidebarNavigation>
+        
+        <!--ARBOL DE TOPOLOGIAS-->
+        <Grid Margin="10" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Header con título -->
+            <TextBlock Grid.Row="0" 
+                   Text="Gestión de Dispositivos" 
+                   FontSize="24" 
+                   FontWeight="Bold" 
+                   Foreground="{StaticResource NeutralBackground1Brush}" 
+                   Margin="0,0,0,10"/>
+
+            <!-- Toolbar con acciones globales -->
+            <StackPanel Grid.Row="1" 
+                    Orientation="Horizontal" 
+                    Margin="0,0,0,15">
+
+                <Button Content="Agregar Dispositivo" 
+                    Command="{Binding AddRootNodeCommand}"
+                    Margin="0,0,10,0"
+                    Padding="10,5"/>
+
+                <Button Content="Expandir Todo" 
+                    Command="{Binding ExpandAllCommand}"
+                    Margin="0,0,10,0"
+                    Padding="10,5"/>
+
+                <Button Content="Colapsar Todo" 
+                    Command="{Binding CollapseAllCommand}"
+                    Margin="0,0,10,0"
+                    Padding="10,5"/>
+
+                <Button Content="Guardar" 
+                    Command="{Binding SaveTreeCommand}"
+                    Margin="0,0,10,0"
+                    Padding="10,5"/>
+
+                <Button Content="Cargar" 
+                    Command="{Binding LoadTreeCommand}"
+                    Padding="10,5"/>
+            </StackPanel>
+
+            <!-- TreeView principal -->
+            <Border Grid.Row="2"
+                Background="{StaticResource NeutralBackground1Brush}"
+                BorderBrush="{StaticResource NeutralBackground1Brush}"
+                BorderThickness="1"
+                CornerRadius="{StaticResource BorderRadiusSmall}">
+
+                <TreeView x:Name="DeviceTreeView"
+                      Style="{StaticResource SimpleTreeViewStyle}"
+                      ItemsSource="{Binding Nodes}"
+                      Margin="5">
+
+                    <!-- Template jerárquico para mostrar los nodos -->
+                    <TreeView.ItemTemplate>
+                        <HierarchicalDataTemplate ItemsSource="{Binding Children}">
+                            <!-- El contenido se maneja completamente en el estilo CustomTreeViewItemStyle -->
+                            <Grid/>
+                        </HierarchicalDataTemplate>
+                    </TreeView.ItemTemplate>
+                </TreeView>
+            </Border>
+        </Grid>
 
         <!-- CONTENT AREA -->
-        <Border Grid.Column="1" Background="{StaticResource BackgroundBrush}">
+        <Border Grid.Column="2" Background="{StaticResource BackgroundBrush}">
             <ContentPresenter x:Name="MainContentPresenter"/>
         </Border>
     </Grid>

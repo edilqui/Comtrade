@@ -1,4 +1,5 @@
 ﻿using Axon.UI.Components.Navigation;
+using Axon.UI.Components.TreeNode;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -55,5 +56,62 @@ namespace Axon.Comtrade
             }
         }
 
+        // Event handler para el botón de menú contextual
+        private void ShowContextMenu_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button button && button.ContextMenu != null)
+            {
+                button.ContextMenu.PlacementTarget = button;
+                button.ContextMenu.IsOpen = true;
+            }
+        }
+
+    }
+
+    // Extension methods para facilitar el uso
+    public static class TreeViewExtensions
+    {
+        public static TreeNodeModel FindNodeByTitle(this TreeViewModel viewModel, string title)
+        {
+            foreach (var node in viewModel.Nodes)
+            {
+                var found = FindNodeRecursive(node, title);
+                if (found != null)
+                    return found;
+            }
+            return null;
+        }
+
+        private static TreeNodeModel FindNodeRecursive(TreeNodeModel node, string title)
+        {
+            if (node.Title == title)
+                return node;
+
+            foreach (var child in node.Children)
+            {
+                var found = FindNodeRecursive(child, title);
+                if (found != null)
+                    return found;
+            }
+            return null;
+        }
+
+        public static void ExpandAll(this TreeNodeModel node)
+        {
+            node.IsExpanded = true;
+            foreach (var child in node.Children)
+            {
+                ExpandAll(child);
+            }
+        }
+
+        public static void CollapseAll(this TreeNodeModel node)
+        {
+            node.IsExpanded = false;
+            foreach (var child in node.Children)
+            {
+                CollapseAll(child);
+            }
+        }
     }
 }

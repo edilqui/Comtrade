@@ -17,8 +17,8 @@
 
             <!-- Estilo para el Tooltip -->
             <Style x:Key="NavigationTooltipStyle" TargetType="ToolTip">
-                <Setter Property="Background" Value="{StaticResource SolidBackgroundFillColorBaseBrush}"/>
-                <Setter Property="BorderBrush" Value="{StaticResource ControlStrokeColorDefaultBrush}"/>
+                <Setter Property="Background" Value="{StaticResource NeutralBackground1Brush}"/>
+                <Setter Property="BorderBrush" Value="{StaticResource NeutralBackground1Brush}"/>
                 <Setter Property="BorderThickness" Value="1"/>
                 <Setter Property="Padding" Value="12,8"/>
                 <Setter Property="MaxWidth" Value="200"/>
