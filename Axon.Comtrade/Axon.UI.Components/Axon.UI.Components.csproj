@@ -48,11 +48,11 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="TreeNode\GenericTreeNodeModel.cs" />
+    <Compile Include="TreeNode\GenericTreeViewModel.cs" />
     <Compile Include="TreeNode\LevelToIndentConverter.cs" />
-    <Compile Include="TreeNode\NodeTypeToIconConverter.cs" />
-    <Compile Include="TreeNode\TreeNodeModel.cs" />
+    <Compile Include="TreeNode\TreeNodeIcon.cs" />
     <Compile Include="TreeNode\TreeViewDragDropBehavior.cs" />
-    <Compile Include="TreeNode\TreeViewModel.cs" />
     <Page Include="TreeNode\TreeViewStyles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -55,6 +55,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\ProtocolNodeModel.cs" />
+    <Compile Include="Model\TopologyNodeModel.cs" />
     <Compile Include="ThemeManager.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -104,6 +106,9 @@
       <Project>{4e8c8482-bad4-404a-a196-1c076c7bfbc5}</Project>
       <Name>Axon.UI.Components</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ViewModel\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

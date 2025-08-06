@@ -15,12 +15,10 @@
                 <ResourceDictionary Source="pack://application:,,,/Axon.UI.Components;component/TreeNode/TreeViewStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
-            <!-- Registrar el converter -->
-            <tree:NodeTypeToIconConverter x:Key="NodeTypeToIconConverter"/>
         </ResourceDictionary>
     </Window.Resources>
     <Window.DataContext>
-        <tree:TreeViewModel/>
+        <tree:GenericTreeViewModel/>
     </Window.DataContext>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -37,7 +35,7 @@
                               ItemSelected="MainNavigation_ItemSelected">
 
             <!-- Logo -->
-            
+
 
             <!-- Header Actions -->
             <!--<nav:SidebarNavigation.HeaderActions>
@@ -59,7 +57,7 @@
 
             <nav:NavigationItem Id="devices" Text="Dispositivos" IsSelected="True" Tooltip ="Dispositivos" >
                 <nav:NavigationItem.Icon>
-                    <Viewbox Height="24" Width="24">                        
+                    <Viewbox Height="24" Width="24">
                         <Path Data="M20,18H4V8H20M20,6H12L10,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V8C22,6.89 21.1,6 20,6Z" 
                           Fill="{StaticResource TextSecondaryBrush}" Width="24" Height="24"/>
                     </Viewbox>
@@ -112,7 +110,7 @@
                           Fill="{StaticResource BrandForeground1Brush}" Width="24" Height="24"/>
                     </Viewbox>
                 </nav:NavigationItem.HomeFilledIcon>
-            </nav:NavigationItem>            
+            </nav:NavigationItem>
             <nav:NavigationSeparator/>
             <!--<nav:NavigationSectionTitle Text="ANÁLISIS"/>-->
             <nav:NavigationItem Id="Configuracion" Text="Configuracion" IsSelected="False">
@@ -131,7 +129,7 @@
             </nav:NavigationItem>
 
         </nav:SidebarNavigation>
-        
+
         <!--ARBOL DE TOPOLOGIAS-->
         <Grid Margin="10" Grid.Column="1">
             <Grid.RowDefinitions>
@@ -140,20 +138,20 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <!-- Header con título -->
+            <!-- Header -->
             <TextBlock Grid.Row="0" 
-                   Text="Gestión de Dispositivos" 
+                   Text="Árbol Genérico" 
                    FontSize="24" 
                    FontWeight="Bold" 
-                   Foreground="{StaticResource NeutralBackground1Brush}" 
+                   Foreground="{StaticResource NeutralForeground1Brush}" 
                    Margin="0,0,0,10"/>
 
-            <!-- Toolbar con acciones globales -->
+            <!-- Toolbar -->
             <StackPanel Grid.Row="1" 
                     Orientation="Horizontal" 
                     Margin="0,0,0,15">
 
-                <Button Content="Agregar Dispositivo" 
+                <Button Content="Agregar Elemento" 
                     Command="{Binding AddRootNodeCommand}"
                     Margin="0,0,10,0"
                     Padding="10,5"/>
@@ -165,39 +163,20 @@
 
                 <Button Content="Colapsar Todo" 
                     Command="{Binding CollapseAllCommand}"
-                    Margin="0,0,10,0"
-                    Padding="10,5"/>
-
-                <Button Content="Guardar" 
-                    Command="{Binding SaveTreeCommand}"
-                    Margin="0,0,10,0"
-                    Padding="10,5"/>
-
-                <Button Content="Cargar" 
-                    Command="{Binding LoadTreeCommand}"
                     Padding="10,5"/>
             </StackPanel>
 
-            <!-- TreeView principal -->
+            <!-- TreeView genérico -->
             <Border Grid.Row="2"
                 Background="{StaticResource NeutralBackground1Brush}"
                 BorderBrush="{StaticResource NeutralBackground1Brush}"
                 BorderThickness="1"
                 CornerRadius="{StaticResource BorderRadiusSmall}">
 
-                <TreeView x:Name="DeviceTreeView"
-                      Style="{StaticResource SimpleTreeViewStyle}"
+                <TreeView x:Name="GenericTreeView"
+                      Style="{StaticResource GenericTreeViewStyle}"
                       ItemsSource="{Binding Nodes}"
-                      Margin="5">
-
-                    <!-- Template jerárquico para mostrar los nodos -->
-                    <TreeView.ItemTemplate>
-                        <HierarchicalDataTemplate ItemsSource="{Binding Children}">
-                            <!-- El contenido se maneja completamente en el estilo CustomTreeViewItemStyle -->
-                            <Grid/>
-                        </HierarchicalDataTemplate>
-                    </TreeView.ItemTemplate>
-                </TreeView>
+                      Margin="5"/>
             </Border>
         </Grid>
 

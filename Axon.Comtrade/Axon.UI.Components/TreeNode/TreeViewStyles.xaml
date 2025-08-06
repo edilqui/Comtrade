@@ -1,14 +1,13 @@
-﻿<!-- TreeViewStyles.xaml - Estructura corregida -->
+﻿<!-- TreeViewStyles.xaml - Versión genérica -->
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:Axon.UI.Components.TreeNode">
 
     <!-- Converters -->
     <local:LevelToIndentConverter x:Key="LevelToIndentConverter"/>
-    <local:NodeTypeToColorConverter x:Key="NodeTypeToColorConverter"/>
 
-    <!-- ESTILO PARA TreeViewItem -->
-    <Style x:Key="SimpleTreeViewItemStyle" TargetType="TreeViewItem">
+    <!-- ESTILO GENÉRICO PARA TreeViewItem -->
+    <Style x:Key="GenericTreeViewItemStyle" TargetType="TreeViewItem">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Foreground" Value="{StaticResource NeutralForeground1Brush}"/>
         <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}"/>
@@ -93,9 +92,12 @@
                                             <ToggleButton.Template>
                                                 <ControlTemplate TargetType="ToggleButton">
                                                     <Border Background="Transparent">
-                                                        <Viewbox Height="24" Width="24">
-                                                            <Path x:Name="pathCollapse" Data="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" 
-                          Fill="{StaticResource TextSecondaryBrush}" Width="24" Height="24"/>
+                                                        <Viewbox Height="16" Width="16">
+                                                            <Path x:Name="pathCollapse" 
+                                                                  Data="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" 
+                                                                  Fill="{StaticResource TextSecondaryBrush}" 
+                                                                  Width="24" 
+                                                                  Height="24"/>
                                                         </Viewbox>
                                                     </Border>
                                                     <ControlTemplate.Triggers>
@@ -107,10 +109,17 @@
                                             </ToggleButton.Template>
                                         </ToggleButton>
 
-                                        <!-- Icono del tipo de nodo -->
-                                        <Rectangle Width="16" Height="16" 
-                                                 Fill="{Binding NodeType, Converter={StaticResource NodeTypeToColorConverter}}"
-                                                 Margin="0,0,8,0"/>
+                                        <!-- Icono personalizable (solo si existe) -->
+                                        <Grid x:Name="IconContainer" 
+                                              Width="20" 
+                                              Height="20" 
+                                              Margin="0,0,8,0">
+                                            <Viewbox Width="16" Height="16">
+                                                <Path Data="{Binding IconPath}" 
+                                                      Fill="{StaticResource NeutralForeground1Brush}"
+                                                      Stretch="Uniform"/>
+                                            </Viewbox>
+                                        </Grid>
 
                                         <!-- Texto del nodo -->
                                         <TextBlock Text="{Binding Title}"
@@ -127,7 +136,6 @@
 
                                         <!-- Botón para agregar -->
                                         <Button x:Name="AddButton"
-                                              Content="+"
                                               Background="{StaticResource NeutralBackground1Brush}"
                                               Foreground="{StaticResource NeutralForeground1Brush}"
                                               Width="24"
@@ -135,13 +143,16 @@
                                               Margin="2,0"
                                               Command="{Binding AddChildCommand}"
                                               Opacity="0"
-                                              BorderThickness="0">
+                                              BorderThickness="0"
+                                              ToolTip="Agregar elemento">
                                             <Button.Template>
                                                 <ControlTemplate TargetType="Button">
                                                     <Border Background="{TemplateBinding Background}"
                                                             CornerRadius="{StaticResource BorderRadiusSmall}">
-                                                        <ContentPresenter HorizontalAlignment="Center"
-                                                                        VerticalAlignment="Center"/>
+                                                        <Viewbox Width="12" Height="12">
+                                                            <Path Data="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" 
+                                                                  Fill="{StaticResource NeutralForeground1Brush}"/>
+                                                        </Viewbox>
                                                     </Border>
                                                     <ControlTemplate.Triggers>
                                                         <Trigger Property="IsMouseOver" Value="True">
@@ -154,20 +165,22 @@
 
                                         <!-- Botón de menú -->
                                         <Button x:Name="MenuButton"
-                                              Content="⋯"
                                               Background="{StaticResource NeutralBackground1Brush}"
                                               Foreground="{StaticResource NeutralForeground1Brush}"
                                               Width="24"
                                               Height="24"
                                               Margin="2,0"
                                               Opacity="0"
-                                              BorderThickness="0">
+                                              BorderThickness="0"
+                                              ToolTip="Más opciones">
                                             <Button.Template>
                                                 <ControlTemplate TargetType="Button">
                                                     <Border Background="{TemplateBinding Background}"
                                                             CornerRadius="{StaticResource BorderRadiusSmall}">
-                                                        <ContentPresenter HorizontalAlignment="Center"
-                                                                        VerticalAlignment="Center"/>
+                                                        <Viewbox Width="12" Height="12">
+                                                            <Path Data="M12,16A2,2 0 0,1 14,18A2,2 0 0,1 12,20A2,2 0 0,1 10,18A2,2 0 0,1 12,16M12,10A2,2 0 0,1 14,12A2,2 0 0,1 12,14A2,2 0 0,1 10,12A2,2 0 0,1 12,10M12,4A2,2 0 0,1 14,6A2,2 0 0,1 12,8A2,2 0 0,1 10,6A2,2 0 0,1 12,4Z" 
+                                                                  Fill="{StaticResource NeutralForeground1Brush}"/>
+                                                        </Viewbox>
                                                     </Border>
                                                     <ControlTemplate.Triggers>
                                                         <Trigger Property="IsMouseOver" Value="True">
@@ -178,7 +191,7 @@
                                             </Button.Template>
                                             <Button.ContextMenu>
                                                 <ContextMenu>
-                                                    <MenuItem Header="Agregar nodo" Command="{Binding AddChildCommand}"/>
+                                                    <MenuItem Header="Agregar elemento" Command="{Binding AddChildCommand}"/>
                                                     <MenuItem Header="Eliminar" Command="{Binding DeleteCommand}"/>
                                                     <Separator/>
                                                     <MenuItem Header="Mover arriba" Command="{Binding MoveUpCommand}"/>
@@ -207,6 +220,13 @@
                             <Setter TargetName="ItemsHost" Property="Visibility" Value="Collapsed"/>
                         </Trigger>
 
+                        <!-- Ocultar icono si no existe -->
+                        <DataTrigger Binding="{Binding HasIcon}" Value="False">
+                            <Setter TargetName="IconContainer" Property="Visibility" Value="Collapsed"/>
+                            <Setter TargetName="IconContainer" Property="Width" Value="0"/>
+                            <Setter TargetName="IconContainer" Property="Margin" Value="0"/>
+                        </DataTrigger>
+
                         <!-- Efectos de hover en el área específica -->
                         <Trigger SourceName="HoverArea" Property="IsMouseOver" Value="True">
                             <Setter TargetName="ItemBorder" Property="Background" Value="{StaticResource HoverBrush}"/>
@@ -224,14 +244,14 @@
         </Setter>
     </Style>
 
-    <!-- ESTILO PARA TreeView -->
-    <Style x:Key="SimpleTreeViewStyle" TargetType="TreeView">
+    <!-- ESTILO GENÉRICO PARA TreeView -->
+    <Style x:Key="GenericTreeViewStyle" TargetType="TreeView">
         <Setter Property="Background" Value="{StaticResource NeutralBackground1Brush}"/>
         <Setter Property="Foreground" Value="{StaticResource NeutralForeground1Brush}"/>
         <Setter Property="BorderBrush" Value="{StaticResource NeutralBackground1Brush}"/>
         <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="ItemContainerStyle" Value="{StaticResource SimpleTreeViewItemStyle}"/>
-        <!-- Asegurar que use el template jerárquico -->
+        <Setter Property="ItemContainerStyle" Value="{StaticResource GenericTreeViewItemStyle}"/>
+        <!-- Template jerárquico genérico -->
         <Setter Property="ItemTemplate">
             <Setter.Value>
                 <HierarchicalDataTemplate ItemsSource="{Binding Children}">

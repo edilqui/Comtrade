@@ -57,7 +57,7 @@ namespace Axon.UI.Components.TreeNode
 
             if (value is int level)
             {
-                var result = level * 20; // 20 pixels por nivel
+                var result = level * 9; // 9 pixels por nivel
                 Debug.WriteLine($"LevelToIndentConverter - Output: {result}");
                 return result;
             }
@@ -72,31 +72,5 @@ namespace Axon.UI.Components.TreeNode
         }
     }
 
-    // Converter simple para colores de nodos
-    public class NodeTypeToColorConverter : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            if (value is TreeNodeType nodeType)
-            {
-                switch (nodeType)
-                {
-                    case TreeNodeType.Folder:
-                        return new SolidColorBrush(Color.FromRgb(255, 193, 7));
-                    case TreeNodeType.Device:
-                        return new SolidColorBrush(Color.FromRgb(0, 123, 255));
-                    case TreeNodeType.Protocol:
-                        return new SolidColorBrush(Color.FromRgb(40, 167, 69));
-                    default:
-                        return new SolidColorBrush(Colors.Gray);
-                }
-            }
-            return new SolidColorBrush(Colors.Gray);
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
-    }
+   
 }

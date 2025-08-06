@@ -105,8 +105,8 @@ namespace Axon.UI.Components.TreeNode
             if (targetItem == null || targetItem == _draggedItem)
                 return;
 
-            var draggedNode = (TreeNodeModel)e.Data.GetData("TreeNodeModel");
-            var targetNode = (TreeNodeModel)targetItem.DataContext;
+            var draggedNode = (GenericTreeNodeModel)e.Data.GetData("TreeNodeModel");
+            var targetNode = (GenericTreeNodeModel)targetItem.DataContext;
 
             // Prevenir mover un nodo a sí mismo o a sus hijos
             if (IsDescendant(targetNode, draggedNode))
@@ -117,7 +117,7 @@ namespace Axon.UI.Components.TreeNode
             {
                 draggedNode.Parent.Children.Remove(draggedNode);
             }
-            else if (sender is TreeView treeView && treeView.DataContext is TreeViewModel viewModel)
+            else if (sender is TreeView treeView && treeView.DataContext is GenericTreeViewModel viewModel)
             {
                 viewModel.Nodes.Remove(draggedNode);
             }
@@ -131,7 +131,7 @@ namespace Axon.UI.Components.TreeNode
             e.Handled = true;
         }
 
-        private static bool IsDescendant(TreeNodeModel node, TreeNodeModel potentialAncestor)
+        private static bool IsDescendant(GenericTreeNodeModel node, GenericTreeNodeModel potentialAncestor)
         {
             var current = node.Parent;
             while (current != null)

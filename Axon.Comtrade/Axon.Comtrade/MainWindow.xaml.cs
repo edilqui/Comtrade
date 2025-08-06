@@ -71,7 +71,7 @@ namespace Axon.Comtrade
     // Extension methods para facilitar el uso
     public static class TreeViewExtensions
     {
-        public static TreeNodeModel FindNodeByTitle(this TreeViewModel viewModel, string title)
+        public static GenericTreeNodeModel FindNodeByTitle(this GenericTreeViewModel viewModel, string title)
         {
             foreach (var node in viewModel.Nodes)
             {
@@ -82,7 +82,7 @@ namespace Axon.Comtrade
             return null;
         }
 
-        private static TreeNodeModel FindNodeRecursive(TreeNodeModel node, string title)
+        private static GenericTreeNodeModel FindNodeRecursive(GenericTreeNodeModel node, string title)
         {
             if (node.Title == title)
                 return node;
@@ -96,7 +96,7 @@ namespace Axon.Comtrade
             return null;
         }
 
-        public static void ExpandAll(this TreeNodeModel node)
+        public static void ExpandAll(this GenericTreeNodeModel node)
         {
             node.IsExpanded = true;
             foreach (var child in node.Children)
@@ -105,7 +105,7 @@ namespace Axon.Comtrade
             }
         }
 
-        public static void CollapseAll(this TreeNodeModel node)
+        public static void CollapseAll(this GenericTreeNodeModel node)
         {
             node.IsExpanded = false;
             foreach (var child in node.Children)
