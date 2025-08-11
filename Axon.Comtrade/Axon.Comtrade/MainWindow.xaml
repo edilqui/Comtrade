@@ -6,6 +6,7 @@
         xmlns:nav="clr-namespace:Axon.UI.Components.Navigation;assembly=Axon.UI.Components"
         xmlns:tree="clr-namespace:Axon.UI.Components.TreeNode;assembly=Axon.UI.Components"
     xmlns:local="clr-namespace:Axon.Comtrade" xmlns:buttons="clr-namespace:Axon.UI.Components.Buttons;assembly=Axon.UI.Components"
+        xmlns:views="clr-namespace:Axon.Comtrade.Views"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Window.Resources>
@@ -131,54 +132,7 @@
         </nav:SidebarNavigation>
 
         <!--ARBOL DE TOPOLOGIAS-->
-        <Grid Margin="10" Grid.Column="1">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-
-            <!-- Header -->
-            <TextBlock Grid.Row="0" 
-                   Text="Árbol Genérico" 
-                   FontSize="24" 
-                   FontWeight="Bold" 
-                   Foreground="{StaticResource NeutralForeground1Brush}" 
-                   Margin="0,0,0,10"/>
-
-            <!-- Toolbar -->
-            <StackPanel Grid.Row="1" 
-                    Orientation="Horizontal" 
-                    Margin="0,0,0,15">
-
-                <Button Content="Agregar Elemento" 
-                    Command="{Binding AddRootNodeCommand}"
-                    Margin="0,0,10,0"
-                    Padding="10,5"/>
-
-                <Button Content="Expandir Todo" 
-                    Command="{Binding ExpandAllCommand}"
-                    Margin="0,0,10,0"
-                    Padding="10,5"/>
-
-                <Button Content="Colapsar Todo" 
-                    Command="{Binding CollapseAllCommand}"
-                    Padding="10,5"/>
-            </StackPanel>
-
-            <!-- TreeView genérico -->
-            <Border Grid.Row="2"
-                Background="{StaticResource NeutralBackground1Brush}"
-                BorderBrush="{StaticResource NeutralBackground1Brush}"
-                BorderThickness="1"
-                CornerRadius="{StaticResource BorderRadiusSmall}">
-
-                <TreeView x:Name="GenericTreeView"
-                      Style="{StaticResource GenericTreeViewStyle}"
-                      ItemsSource="{Binding Nodes}"
-                      Margin="5"/>
-            </Border>
-        </Grid>
+        <views:TopologyPanel Grid.Column="1"></views:TopologyPanel>        
 
         <!-- CONTENT AREA -->
         <Border Grid.Column="2" Background="{StaticResource BackgroundBrush}">

@@ -48,6 +48,11 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Base\BaseViewModel.cs" />
+    <Compile Include="Base\DelegateCommand.cs" />
+    <Compile Include="Base\IWaiting.cs" />
+    <Compile Include="Behaviours\ValidatorMessage.cs" />
+    <Compile Include="Core\Common\DependencyVariable.cs" />
     <Compile Include="TreeNode\GenericTreeNodeModel.cs" />
     <Compile Include="TreeNode\GenericTreeViewModel.cs" />
     <Compile Include="TreeNode\LevelToIndentConverter.cs" />
@@ -102,6 +107,9 @@
       <Project>{583edd1b-6ceb-4a06-9090-86e761546a7c}</Project>
       <Name>Axon.Resources</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Dialogs\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
