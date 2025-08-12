@@ -72,6 +72,7 @@ namespace Axon.UI.Components.Datagrid
                 if (FindResource("EnhancedDataGridRowStyle") is Style rowStyle)
                     RowStyle = rowStyle;
 
+                // Usar el estilo sin filtros por defecto
                 if (FindResource("EnhancedDataGridColumnHeaderStyle") is Style headerStyle)
                     ColumnHeaderStyle = headerStyle;
 
@@ -86,6 +87,22 @@ namespace Axon.UI.Components.Datagrid
             // Configuración adicional
             Loaded += OnEnhancedLoaded;
             DataContextChanged += OnEnhancedDataContextChanged;
+        }
+
+        public void EnableFilters(bool enable)
+        {
+            try
+            {
+                var styleName = enable ? "EnhancedDataGridColumnHeaderWithFilterStyle" : "EnhancedDataGridColumnHeaderStyle";
+                if (FindResource(styleName) is Style headerStyle)
+                {
+                    ColumnHeaderStyle = headerStyle;
+                }
+            }
+            catch
+            {
+                // Manejar error
+            }
         }
 
         private void OnEnhancedLoaded(object sender, RoutedEventArgs e)
