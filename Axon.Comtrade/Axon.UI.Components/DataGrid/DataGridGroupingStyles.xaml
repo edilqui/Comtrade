@@ -1,0 +1,141 @@
+﻿<!-- DataGridGroupingStyles.xaml -->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- Estilo para el header de grupo -->
+    <Style x:Key="DataGridGroupHeaderStyle" TargetType="{x:Type GroupItem}">
+        <Setter Property="Margin" Value="0,0,0,5"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type GroupItem}">
+                    <Expander IsExpanded="True" 
+                              Background="{StaticResource NeutralBackground2Brush}"
+                              BorderBrush="Transparent"
+                              BorderThickness="0,0,0,1">
+                        <Expander.Header>
+                            <DockPanel>
+                                <TextBlock FontWeight="Bold" 
+                                         Text="{Binding Path=Name}" 
+                                         Margin="5,0,0,0" 
+                                         Width="100"
+                                         Foreground="{StaticResource NeutralForeground1Brush}"/>
+                                <TextBlock FontWeight="Bold" 
+                                         Text="{Binding Path=ItemCount, StringFormat='({0} elementos)'}" 
+                                         Foreground="{StaticResource NeutralForeground2Brush}"/>
+                            </DockPanel>
+                        </Expander.Header>
+                        <Expander.Content>
+                            <ItemsPresenter />
+                        </Expander.Content>
+                    </Expander>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Template para el DataGrid con agrupación - SIN GroupStyle Setter -->
+    <Style x:Key="GroupingDataGridStyle" TargetType="DataGrid" BasedOn="{StaticResource EnhancedDataGridStyle}">
+        <!-- Remover GroupStyle setter - se aplicará via código -->
+    </Style>
+
+    <!-- Estilo específico para filas dentro de grupos -->
+    <Style x:Key="GroupedDataGridRowStyle" TargetType="DataGridRow" BasedOn="{StaticResource EnhancedDataGridRowStyle}">
+        <Setter Property="Background" Value="{StaticResource NeutralBackground1Brush}"/>
+        <Style.Triggers>
+            <Trigger Property="AlternationIndex" Value="1">
+                <Setter Property="Background" Value="{StaticResource NeutralBackground2Brush}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!-- GroupStyle como recurso separado -->
+    <GroupStyle x:Key="DefaultGroupStyle">
+        <GroupStyle.Panel>
+            <ItemsPanelTemplate>
+                <DataGridRowsPresenter/>
+            </ItemsPanelTemplate>
+        </GroupStyle.Panel>
+        <GroupStyle.ContainerStyle>
+            <Style TargetType="{x:Type GroupItem}">
+                <Setter Property="Margin" Value="0,0,0,5"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type GroupItem}">
+                            <Expander IsExpanded="True">
+                                <Expander.Style>
+                                    <Style TargetType="Expander">
+                                        <Setter Property="Background" Value="{StaticResource NeutralBackground2Brush}"/>
+                                        <Setter Property="BorderBrush" Value="{StaticResource ControlStrokeColorDefaultBrush}"/>
+                                        <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                                        <Setter Property="Padding" Value="8,4"/>
+                                        <Setter Property="Margin" Value="0,0,0,2"/>
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="Expander">
+                                                    <Border Background="{TemplateBinding Background}"
+                                                            BorderBrush="{TemplateBinding BorderBrush}"
+                                                            BorderThickness="{TemplateBinding BorderThickness}"
+                                                            CornerRadius="{StaticResource BorderRadiusSmall}">
+                                                        <DockPanel>
+                                                            <ToggleButton x:Name="ExpanderButton"
+                                                                        DockPanel.Dock="Left"
+                                                                        IsChecked="{Binding Path=IsExpanded, RelativeSource={RelativeSource TemplatedParent}}"
+                                                                        OverridesDefaultStyle="True">
+                                                                <ToggleButton.Template>
+                                                                    <ControlTemplate TargetType="ToggleButton">
+                                                                        <Border Width="20" Height="20" Background="Transparent">
+                                                                            <Path x:Name="ExpandPath"
+                                                                                  HorizontalAlignment="Center"
+                                                                                  VerticalAlignment="Center"
+                                                                                  Fill="{StaticResource NeutralForeground1Brush}"
+                                                                                  Data="M 4 6 L 6 4 L 6 8 Z"/>
+                                                                        </Border>
+                                                                        <ControlTemplate.Triggers>
+                                                                            <Trigger Property="IsChecked" Value="True">
+                                                                                <Setter TargetName="ExpandPath" Property="Data" Value="M 4 4 L 8 6 L 4 8 Z"/>
+                                                                            </Trigger>
+                                                                        </ControlTemplate.Triggers>
+                                                                    </ControlTemplate>
+                                                                </ToggleButton.Template>
+                                                            </ToggleButton>
+                                                            <ContentPresenter x:Name="HeaderContent"
+                                                                            ContentSource="Header"
+                                                                            Margin="{TemplateBinding Padding}"/>
+                                                        </DockPanel>
+                                                    </Border>
+                                                    <ControlTemplate.Triggers>
+                                                        <Trigger Property="IsExpanded" Value="True">
+                                                            <Setter Property="Visibility" TargetName="HeaderContent" Value="Visible"/>
+                                                        </Trigger>
+                                                    </ControlTemplate.Triggers>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </Expander.Style>
+                                <Expander.Header>
+                                    <StackPanel Orientation="Horizontal" Margin="4,0">
+                                        <TextBlock Text="{Binding Name}" 
+                                                 FontWeight="SemiBold"
+                                                 FontSize="14"
+                                                 Foreground="{StaticResource NeutralForeground1Brush}"
+                                                 VerticalAlignment="Center"/>
+                                        <TextBlock Text="{Binding ItemCount, StringFormat=' ({0} elementos)'}" 
+                                                 FontSize="12"
+                                                 Foreground="{StaticResource NeutralForeground2Brush}"
+                                                 VerticalAlignment="Center"
+                                                 Margin="8,0,0,0"/>
+                                    </StackPanel>
+                                </Expander.Header>
+                                <Expander.Content>
+                                    <ItemsPresenter Margin="20,4,0,8"/>
+                                </Expander.Content>
+                            </Expander>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </GroupStyle.ContainerStyle>
+    </GroupStyle>
+
+</ResourceDictionary>

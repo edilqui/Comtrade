@@ -5,7 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:nav="clr-namespace:Axon.UI.Components.Navigation;assembly=Axon.UI.Components"
         xmlns:tree="clr-namespace:Axon.UI.Components.TreeNode;assembly=Axon.UI.Components"
-    xmlns:local="clr-namespace:Axon.Comtrade" xmlns:buttons="clr-namespace:Axon.UI.Components.Buttons;assembly=Axon.UI.Components"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    xmlns:local="clr-namespace:Axon.Comtrade" 
+        xmlns:buttons="clr-namespace:Axon.UI.Components.Buttons;assembly=Axon.UI.Components"
+        xmlns:customGrid ="clr-namespace:Axon.UI.Components.Datagrid;assembly=Axon.UI.Components"
+        xmlns:gridOld ="clr-namespace:Axon.Wpf.Common;assembly=Axon.Wpf.Common"
         xmlns:views="clr-namespace:Axon.Comtrade.Views"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
@@ -18,9 +22,6 @@
 
         </ResourceDictionary>
     </Window.Resources>
-    <Window.DataContext>
-        <tree:GenericTreeViewModel/>
-    </Window.DataContext>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"/>
@@ -132,11 +133,106 @@
         </nav:SidebarNavigation>
 
         <!--ARBOL DE TOPOLOGIAS-->
-        <views:TopologyPanel Grid.Column="1"></views:TopologyPanel>        
+        <views:TopologyPanel DataContext="{Binding Tree}" Grid.Column="1"></views:TopologyPanel>        
 
         <!-- CONTENT AREA -->
-        <Border Grid.Column="2" Background="{StaticResource BackgroundBrush}">
+        <!--<Border Grid.Column="2" Background="{StaticResource BackgroundBrush}">
             <ContentPresenter x:Name="MainContentPresenter"/>
+        </Border>-->
+        <!-- DataGrid Principal -->
+
+        <Border Grid.Column="2"
+                BorderBrush="{StaticResource NeutralForegroundDisabledBrush}"
+                Background="{DynamicResource NeutralBackground4Brush}"
+                BorderThickness="1"
+                CornerRadius="4">
+            <customGrid:EnhancedCustomDataGrid x:Name="MainDataGrid" Background="Transparent"
+                                        ItemsSource="{Binding Devices}"
+                                        AlternationCount="2"
+                                        CanUserResizeColumns="True"
+                                        CanUserReorderColumns="True"
+                                        CanUserSortColumns="True">
+
+                <!-- Definir columnas -->
+                <DataGrid.Columns>
+                    <!-- Columna con CheckBox -->
+                    <!--<DataGridCheckBoxColumn Header="Enabled" 
+                                          Binding="{Binding IsEnabled}"
+                                          Width="80"
+                                          HeaderStyle="{StaticResource EnhancedDataGridColumnHeaderStyle}"/>-->
+
+                    <!-- Columna de texto -->
+                    <DataGridTextColumn Header="Dispositivo" 
+                                      Binding="{Binding Name}"
+                                      Width="200"/>
+
+                    <!-- Columna de IP -->
+                    <DataGridTextColumn Header="IP" 
+                                      Binding="{Binding Ip}"
+                                      Width="150"/>
+
+                    <!-- Columna de Puerto -->
+                    <DataGridTextColumn Header="Port" 
+                                      Binding="{Binding Port}"
+                                      Width="100"/>
+
+                    <!-- Columna con ComboBox --><!--
+                    <DataGridComboBoxColumn Header="Protocolo" 
+                                          SelectedItemBinding="{Binding Protocol}"
+                                          Width="120"
+                                          HeaderStyle="{StaticResource EnhancedDataGridColumnHeaderStyle}">
+                        <DataGridComboBoxColumn.ItemsSource>
+                            <x:Array Type="sys:String">
+                                <sys:String>IEC-61850</sys:String>
+                                <sys:String>FTP</sys:String>
+                                <sys:String>TFTP</sys:String>
+                                <sys:String>MODBUS</sys:String>
+                            </x:Array>
+                        </DataGridComboBoxColumn.ItemsSource>
+                    </DataGridComboBoxColumn>-->
+
+                    <!-- Columna de acciones con botones -->
+                    <!--<DataGridTemplateColumn Header="Acciones" 
+                                          Width="120"
+                                          HeaderStyle="{StaticResource EnhancedDataGridColumnHeaderStyle}">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" 
+                                          HorizontalAlignment="Center">
+                                    <Button Content="⚙" 
+                                            Width="28" 
+                                            Height="28"
+                                            Margin="2,0"
+                                            ToolTip="Configurar"
+                                            Command="{Binding DataContext.ConfigureCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                            CommandParameter="{Binding}"/>
+                                    <Button Content="🗑" 
+                                            Width="28" 
+                                            Height="28"
+                                            Margin="2,0"
+                                            ToolTip="Eliminar"
+                                            Command="{Binding DataContext.DeleteCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                            CommandParameter="{Binding}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>-->
+                </DataGrid.Columns>
+
+                <!-- Template para agrupación personalizada -->
+                <!--<DataGrid.GroupStyle>
+                    <GroupStyle>
+                        <GroupStyle.Panel>
+                            <ItemsPanelTemplate>
+                                <DataGridRowsPresenter/>
+                            </ItemsPanelTemplate>
+                        </GroupStyle.Panel>
+                        <GroupStyle.ContainerStyle>
+                            <Style TargetType="{x:Type GroupItem}" BasedOn="{StaticResource DataGridGroupHeaderStyle}"/>
+                        </GroupStyle.ContainerStyle>
+                    </GroupStyle>
+                </DataGrid.GroupStyle>-->
+            </customGrid:EnhancedCustomDataGrid>
         </Border>
     </Grid>
 </Window>

@@ -1,13 +1,14 @@
 ﻿<Application x:Class="Axon.Comtrade.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:Axon.Comtrade"
-             StartupUri="MainWindow.xaml">
+             xmlns:local="clr-namespace:Axon.Comtrade">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <!-- Recursos del proyecto de recursos -->
                 <ResourceDictionary Source="pack://application:,,,/Axon.Resources;component/Themes/Generic.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Axon.UI.Components;component/DataGrid/DataGridGroupingStyles.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Axon.UI.Components;component/DataGrid/EnhancedDataGridStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

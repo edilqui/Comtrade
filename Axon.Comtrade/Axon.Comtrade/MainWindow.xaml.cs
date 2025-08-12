@@ -1,5 +1,7 @@
-﻿using Axon.UI.Components.Navigation;
+﻿using Axon.Comtrade.ViewModel;
+using Axon.UI.Components.Navigation;
 using Axon.UI.Components.TreeNode;
+using Axon.Wpf.Common.UserControls.Datagrid;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -23,8 +25,9 @@ namespace Axon.Comtrade
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        public MainWindow(ComtradeConfiguration viewModel)
         {
+            this.DataContext = viewModel;
             InitializeComponent();
         }
 

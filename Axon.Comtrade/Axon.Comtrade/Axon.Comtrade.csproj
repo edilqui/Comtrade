@@ -35,6 +35,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Axon.Wpf.Common, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Library\Axon.Wpf.Common.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -58,6 +62,8 @@
     <Compile Include="Model\ProtocolNodeModel.cs" />
     <Compile Include="Model\TopologyNodeModel.cs" />
     <Compile Include="ThemeManager.cs" />
+    <Compile Include="ViewModel\ComtradeConfiguration.cs" />
+    <Compile Include="ViewModel\DeviceViewModel.cs" />
     <Compile Include="ViewModel\TopologyTreeMapper.cs" />
     <Compile Include="ViewModel\TopologyTreeViewModel.cs" />
     <Compile Include="Views\TopologyPanel.xaml.cs">

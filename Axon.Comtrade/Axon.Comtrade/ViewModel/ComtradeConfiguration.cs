@@ -1,0 +1,36 @@
+﻿using Axon.UI.Components.Base;
+using Axon.UI.Components.TreeNode;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Axon.Comtrade.ViewModel
+{
+    public class ComtradeConfiguration:BaseViewModel
+    {
+        public ObservableCollection<DeviceViewModel> Devices { get; set; } 
+        public ComtradeConfiguration()
+        {
+            Devices = new ObservableCollection<DeviceViewModel>();
+            Devices.Add(new DeviceViewModel() { Name = "Device1"});
+            Devices.Add(new DeviceViewModel() { Name = "Device2" });
+            Devices.Add(new DeviceViewModel() { Name = "Device3" });
+            OnPropertyChanged("Devices");
+        }
+
+        private TopologyTreeViewModel _tree;
+
+        public TopologyTreeViewModel Tree
+        {
+            get {
+                if(_tree == null) _tree = new TopologyTreeViewModel();
+                return _tree;
+            }
+            set { _tree = value; OnPropertyChanged(); }
+        }
+
+    }
+}

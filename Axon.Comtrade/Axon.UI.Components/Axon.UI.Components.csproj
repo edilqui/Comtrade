@@ -53,11 +53,21 @@
     <Compile Include="Base\IWaiting.cs" />
     <Compile Include="Behaviours\ValidatorMessage.cs" />
     <Compile Include="Core\Common\DependencyVariable.cs" />
+    <Compile Include="DataGrid\EnhancedCustomDataGrid.cs" />
+    <Compile Include="DataGrid\EnhancedFillHandleAdorner.cs" />
     <Compile Include="TreeNode\GenericTreeNodeModel.cs" />
     <Compile Include="TreeNode\GenericTreeViewModel.cs" />
     <Compile Include="TreeNode\LevelToIndentConverter.cs" />
     <Compile Include="TreeNode\TreeNodeIcon.cs" />
     <Compile Include="TreeNode\TreeViewDragDropBehavior.cs" />
+    <Page Include="DataGrid\DataGridGroupingStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DataGrid\EnhancedDataGridStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="TreeNode\TreeViewStyles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
