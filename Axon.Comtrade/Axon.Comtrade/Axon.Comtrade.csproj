@@ -67,6 +67,12 @@
     <Compile Include="ViewModel\DeviceViewModel.cs" />
     <Compile Include="ViewModel\TopologyTreeMapper.cs" />
     <Compile Include="ViewModel\TopologyTreeViewModel.cs" />
+    <Compile Include="Views\DevicesListView.xaml.cs">
+      <DependentUpon>DevicesListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SideBarView.xaml.cs">
+      <DependentUpon>SideBarView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\TopologyPanel.xaml.cs">
       <DependentUpon>TopologyPanel.xaml</DependentUpon>
     </Compile>
@@ -82,6 +88,14 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\DevicesListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SideBarView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\TopologyPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
