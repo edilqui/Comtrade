@@ -164,7 +164,12 @@
             CornerRadius="4">
 
                 <customGrid:EnhancedCustomDataGrid x:Name="MainDataGrid" 
-                                    Background="Transparent"
+                                    Background="#FF1E1E1E"
+                                    Foreground="White"
+                                    BorderBrush="#FF464646"
+                                    BorderThickness="1"
+                                    GridLinesVisibility="Horizontal"
+                                    HorizontalGridLinesBrush="#FF323232"
                                     ItemsSource="{Binding DataItems}"
                                     AutoGenerateColumns="False"
                                     CanUserAddRows="False"
@@ -174,19 +179,62 @@
                                     CanUserReorderColumns="True"
                                     CanUserSortColumns="True">
 
-                    <!-- ✅ GroupStyle que SÍ funciona (copiado del DataGrid básico) -->
+                    <!-- ✅ GroupStyle que SÍ funciona + estilos básicos para filas -->
+                    <DataGrid.RowStyle>
+                        <Style TargetType="DataGridRow">
+                            <Setter Property="Background" Value="#FF252525"/>
+                            <Setter Property="Foreground" Value="White"/>
+                            <Style.Triggers>
+                                <Trigger Property="AlternationIndex" Value="1">
+                                    <Setter Property="Background" Value="#FF2A2A2A"/>
+                                </Trigger>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#FF3A3A3A"/>
+                                </Trigger>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter Property="Background" Value="#FF0078D4"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGrid.RowStyle>
+
+                    <DataGrid.CellStyle>
+                        <Style TargetType="DataGridCell">
+                            <Setter Property="BorderThickness" Value="0"/>
+                            <Setter Property="Padding" Value="8,4"/>
+                            <Setter Property="Foreground" Value="White"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter Property="Background" Value="#FF0078D4"/>
+                                    <Setter Property="Foreground" Value="White"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGrid.CellStyle>
+
+                    <DataGrid.ColumnHeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="Background" Value="#FF3F3F46"/>
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="BorderBrush" Value="#FF6B6B6B"/>
+                            <Setter Property="BorderThickness" Value="0,0,1,1"/>
+                            <Setter Property="Padding" Value="8,8"/>
+                            <Setter Property="FontWeight" Value="SemiBold"/>
+                        </Style>
+                    </DataGrid.ColumnHeaderStyle>
+
+                    <!-- ✅ GroupStyle que SÍ funciona -->
                     <DataGrid.GroupStyle>
-                        <GroupStyle>                            
+                        <GroupStyle>
                             <GroupStyle.ContainerStyle>
                                 <Style TargetType="{x:Type GroupItem}">
-                                    <Setter Property="Foreground" Value="{DynamicResource NeutralForeground1Brush}"/>
                                     <Setter Property="Template">
                                         <Setter.Value>
                                             <ControlTemplate TargetType="{x:Type GroupItem}">
                                                 <Expander IsExpanded="True" Background="#FF3F3F46" Margin="2">
                                                     <Expander.Header>
                                                         <StackPanel Orientation="Horizontal" Height="30">
-                                                            <TextBlock Text="📁 " FontSize="14" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                                                            <!--<TextBlock Text="📁 " FontSize="14" VerticalAlignment="Center" Margin="5,0,5,0"/>-->
                                                             <TextBlock Text="{Binding Name}" 
                                                                FontWeight="Bold" 
                                                                FontSize="14"
