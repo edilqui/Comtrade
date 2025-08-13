@@ -33,10 +33,7 @@
         </Setter>
     </Style>
 
-    <!-- Template para el DataGrid con agrupación - SIN GroupStyle Setter -->
-    <Style x:Key="GroupingDataGridStyle" TargetType="DataGrid" BasedOn="{StaticResource EnhancedDataGridStyle}">
-        <!-- Remover GroupStyle setter - se aplicará via código -->
-    </Style>
+
 
     <!-- Estilo específico para filas dentro de grupos -->
     <Style x:Key="GroupedDataGridRowStyle" TargetType="DataGridRow" BasedOn="{StaticResource EnhancedDataGridRowStyle}">
@@ -65,7 +62,7 @@
                                 <Expander.Style>
                                     <Style TargetType="Expander">
                                         <Setter Property="Background" Value="{StaticResource NeutralBackground2Brush}"/>
-                                        <Setter Property="BorderBrush" Value="{StaticResource ControlStrokeColorDefaultBrush}"/>
+                                        <Setter Property="BorderBrush" Value="Transparent"/>
                                         <Setter Property="BorderThickness" Value="0,0,0,1"/>
                                         <Setter Property="Padding" Value="8,4"/>
                                         <Setter Property="Margin" Value="0,0,0,2"/>

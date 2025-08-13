@@ -133,48 +133,110 @@
         </nav:SidebarNavigation>
 
         <!--ARBOL DE TOPOLOGIAS-->
-        <views:TopologyPanel DataContext="{Binding Tree}" Grid.Column="1"></views:TopologyPanel>        
+        <views:TopologyPanel DataContext="{Binding Tree}" Grid.Column="1"></views:TopologyPanel>
 
+        <Grid Grid.Column="2" DataContext="{Binding GridExample}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
 
-        <Border Grid.Column="2"
-                BorderBrush="{StaticResource NeutralForegroundDisabledBrush}"
-                Background="{DynamicResource NeutralBackground4Brush}"
-                BorderThickness="1"
-                CornerRadius="4">
-            <customGrid:EnhancedCustomDataGrid x:Name="MainDataGrid" Background="Transparent"
-                                        ItemsSource="{Binding Devices}"
-                                        AlternationCount="2"
-                                        CanUserResizeColumns="True"
-                                        CanUserReorderColumns="True"
-                                        CanUserSortColumns="True">
+            <!-- Panel de control -->
+            <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="8" HorizontalAlignment="Right">
+                <Button Content="Agrupar por Grupo" 
+                Command="{Binding GroupByGroupCommand}"
+                Padding="8,4" Margin="4,0"/>
+                <Button Content="Agrupar por Protocolo" 
+                Command="{Binding GroupByProtocolCommand}"
+                Padding="8,4" Margin="4,0"/>
+                <Button Content="Sin Agrupación" 
+                Command="{Binding ClearGroupingCommand}"
+                Padding="8,4" Margin="4,0"/>
+                <ToggleButton Content="Agrupación" 
+                      IsChecked="{Binding ShowGrouping}"
+                      Padding="8,4" Margin="4,0"/>
+            </StackPanel>
 
-                <!-- Definir columnas -->
-                <DataGrid.Columns>
-                    <!-- Columna con CheckBox -->
-                    <!--<DataGridCheckBoxColumn Header="Enabled" 
-                                          Binding="{Binding IsEnabled}"
-                                          Width="80"
-                                          HeaderStyle="{StaticResource EnhancedDataGridColumnHeaderStyle}"/>-->
+            <Border Grid.Row="1"
+            BorderBrush="#FF6B6B6B"
+            Background="#FF2A2A2A"
+            BorderThickness="1"
+            CornerRadius="4">
 
-                    <!-- Columna de texto -->
-                    <DataGridTextColumn Header="Dispositivo" 
-                                      Binding="{Binding Name}"
-                                      Width="200"/>
+                <customGrid:EnhancedCustomDataGrid x:Name="MainDataGrid" 
+                                    Background="Transparent"
+                                    ItemsSource="{Binding DataItems}"
+                                    AutoGenerateColumns="False"
+                                    CanUserAddRows="False"
+                                    CanUserDeleteRows="False"
+                                    AlternationCount="2"
+                                    CanUserResizeColumns="True"
+                                    CanUserReorderColumns="True"
+                                    CanUserSortColumns="True">
 
-                    <!-- Columna de IP -->
-                    <DataGridTextColumn Header="IP" 
-                                      Binding="{Binding Ip}"
-                                      Width="150"/>
+                    <!-- ✅ GroupStyle que SÍ funciona (copiado del DataGrid básico) -->
+                    <DataGrid.GroupStyle>
+                        <GroupStyle>                            
+                            <GroupStyle.ContainerStyle>
+                                <Style TargetType="{x:Type GroupItem}">
+                                    <Setter Property="Foreground" Value="{DynamicResource NeutralForeground1Brush}"/>
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="{x:Type GroupItem}">
+                                                <Expander IsExpanded="True" Background="#FF3F3F46" Margin="2">
+                                                    <Expander.Header>
+                                                        <StackPanel Orientation="Horizontal" Height="30">
+                                                            <TextBlock Text="📁 " FontSize="14" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                                                            <TextBlock Text="{Binding Name}" 
+                                                               FontWeight="Bold" 
+                                                               FontSize="14"
+                                                               Foreground="White"
+                                                               VerticalAlignment="Center"/>
+                                                            <TextBlock Text="{Binding ItemCount, StringFormat='  ({0} elementos)'}" 
+                                                               FontSize="12"
+                                                               Foreground="#FFCCCCCC"
+                                                               VerticalAlignment="Center"
+                                                               Margin="8,0"/>
+                                                        </StackPanel>
+                                                    </Expander.Header>
+                                                    <Expander.Content>
+                                                        <ItemsPresenter Margin="15,5"/>
+                                                    </Expander.Content>
+                                                </Expander>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </GroupStyle.ContainerStyle>
+                        </GroupStyle>
+                    </DataGrid.GroupStyle>
 
-                    <!-- Columna de Puerto -->
-                    <DataGridTextColumn Header="Port" 
-                                      Binding="{Binding Port}"
-                                      Width="100"/>
-                    
-                </DataGrid.Columns>
-
-               
-            </customGrid:EnhancedCustomDataGrid>
-        </Border>
+                    <!-- Columnas -->
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Dispositivo" 
+                                    Binding="{Binding DeviceName}"
+                                    Width="200"/>
+                        <DataGridTextColumn Header="IP" 
+                                    Binding="{Binding IPAddress}"
+                                    Width="150"/>
+                        <DataGridTextColumn Header="Port" 
+                                    Binding="{Binding Port}"
+                                    Width="100"/>
+                        <DataGridComboBoxColumn Header="Protocolo" 
+                                        SelectedItemBinding="{Binding Protocol}"
+                                        Width="120">
+                            <DataGridComboBoxColumn.ItemsSource>
+                                <x:Array Type="sys:String">
+                                    <sys:String>IEC-61850</sys:String>
+                                    <sys:String>FTP</sys:String>
+                                    <sys:String>TFTP</sys:String>
+                                    <sys:String>MODBUS</sys:String>
+                                </x:Array>
+                            </DataGridComboBoxColumn.ItemsSource>
+                        </DataGridComboBoxColumn>
+                    </DataGrid.Columns>
+                </customGrid:EnhancedCustomDataGrid>
+            </Border>
+        </Grid>
     </Grid>
 </Window>

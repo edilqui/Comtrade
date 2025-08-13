@@ -9,13 +9,13 @@ using System.Threading.Tasks;
 
 namespace Axon.Comtrade.ViewModel
 {
-    public class ComtradeConfiguration:BaseViewModel
+    public class ComtradeConfiguration : BaseViewModel
     {
-        public ObservableCollection<DeviceViewModel> Devices { get; set; } 
+        public ObservableCollection<DeviceViewModel> Devices { get; set; }
         public ComtradeConfiguration()
         {
             Devices = new ObservableCollection<DeviceViewModel>();
-            Devices.Add(new DeviceViewModel() { Name = "Device1"});
+            Devices.Add(new DeviceViewModel() { Name = "Device1" });
             Devices.Add(new DeviceViewModel() { Name = "Device2" });
             Devices.Add(new DeviceViewModel() { Name = "Device3" });
             OnPropertyChanged("Devices");
@@ -25,11 +25,26 @@ namespace Axon.Comtrade.ViewModel
 
         public TopologyTreeViewModel Tree
         {
-            get {
-                if(_tree == null) _tree = new TopologyTreeViewModel();
+            get
+            {
+                if (_tree == null) _tree = new TopologyTreeViewModel();
                 return _tree;
             }
             set { _tree = value; OnPropertyChanged(); }
+        }
+
+
+
+        private DataGridExampleViewModel _gridExample;
+
+        public DataGridExampleViewModel GridExample
+        {
+            get
+            {
+                if (_gridExample == null) _gridExample = new DataGridExampleViewModel();
+                return _gridExample;
+            }
+            set { _gridExample = value; OnPropertyChanged(); }
         }
 
     }
