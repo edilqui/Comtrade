@@ -159,6 +159,7 @@
     <!-- Estilo para las filas -->
     <Style x:Key="EnhancedDataGridRowStyle" TargetType="DataGridRow">
         <Setter Property="Background" Value="{StaticResource NeutralBackground1Brush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource NeutralForeground1Brush}"/>
         <Setter Property="SnapsToDevicePixels" Value="true"/>
         <Setter Property="Validation.ErrorTemplate" Value="{x:Null}"/>
         <Setter Property="ValidationErrorTemplate">
