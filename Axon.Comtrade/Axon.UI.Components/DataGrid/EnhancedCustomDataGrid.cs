@@ -64,6 +64,7 @@ namespace Axon.UI.Components.Datagrid
                 ApplyStyleSafely("EnhancedDataGridCellStyle", style => CellStyle = style);
                 ApplyStyleSafely("EnhancedDataGridRowStyle", style => RowStyle = style);
                 ApplyStyleSafely("EnhancedDataGridColumnHeaderStyle", style => ColumnHeaderStyle = style);
+                ApplyStyleSafely("EnhancedDataGridRowHeaderStyle", style => RowHeaderStyle= style);
             }
             catch (Exception ex)
             {

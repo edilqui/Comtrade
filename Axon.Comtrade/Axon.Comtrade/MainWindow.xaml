@@ -199,10 +199,10 @@
                                                                 <!-- Header clickeable -->
                                                                 <Border x:Name="HeaderBorder" 
                                                                     Grid.Row="0"
-                                                                    Background="#FF3F3F46"
-                                                                    BorderBrush="#FF6B6B6B"
-                                                                    BorderThickness="0,0,0,1"
-                                                                    Padding="8,6"
+                                                                    Background="{DynamicResource NeutralBackground3Brush}"
+                                                                    BorderBrush="DarkRed"
+                                                                    BorderThickness="0,0,0,0"
+                                                                    Padding="0,6"
                                                                     Cursor="Hand">
                                                                     <Grid>
                                                                         <Grid.ColumnDefinitions>
@@ -253,7 +253,7 @@
                                                                     Grid.Row="1"
                                                                     Visibility="Visible">
                                                                     <ContentPresenter x:Name="ContentPresenter"
-                                                                                  Margin="20,0,0,0"/>
+                                                                                  Margin="-14,0,0,0"/>
                                                                 </Border>
                                                             </Grid>
 

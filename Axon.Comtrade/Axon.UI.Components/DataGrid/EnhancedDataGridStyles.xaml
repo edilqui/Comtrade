@@ -20,6 +20,7 @@
         <Setter Property="AutoGenerateColumns" Value="False"/>
         <Setter Property="SelectionMode" Value="Extended"/>
         <Setter Property="SelectionUnit" Value="Cell"/>
+        <!-- CORRECCIÓN PRINCIPAL: Aplicar estilos automáticamente -->
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="DataGrid">
@@ -122,7 +123,7 @@
     <Style x:Key="EnhancedDataGridCellStyle" TargetType="DataGridCell">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="BorderBrush" Value="Transparent"/>
-        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="BorderThickness" Value="1,0"/>
         <Setter Property="Padding" Value="8,6"/>
         <Setter Property="Template">
             <Setter.Value>
@@ -387,33 +388,71 @@
         </Setter>
     </Style>
 
-    <!-- Estilo para headers de fila -->
+    <!-- ESTILO CORREGIDO PARA ROW HEADERS -->
     <Style x:Key="EnhancedDataGridRowHeaderStyle" TargetType="DataGridRowHeader">
-        <Setter Property="Background" Value="{StaticResource NeutralBackground2Brush}"/>
-        <Setter Property="Foreground" Value="{StaticResource NeutralForeground2Brush}"/>
-        <Setter Property="BorderBrush" Value="Transparent"/>
-        <Setter Property="BorderThickness" Value="0,0,1,0"/>
-        <Setter Property="Width" Value="40"/>
+        <!-- CORRECCIÓN 1: Background más visible -->
+        <Setter Property="Background" Value="{StaticResource NeutralBackground3Brush}"/>
+        <Setter Property="Foreground" Value="{StaticResource NeutralForeground1Brush}"/>
+
+        <!-- CORRECCIÓN 2: BorderBrush visible en lugar de transparente -->
+        <Setter Property="BorderBrush" Value="{StaticResource NeutralForeground4Brush}"/>
+        <Setter Property="BorderThickness" Value="0,0,1,1"/>
+
+        <!-- CORRECCIÓN 3: Width más ancho -->
+        <Setter Property="Width" Value="60"/>
+        <Setter Property="MinWidth" Value="40"/>
+
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Padding" Value="4"/>
+        <Setter Property="FontWeight" Value="Medium"/>
+
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="DataGridRowHeader">
-                    <Border Background="{TemplateBinding Background}"
+                    <Border x:Name="RowHeaderBorder"
+                            Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}">
-                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Padding="{TemplateBinding Padding}">
+
+                        <!-- CORRECCIÓN 4: Contenido más visible con número de fila -->
+                        <Grid>
+                            <!-- Indicador de selección visual -->
+                            <Rectangle x:Name="SelectionIndicator"
+                                     Width="3"
+                                     HorizontalAlignment="Left"
+                                     Fill="{StaticResource BrandBackground2Brush}"
+                                     Visibility="Collapsed"/>
+
+                            <!-- Contenido del header (normalmente vacío, pero puede mostrar índice) -->
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                        </Grid>
                     </Border>
+
                     <ControlTemplate.Triggers>
+                        <!-- CORRECCIÓN 5: Triggers más visibles -->
                         <Trigger Property="IsRowSelected" Value="True">
-                            <Setter Property="Background" Value="{StaticResource BrandBackground2Brush}"/>
-                            <Setter Property="Foreground" Value="{StaticResource NeutralForeground1Brush}"/>
+                            <Setter TargetName="RowHeaderBorder" Property="Background" Value="{StaticResource BrandBackground2Brush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource NeutralForeground1OnBrandBrush}"/>
+                            <Setter TargetName="SelectionIndicator" Property="Visibility" Value="Visible"/>
                         </Trigger>
+
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="{StaticResource NeutralBackground2Brush}"/>
+                            <Setter TargetName="RowHeaderBorder" Property="Background" Value="{StaticResource NeutralBackground2Brush}"/>
                         </Trigger>
+
+                        <!-- Estado cuando la fila está seleccionada pero el control no tiene foco -->
+                        <!--<MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsRowSelected" Value="True"/>
+                                <Condition Property="Selector.IsSelectionActive" Value="False" SourceName="{x:Static DataGrid.DataGridProperty}"/>
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="RowHeaderBorder" Property="Background" Value="{StaticResource NeutralBackground4Brush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource NeutralForeground2Brush}"/>
+                        </MultiTrigger>-->
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
