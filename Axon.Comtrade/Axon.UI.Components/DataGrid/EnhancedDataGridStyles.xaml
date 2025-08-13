@@ -122,8 +122,8 @@
     <!-- Estilo para las celdas -->
     <Style x:Key="EnhancedDataGridCellStyle" TargetType="DataGridCell">
         <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="BorderBrush" Value="Transparent"/>
-        <Setter Property="BorderThickness" Value="1,0"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource NeutralForeground4Brush}"/>
+        <Setter Property="BorderThickness" Value="0,1,1,0"/>
         <Setter Property="Padding" Value="8,6"/>
         <Setter Property="Template">
             <Setter.Value>
@@ -396,10 +396,10 @@
 
         <!-- CORRECCIÓN 2: BorderBrush visible en lugar de transparente -->
         <Setter Property="BorderBrush" Value="{StaticResource NeutralForeground4Brush}"/>
-        <Setter Property="BorderThickness" Value="0,0,1,1"/>
+        <Setter Property="BorderThickness" Value="0,1,1,1"/>
 
         <!-- CORRECCIÓN 3: Width más ancho -->
-        <Setter Property="Width" Value="60"/>
+        <Setter Property="Width" Value="40"/>
         <Setter Property="MinWidth" Value="40"/>
 
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
