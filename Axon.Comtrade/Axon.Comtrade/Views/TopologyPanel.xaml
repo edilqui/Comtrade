@@ -22,12 +22,15 @@
         </Grid.RowDefinitions>
 
         <!-- Header -->
-        <TextBlock Grid.Row="0" 
+        <Border Grid.Row="0" Height="48" >
+            
+        <TextBlock VerticalAlignment="Center"
                    Text="Dispositivos" 
                    FontSize="16" 
                    FontWeight="Bold" 
                    Foreground="{StaticResource NeutralForeground1Brush}" 
-                   Margin="0,0,0,15"/>
+                   Margin="8,0,0,0"/>
+        </Border>
 
         <!-- Toolbar -->
         <!--<StackPanel Grid.Row="1" 
