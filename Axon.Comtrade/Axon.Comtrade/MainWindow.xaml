@@ -21,15 +21,11 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="300"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <views:SideBarView/>
+        <ContentControl Content="{Binding SideBar}"/>
 
-        <!--ARBOL DE TOPOLOGIAS-->
-        <views:TopologyPanel DataContext="{Binding Tree}" Grid.Column="1"></views:TopologyPanel>
-
-        <views:DevicesListView Grid.Column="2" DataContext="{Binding GridExample}"/>
+        <ContentControl Content="{Binding RootContent}" Grid.Column="1"/>
     </Grid>
 </Window>

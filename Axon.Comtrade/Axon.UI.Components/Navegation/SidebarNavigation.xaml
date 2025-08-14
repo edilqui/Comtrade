@@ -212,7 +212,7 @@
                                                           Tag="{Binding Icon}"
                                                           local:ButtonExtensions.SelectedIcon="{Binding HomeFilledIcon}"
                                                           Style="{StaticResource SidebarButtonStyle}"
-                                                          Command="{Binding Command}"
+                                                          Command="{Binding DataContext.ItemSelectedCommand, RelativeSource={RelativeSource AncestorType=local:SidebarNavigation}}"
                                                           CommandParameter="{Binding Id}"
                                                           ToolTip="{Binding Tooltip}"/>
                                                 </DataTemplate>

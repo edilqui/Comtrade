@@ -91,11 +91,38 @@ namespace Axon.UI.Components.Navigation
 
         #region Constructor
 
+        public ICommand ItemSelectedCommand { get; private set; }
+
         public SidebarNavigation()
         {
             InitializeComponent();
             NavigationItems = new ObservableCollection<NavigationItemBase>();
+            ItemSelectedCommand = new RelayCommand(OnItemSelectedCommand);
             DataContext = this;
+        }
+
+        private void OnItemSelectedCommand(object parameter)
+        {
+            if (parameter is string itemId)
+            {
+                // Actualizar el item seleccionado
+                UpdateSelectedItem(itemId);
+
+                // Disparar el evento
+                //ItemSelected?.Invoke(this, new NavigationItemSelectedEventArgs(itemId));
+            }
+        }
+
+        private void UpdateSelectedItem(string selectedId)
+        {
+            foreach (var item in NavigationItems)
+            {
+                if (item is NavigationItem navItem)
+                {
+                    navItem.IsSelected = navItem.Id == selectedId;
+                }
+            }
+            SelectedItem = selectedId;
         }
 
         #endregion

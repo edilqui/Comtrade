@@ -1,5 +1,4 @@
-﻿using Axon.Comtrade.Base;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,21 +16,13 @@ using System.Windows.Shapes;
 namespace Axon.Comtrade.Views
 {
     /// <summary>
-    /// Interaction logic for SideBarView.xaml
+    /// Interaction logic for DevicesExplorer.xaml
     /// </summary>
-    public partial class SideBarView : UserControl
+    public partial class DevicesExplorer : UserControl
     {
-        ISideBar SideBar;
-        public SideBarView(ISideBar miSideBar)
+        public DevicesExplorer()
         {
-            SideBar = miSideBar;
             InitializeComponent();
-            DataContext = miSideBar;
-        }
-
-        private void MainNavigation_ItemSelected(object sender, UI.Components.Navigation.NavigationItemSelectedEventArgs e)
-        {
-            SideBar.OnMenuItemSelected(e.ItemId);
         }
     }
 }
