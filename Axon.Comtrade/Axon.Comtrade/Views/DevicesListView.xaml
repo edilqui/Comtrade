@@ -33,21 +33,21 @@
         <Border Grid.Row="1"
             BorderBrush="#FF6B6B6B"
             Background="#FF2A2A2A"
-            BorderThickness="1"
+            BorderThickness="0"
             CornerRadius="4">
 
             <customGrid:EnhancedCustomDataGrid x:Name="MainDataGrid" 
-                                    Background="#FF1E1E1E"
+                                    Background="{DynamicResource TableBackground}"
                                     Foreground="White"
                                     BorderBrush="{DynamicResource ColorNeutralStrokeAccessibleBrush}"
-                                    BorderThickness="1"
+                                    BorderThickness="0"
                                     GridLinesVisibility="Horizontal"
-                                    HorizontalGridLinesBrush="#FF323232"
+                                    HorizontalGridLinesBrush="{DynamicResource TableBorder}"
                                     ItemsSource="{Binding DataItems}"
                                     AutoGenerateColumns="False"
                                     CanUserAddRows="False"
                                     CanUserDeleteRows="False"
-                                    AlternationCount="2"
+                                    AlternationCount="1"
                                     CanUserResizeColumns="True"
                                     CanUserReorderColumns="True"
                                     CanUserSortColumns="True">
@@ -72,7 +72,7 @@
                                                             <!-- Header clickeable -->
                                                             <Border x:Name="HeaderBorder" 
                                                                     Grid.Row="0"
-                                                                    Background="{DynamicResource ColorNeutralBackground3Brush}"
+                                                                    Background="Transparent"
                                                                     BorderBrush="DarkRed"
                                                                     BorderThickness="0,0,0,0"
                                                                     Padding="0,6"
@@ -135,7 +135,7 @@
                                                                 <Setter TargetName="ContentBorder" Property="Visibility" Value="Collapsed"/>
                                                             </Trigger>
                                                             <Trigger Property="IsMouseOver" Value="True">
-                                                                <Setter TargetName="HeaderBorder" Property="Background" Value="#FF4A4A4A"/>
+                                                                <Setter TargetName="HeaderBorder" Property="Background" Value="{DynamicResource TableGroupHeaderBackgroundHover}"/>
                                                             </Trigger>
                                                         </ControlTemplate.Triggers>
                                                     </ControlTemplate>
@@ -144,13 +144,13 @@
                                                     <StackPanel Orientation="Horizontal" Height="30">
                                                         <!--<TextBlock Text="📁 " FontSize="14" VerticalAlignment="Center" Margin="5,0,5,0"/>-->
                                                         <TextBlock Text="{Binding Name}" 
-                                                               FontWeight="Bold" 
+                                                               FontWeight="SemiBold" 
                                                                FontSize="14"
-                                                               Foreground="White"
+                                                               Foreground="{DynamicResource TableHeaderForeground}"
                                                                VerticalAlignment="Center"/>
                                                         <TextBlock Text="{Binding ItemCount, StringFormat='  ({0} elementos)'}" 
                                                                FontSize="12"
-                                                               Foreground="#FFCCCCCC"
+                                                               Foreground="{DynamicResource TableHeaderForegroundHover}"
                                                                VerticalAlignment="Center"
                                                                Margin="8,0"/>
                                                     </StackPanel>
@@ -171,7 +171,7 @@
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Dispositivo" 
                                     Binding="{Binding DeviceName}"
-                                    Width="200"/>
+                                    Width="250"/>
                     <DataGridTextColumn Header="IP" 
                                     Binding="{Binding IPAddress}"
                                     Width="150"/>

@@ -105,8 +105,11 @@
     <!-- TABLE/DATAGRID BRUSHES -->
     <!-- =============================================== -->
 
+    <!-- General Brushes -->
+    <SolidColorBrush x:Key="TableBackground" Color="{DynamicResource ColorNeutralBackground1}"/>
+    
     <!-- Header Brushes -->
-    <SolidColorBrush x:Key="TableHeaderBackground" Color="{DynamicResource ColorNeutralBackground3}"/>
+    <SolidColorBrush x:Key="TableHeaderBackground" Color="{DynamicResource ColorNeutralBackground4}"/>
     <SolidColorBrush x:Key="TableHeaderBackgroundHover" Color="{DynamicResource ColorNeutralBackground3Hover}"/>
     <SolidColorBrush x:Key="TableHeaderBackgroundPressed" Color="{DynamicResource ColorNeutralBackground3Pressed}"/>
     <SolidColorBrush x:Key="TableHeaderForeground" Color="{DynamicResource ColorNeutralForeground1}"/>
@@ -178,7 +181,7 @@
 
     <!-- Grouping Brushes -->
     <SolidColorBrush x:Key="TableGroupHeaderBackground" Color="{DynamicResource ColorNeutralBackground2}"/>
-    <SolidColorBrush x:Key="TableGroupHeaderBackgroundHover" Color="{DynamicResource ColorNeutralBackground2Hover}"/>
+    <SolidColorBrush x:Key="TableGroupHeaderBackgroundHover" Color="{DynamicResource ColorNeutralBackground3}"/>
     <SolidColorBrush x:Key="TableGroupHeaderBackgroundExpanded" Color="{DynamicResource ColorNeutralBackground2Selected}"/>
     <SolidColorBrush x:Key="TableGroupHeaderForeground" Color="{DynamicResource ColorNeutralForeground1}"/>
     <SolidColorBrush x:Key="TableGroupHeaderBorder" Color="{DynamicResource ColorNeutralStroke2}"/>

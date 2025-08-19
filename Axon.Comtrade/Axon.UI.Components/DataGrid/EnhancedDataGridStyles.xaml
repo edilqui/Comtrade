@@ -1,33 +1,32 @@
-﻿<!-- EnhancedDataGridStyles.xaml - CORREGIDO -->
+﻿<!-- EnhancedDataGridStyles.xaml - ACTUALIZADO CON NUEVOS BRUSHES -->
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <!-- Estilo principal del DataGrid -->
     <Style x:Key="EnhancedDataGridStyle" TargetType="DataGrid">
-        <Setter Property="Background" Value="{StaticResource ColorNeutralBackground1Brush}"/>
-        <Setter Property="Foreground" Value="{StaticResource ColorNeutralForeground1Brush}"/>
-        <Setter Property="BorderBrush" Value="Transparent"/>
-        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Background" Value="{StaticResource TableRowBackground}"/>
+        <Setter Property="Foreground" Value="{StaticResource TableCellForeground}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource TableBorder}"/>
+        <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="RowDetailsVisibilityMode" Value="VisibleWhenSelected"/>
         <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
         <Setter Property="ScrollViewer.PanningMode" Value="Both"/>
         <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
         <Setter Property="GridLinesVisibility" Value="Horizontal"/>
-        <Setter Property="HorizontalGridLinesBrush" Value="{StaticResource ColorNeutralForeground1Brush}"/>
-        <Setter Property="VerticalGridLinesBrush" Value="{StaticResource ColorNeutralForeground1Brush}"/>
+        <Setter Property="HorizontalGridLinesBrush" Value="{StaticResource TableRowSeparator}"/>
+        <Setter Property="VerticalGridLinesBrush" Value="{StaticResource TableColumnSeparator}"/>
         <Setter Property="CanUserAddRows" Value="False"/>
         <Setter Property="CanUserDeleteRows" Value="False"/>
         <Setter Property="AutoGenerateColumns" Value="False"/>
         <Setter Property="SelectionMode" Value="Extended"/>
         <Setter Property="SelectionUnit" Value="Cell"/>
-        <!-- CORRECCIÓN PRINCIPAL: Aplicar estilos automáticamente -->
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="DataGrid">
                     <Border Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="{StaticResource BorderRadiusSmall}"
+                            CornerRadius="4"
                             SnapsToDevicePixels="True">
                         <ScrollViewer x:Name="DG_ScrollViewer" Focusable="false">
                             <ScrollViewer.Template>
@@ -44,8 +43,7 @@
                                             <RowDefinition Height="Auto"/>
                                         </Grid.RowDefinitions>
 
-                                        <!-- CORRECCIÓN 1: Botón esquina superior izquierda con estilo apropiado -->
-                                        <!-- CORRECCIÓN 1: Botón esquina superior izquierda con estilo dark personalizado -->
+                                        <!-- Botón esquina superior izquierda -->
                                         <Button x:Name="PART_TopLeftHeader"
                                                 Grid.Row="0" Grid.Column="0"
                                                 Focusable="False" 
@@ -55,12 +53,12 @@
                                             <Button.Template>
                                                 <ControlTemplate TargetType="Button">
                                                     <Border x:Name="Border"
-                                                            Background="{StaticResource ColorNeutralBackground3Brush}"
-                                                            BorderBrush="{StaticResource  ColorNeutralForeground4Brush}"
+                                                            Background="{StaticResource TableHeaderBackground}"
+                                                            BorderBrush="{StaticResource TableHeaderBorder}"
                                                             BorderThickness="0,0,1,1"
                                                             SnapsToDevicePixels="True">
                                                         <Polygon x:Name="Arrow"
-                                                                Fill="{StaticResource ColorNeutralForeground2Brush}"
+                                                                Fill="{StaticResource TableHeaderSortArrow}"
                                                                 HorizontalAlignment="Right"
                                                                 Margin="8,8,3,3"
                                                                 Opacity="0.15"
@@ -70,11 +68,11 @@
                                                     </Border>
                                                     <ControlTemplate.Triggers>
                                                         <Trigger Property="IsMouseOver" Value="True">
-                                                            <Setter TargetName="Border" Property="Background" Value="{StaticResource ColorNeutralBackground2Brush}"/>
+                                                            <Setter TargetName="Border" Property="Background" Value="{StaticResource TableHeaderBackgroundHover}"/>
                                                             <Setter TargetName="Arrow" Property="Opacity" Value="0.3"/>
                                                         </Trigger>
                                                         <Trigger Property="IsPressed" Value="True">
-                                                            <Setter TargetName="Border" Property="Background" Value="{StaticResource ColorNeutralBackground4Brush}"/>
+                                                            <Setter TargetName="Border" Property="Background" Value="{StaticResource TableHeaderBackgroundPressed}"/>
                                                             <Setter TargetName="Arrow" Property="Opacity" Value="0.5"/>
                                                         </Trigger>
                                                     </ControlTemplate.Triggers>
@@ -82,12 +80,12 @@
                                             </Button.Template>
                                         </Button>
 
-                                        <!-- CORRECCIÓN 2: Column headers presenter correctamente configurado -->
+                                        <!-- Column headers presenter -->
                                         <DataGridColumnHeadersPresenter x:Name="PART_ColumnHeadersPresenter"
                                                 Grid.Row="0" Grid.Column="1"
                                                 Visibility="{Binding HeadersVisibility, ConverterParameter={x:Static DataGridHeadersVisibility.Column}, Converter={x:Static DataGrid.HeadersVisibilityConverter}, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"/>
 
-                                        <!-- CORRECCIÓN 3: ScrollContentPresenter sin modificaciones innecesarias -->
+                                        <!-- ScrollContentPresenter -->
                                         <ScrollContentPresenter x:Name="PART_ScrollContentPresenter"
                                                 Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
                                                 CanContentScroll="{TemplateBinding CanContentScroll}"/>
@@ -99,7 +97,8 @@
                                                    Maximum="{TemplateBinding ScrollableHeight}"
                                                    ViewportSize="{TemplateBinding ViewportHeight}"
                                                    Value="{Binding VerticalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}"
-                                                   Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"/>
+                                                   Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"
+                                                   Style="{DynamicResource TableScrollBarStyle}"/>
 
                                         <ScrollBar x:Name="PART_HorizontalScrollBar"
                                                    Grid.Row="2" Grid.Column="1" 
@@ -107,7 +106,8 @@
                                                    Maximum="{TemplateBinding ScrollableWidth}"
                                                    ViewportSize="{TemplateBinding ViewportWidth}"
                                                    Value="{Binding HorizontalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}"
-                                                   Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}"/>
+                                                   Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}"
+                                                   Style="{DynamicResource TableScrollBarStyle}"/>
                                     </Grid>
                                 </ControlTemplate>
                             </ScrollViewer.Template>
@@ -122,9 +122,10 @@
     <!-- Estilo para las celdas -->
     <Style x:Key="EnhancedDataGridCellStyle" TargetType="DataGridCell">
         <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="BorderBrush" Value="{DynamicResource  ColorNeutralForeground4Brush}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource TableCellBorder}"/>
         <Setter Property="BorderThickness" Value="0,1,1,0"/>
         <Setter Property="Padding" Value="8,6"/>
+        <Setter Property="Foreground" Value="{StaticResource TableCellForeground}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="DataGridCell">
@@ -137,11 +138,12 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsSelected" Value="True">
-                            <Setter Property="Background" Value="{StaticResource ColorBrandBackground2Brush}"/>
-                            <Setter Property="Foreground" Value="{StaticResource ColorNeutralForeground1Brush}"/>
+                            <Setter Property="Background" Value="{StaticResource TableSelectionBackground}"/>
+                            <Setter Property="Foreground" Value="{StaticResource TableCellForegroundSelected}"/>
+                            <Setter Property="BorderBrush" Value="{StaticResource TableCellBorderSelected}"/>
                         </Trigger>
                         <Trigger Property="IsKeyboardFocusWithin" Value="True">
-                            <Setter Property="BorderBrush" Value="{StaticResource NeutralForeground3Brush}"/>
+                            <Setter Property="BorderBrush" Value="{StaticResource TableCellFocusVisual}"/>
                             <Setter Property="BorderThickness" Value="2"/>
                         </Trigger>
                         <MultiTrigger>
@@ -149,7 +151,8 @@
                                 <Condition Property="IsSelected" Value="True"/>
                                 <Condition Property="Selector.IsSelectionActive" Value="False"/>
                             </MultiTrigger.Conditions>
-                            <Setter Property="Background" Value="{StaticResource ColorNeutralBackground4Brush}"/>
+                            <Setter Property="Background" Value="{StaticResource TableSelectionBackgroundInactive}"/>
+                            <Setter Property="BorderBrush" Value="{StaticResource TableSelectionBorderInactive}"/>
                         </MultiTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -159,8 +162,8 @@
 
     <!-- Estilo para las filas -->
     <Style x:Key="EnhancedDataGridRowStyle" TargetType="DataGridRow">
-        <Setter Property="Background" Value="{StaticResource ColorNeutralBackground1Brush}"/>
-        <Setter Property="Foreground" Value="{DynamicResource ColorNeutralForeground1Brush}"/>
+        <Setter Property="Background" Value="{StaticResource TableRowBackground}"/>
+        <Setter Property="Foreground" Value="{StaticResource TableCellForeground}"/>
         <Setter Property="SnapsToDevicePixels" Value="true"/>
         <Setter Property="Validation.ErrorTemplate" Value="{x:Null}"/>
         <Setter Property="ValidationErrorTemplate">
@@ -168,8 +171,9 @@
                 <ControlTemplate>
                     <TextBlock Margin="2,0,0,0"
                              VerticalAlignment="Center"
-                             Foreground="{StaticResource ColorNeutralForeground1Brush}"
-                             Text="!"/>
+                             Foreground="{StaticResource TableCellForegroundError}"
+                             Text="!"
+                             FontWeight="Bold"/>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -212,34 +216,48 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="DGR_Border" Property="Background" Value="{StaticResource ColorNeutralBackground3Brush}"/>
+                            <Setter TargetName="DGR_Border" Property="Background" Value="{StaticResource TableRowBackgroundHover}"/>
                         </Trigger>
                         <Trigger Property="IsSelected" Value="True">
-                            <Setter TargetName="DGR_Border" Property="Background" Value="{StaticResource ColorNeutralBackground2Brush}"/>
+                            <Setter TargetName="DGR_Border" Property="Background" Value="{StaticResource TableRowBackgroundSelected}"/>
                         </Trigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
                                 <Condition Property="IsSelected" Value="True"/>
                                 <Condition Property="Selector.IsSelectionActive" Value="False"/>
                             </MultiTrigger.Conditions>
-                            <Setter TargetName="DGR_Border" Property="Background" Value="{StaticResource ColorNeutralBackground4Brush}"/>
+                            <Setter TargetName="DGR_Border" Property="Background" Value="{StaticResource TableRowBackgroundDisabled}"/>
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected" Value="True"/>
+                                <Condition Property="IsMouseOver" Value="True"/>
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="DGR_Border" Property="Background" Value="{StaticResource TableRowBackgroundSelectedHover}"/>
                         </MultiTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Style.Triggers>
+            <!-- Filas alternadas -->
+            <Trigger Property="AlternationIndex" Value="1">
+                <Setter Property="Background" Value="{StaticResource TableRowBackgroundAlternate}"/>
+            </Trigger>
+        </Style.Triggers>
     </Style>
 
-    <!-- CORRECCIÓN 4: Estilo de headers simplificado sin filtros por defecto -->
+    <!-- Estilo de headers simplificado -->
     <Style x:Key="EnhancedDataGridColumnHeaderStyle" TargetType="DataGridColumnHeader">
-        <Setter Property="Background" Value="{StaticResource ColorNeutralBackground3Brush}"/>
-        <Setter Property="Foreground" Value="{StaticResource ColorNeutralForeground1Brush}"/>
-        <Setter Property="BorderBrush" Value="{StaticResource  ColorNeutralForeground4Brush}"/>
+        <Setter Property="Background" Value="{StaticResource TableHeaderBackground}"/>
+        <Setter Property="Foreground" Value="{StaticResource TableHeaderForeground}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource TableHeaderBorder}"/>
         <Setter Property="BorderThickness" Value="0,0,1,1"/>
         <Setter Property="Padding" Value="8,12"/>
         <Setter Property="HorizontalContentAlignment" Value="Left"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
-        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="FontSize" Value="{StaticResource FontSizeBase300}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="DataGridColumnHeader">
@@ -262,7 +280,7 @@
                                 <Path x:Name="SortArrow"
                                       Margin="8,0,0,0"
                                       VerticalAlignment="Center"
-                                      Fill="{TemplateBinding Foreground}"
+                                      Fill="{StaticResource TableHeaderSortArrow}"
                                       Visibility="Collapsed"
                                       Width="12" Height="8"/>
                             </StackPanel>
@@ -275,7 +293,15 @@
                                Cursor="SizeWE">
                             <Thumb.Template>
                                 <ControlTemplate TargetType="Thumb">
-                                    <Border Background="Transparent"/>
+                                    <Border Background="{StaticResource TableResizeGrip}" Width="1" Margin="2,0"/>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="{StaticResource TableResizeGripHover}"/>
+                                        </Trigger>
+                                        <Trigger Property="IsDragging" Value="True">
+                                            <Setter Property="Background" Value="{StaticResource TableResizeGripActive}"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
                                 </ControlTemplate>
                             </Thumb.Template>
                         </Thumb>
@@ -284,17 +310,20 @@
                     <ControlTemplate.Triggers>
                         <!-- Hover Effect -->
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="HeaderBorder" Property="Background" Value="{StaticResource ColorNeutralBackground2Brush}"/>
+                            <Setter TargetName="HeaderBorder" Property="Background" Value="{StaticResource TableHeaderBackgroundHover}"/>
+                            <Setter Property="Foreground" Value="{StaticResource TableHeaderForegroundHover}"/>
                         </Trigger>
 
                         <!-- Sort Direction Triggers -->
                         <Trigger Property="SortDirection" Value="Ascending">
                             <Setter TargetName="SortArrow" Property="Visibility" Value="Visible"/>
                             <Setter TargetName="SortArrow" Property="Data" Value="M 0 6 L 6 0 L 12 6 Z"/>
+                            <Setter TargetName="SortArrow" Property="Fill" Value="{StaticResource TableHeaderSortArrowActive}"/>
                         </Trigger>
                         <Trigger Property="SortDirection" Value="Descending">
                             <Setter TargetName="SortArrow" Property="Visibility" Value="Visible"/>
                             <Setter TargetName="SortArrow" Property="Data" Value="M 0 0 L 6 6 L 12 0 Z"/>
+                            <Setter TargetName="SortArrow" Property="Fill" Value="{StaticResource TableHeaderSortArrowActive}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -302,7 +331,7 @@
         </Setter>
     </Style>
 
-    <!-- CORRECCIÓN 5: Estilo de header con filtros (opcional) -->
+    <!-- Estilo de header con filtros (opcional) -->
     <Style x:Key="EnhancedDataGridColumnHeaderWithFilterStyle" TargetType="DataGridColumnHeader" BasedOn="{StaticResource EnhancedDataGridColumnHeaderStyle}">
         <Setter Property="Template">
             <Setter.Value>
@@ -334,7 +363,7 @@
                                     <Path x:Name="SortArrow"
                                           Margin="8,0,0,0"
                                           VerticalAlignment="Center"
-                                          Fill="{TemplateBinding Foreground}"
+                                          Fill="{StaticResource TableHeaderSortArrow}"
                                           Visibility="Collapsed"
                                           Width="12" Height="8"/>
                                 </StackPanel>
@@ -342,15 +371,30 @@
                                 <!-- Filter TextBox -->
                                 <TextBox x:Name="FilterTextBox"
                                        Grid.Row="1"
-                                       Background="{StaticResource ColorNeutralBackground1Brush}"
-                                       BorderBrush="{StaticResource ColorNeutralBackground1Brush}"
-                                       Foreground="{StaticResource ColorNeutralForeground1Brush}"
+                                       Background="{StaticResource TableFilterBackground}"
+                                       BorderBrush="{StaticResource TableFilterBorder}"
+                                       Foreground="{StaticResource TableCellForeground}"
                                        BorderThickness="1"
                                        Margin="4,4,4,8"
                                        Padding="6,4"
                                        FontSize="12"
                                        FontWeight="Normal"
-                                       Visibility="Visible"/>
+                                       Visibility="Visible">
+                                    <TextBox.Style>
+                                        <Style TargetType="TextBox">
+                                            <Style.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Background" Value="{StaticResource TableFilterBackgroundHover}"/>
+                                                    <Setter Property="BorderBrush" Value="{StaticResource TableFilterBorderHover}"/>
+                                                </Trigger>
+                                                <Trigger Property="IsFocused" Value="True">
+                                                    <Setter Property="Background" Value="{StaticResource TableFilterBackgroundActive}"/>
+                                                    <Setter Property="BorderBrush" Value="{StaticResource TableFilterBorderActive}"/>
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBox.Style>
+                                </TextBox>
                             </Grid>
                         </Border>
 
@@ -361,7 +405,7 @@
                                Cursor="SizeWE">
                             <Thumb.Template>
                                 <ControlTemplate TargetType="Thumb">
-                                    <Border Background="Transparent"/>
+                                    <Border Background="{StaticResource TableResizeGrip}" Width="1" Margin="2,0"/>
                                 </ControlTemplate>
                             </Thumb.Template>
                         </Thumb>
@@ -370,17 +414,19 @@
                     <ControlTemplate.Triggers>
                         <!-- Hover Effect -->
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="HeaderBorder" Property="Background" Value="{StaticResource ColorNeutralBackground2Brush}"/>
+                            <Setter TargetName="HeaderBorder" Property="Background" Value="{StaticResource TableHeaderBackgroundHover}"/>
                         </Trigger>
 
                         <!-- Sort Direction Triggers -->
                         <Trigger Property="SortDirection" Value="Ascending">
                             <Setter TargetName="SortArrow" Property="Visibility" Value="Visible"/>
                             <Setter TargetName="SortArrow" Property="Data" Value="M 0 6 L 6 0 L 12 6 Z"/>
+                            <Setter TargetName="SortArrow" Property="Fill" Value="{StaticResource TableHeaderSortArrowActive}"/>
                         </Trigger>
                         <Trigger Property="SortDirection" Value="Descending">
                             <Setter TargetName="SortArrow" Property="Visibility" Value="Visible"/>
                             <Setter TargetName="SortArrow" Property="Data" Value="M 0 0 L 6 6 L 12 0 Z"/>
+                            <Setter TargetName="SortArrow" Property="Fill" Value="{StaticResource TableHeaderSortArrowActive}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -388,25 +434,18 @@
         </Setter>
     </Style>
 
-    <!-- ESTILO CORREGIDO PARA ROW HEADERS -->
+    <!-- Estilo para Row Headers -->
     <Style x:Key="EnhancedDataGridRowHeaderStyle" TargetType="DataGridRowHeader">
-        <!-- CORRECCIÓN 1: Background más visible -->
-        <Setter Property="Background" Value="{StaticResource ColorNeutralBackground3Brush}"/>
-        <Setter Property="Foreground" Value="{StaticResource ColorNeutralForeground1Brush}"/>
-
-        <!-- CORRECCIÓN 2: BorderBrush visible en lugar de transparente -->
-        <Setter Property="BorderBrush" Value="{StaticResource  ColorNeutralForeground4Brush}"/>
+        <Setter Property="Background" Value="{StaticResource TableHeaderBackground}"/>
+        <Setter Property="Foreground" Value="{StaticResource TableHeaderForeground}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource TableHeaderBorder}"/>
         <Setter Property="BorderThickness" Value="0,1,1,1"/>
-
-        <!-- CORRECCIÓN 3: Width más ancho -->
         <Setter Property="Width" Value="40"/>
         <Setter Property="MinWidth" Value="40"/>
-
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="Padding" Value="4"/>
         <Setter Property="FontWeight" Value="Medium"/>
-
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="DataGridRowHeader">
@@ -416,16 +455,15 @@
                             BorderThickness="{TemplateBinding BorderThickness}"
                             Padding="{TemplateBinding Padding}">
 
-                        <!-- CORRECCIÓN 4: Contenido más visible con número de fila -->
                         <Grid>
                             <!-- Indicador de selección visual -->
                             <Rectangle x:Name="SelectionIndicator"
                                      Width="3"
                                      HorizontalAlignment="Left"
-                                     Fill="{StaticResource ColorBrandBackground2Brush}"
+                                     Fill="{StaticResource TableIndicatorNew}"
                                      Visibility="Collapsed"/>
 
-                            <!-- Contenido del header (normalmente vacío, pero puede mostrar índice) -->
+                            <!-- Contenido del header -->
                             <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                             VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
@@ -433,30 +471,253 @@
                     </Border>
 
                     <ControlTemplate.Triggers>
-                        <!-- CORRECCIÓN 5: Triggers más visibles -->
                         <Trigger Property="IsRowSelected" Value="True">
-                            <Setter TargetName="RowHeaderBorder" Property="Background" Value="{StaticResource ColorBrandBackground2Brush}"/>
-                            <Setter Property="Foreground" Value="{StaticResource NeutralForeground1OnBrandBrush}"/>
+                            <Setter TargetName="RowHeaderBorder" Property="Background" Value="{StaticResource TableSelectionBackground}"/>
+                            <Setter Property="Foreground" Value="{StaticResource TableCellForegroundSelected}"/>
                             <Setter TargetName="SelectionIndicator" Property="Visibility" Value="Visible"/>
                         </Trigger>
 
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="RowHeaderBorder" Property="Background" Value="{StaticResource ColorNeutralBackground2Brush}"/>
+                            <Setter TargetName="RowHeaderBorder" Property="Background" Value="{StaticResource TableHeaderBackgroundHover}"/>
                         </Trigger>
 
                         <!-- Estado cuando la fila está seleccionada pero el control no tiene foco -->
-                        <!--<MultiTrigger>
+                        <MultiTrigger>
                             <MultiTrigger.Conditions>
                                 <Condition Property="IsRowSelected" Value="True"/>
-                                <Condition Property="Selector.IsSelectionActive" Value="False" SourceName="{x:Static DataGrid.DataGridProperty}"/>
+                                <Condition Property="Selector.IsSelectionActive" Value="False"/>
                             </MultiTrigger.Conditions>
-                            <Setter TargetName="RowHeaderBorder" Property="Background" Value="{StaticResource NeutralBackground4Brush}"/>
-                            <Setter Property="Foreground" Value="{StaticResource ColorNeutralForeground2Brush}"/>
-                        </MultiTrigger>-->
+                            <Setter TargetName="RowHeaderBorder" Property="Background" Value="{StaticResource TableSelectionBackgroundInactive}"/>
+                            <Setter Property="Foreground" Value="{StaticResource TableCellForegroundDisabled}"/>
+                        </MultiTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
+
+    <!-- Estilo para ScrollBar personalizado (opcional) -->
+    <Style x:Key="TableScrollBarStyle" TargetType="ScrollBar">
+        <Setter Property="Background" Value="{StaticResource TableScrollbarTrack}"/>
+        <Setter Property="Foreground" Value="{StaticResource TableScrollbarThumb}"/>
+        <Setter Property="Width" Value="12"/>
+        <Setter Property="MinWidth" Value="12"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ScrollBar">
+                    <Grid x:Name="Bg" SnapsToDevicePixels="true">
+                        <Border Background="{TemplateBinding Background}"/>
+                        <Track x:Name="PART_Track" IsDirectionReversed="true" IsEnabled="{TemplateBinding IsMouseOver}">
+                            <Track.Thumb>
+                                <Thumb Background="{TemplateBinding Foreground}" BorderThickness="0">
+                                    <Thumb.Style>
+                                        <Style TargetType="Thumb">
+                                            <Style.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Background" Value="{StaticResource TableScrollbarThumbHover}"/>
+                                                </Trigger>
+                                                <Trigger Property="IsDragging" Value="True">
+                                                    <Setter Property="Background" Value="{StaticResource TableScrollbarThumbPressed}"/>
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Thumb.Style>
+                                </Thumb>
+                            </Track.Thumb>
+                        </Track>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="Orientation" Value="Horizontal">
+                <Setter Property="Width" Value="Auto"/>
+                <Setter Property="MinWidth" Value="0"/>
+                <Setter Property="Height" Value="12"/>
+                <Setter Property="MinHeight" Value="12"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="ScrollBar">
+                            <Grid x:Name="Bg" SnapsToDevicePixels="true">
+                                <Border Background="{TemplateBinding Background}"/>
+                                <Track x:Name="PART_Track" IsEnabled="{TemplateBinding IsMouseOver}">
+                                    <Track.Thumb>
+                                        <Thumb Background="{TemplateBinding Foreground}" BorderThickness="0"/>
+                                    </Track.Thumb>
+                                </Track>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!-- Estilo para Checkbox en DataGrid -->
+    <Style x:Key="TableCheckBoxStyle" TargetType="CheckBox">
+        <Setter Property="Background" Value="{StaticResource TableCheckboxBackground}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource TableCheckboxBorder}"/>
+        <Setter Property="Foreground" Value="{StaticResource TableCheckboxCheckmark}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="CheckBox">
+                    <Grid>
+                        <Border x:Name="CheckboxBorder"
+                                Width="16" Height="16"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="2">
+                            <Path x:Name="CheckMark"
+                                  Width="10" Height="8"
+                                  Data="M 1,4 L 4,7 L 9,1"
+                                  Stroke="{TemplateBinding Foreground}"
+                                  StrokeThickness="2"
+                                  Visibility="Collapsed"
+                                  HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"/>
+                        </Border>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="CheckboxBorder" Property="Background" Value="{StaticResource TableCheckboxBackgroundHover}"/>
+                            <Setter TargetName="CheckboxBorder" Property="BorderBrush" Value="{StaticResource TableCheckboxBorderHover}"/>
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="CheckboxBorder" Property="Background" Value="{StaticResource TableCheckboxBackgroundChecked}"/>
+                            <Setter TargetName="CheckboxBorder" Property="BorderBrush" Value="{StaticResource TableCheckboxBorderChecked}"/>
+                            <Setter TargetName="CheckMark" Property="Visibility" Value="Visible"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsChecked" Value="True"/>
+                                <Condition Property="IsMouseOver" Value="True"/>
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="CheckboxBorder" Property="Background" Value="{StaticResource TableCheckboxBackgroundCheckedHover}"/>
+                        </MultiTrigger>
+                        <Trigger Property="IsChecked" Value="{x:Null}">
+                            <Setter TargetName="CheckboxBorder" Property="Background" Value="{StaticResource TableCheckboxBackgroundChecked}"/>
+                            <Setter TargetName="CheckboxBorder" Property="BorderBrush" Value="{StaticResource TableCheckboxBorderChecked}"/>
+                            <Setter TargetName="CheckMark" Property="Data" Value="M 2,6 L 8,6"/>
+                            <Setter TargetName="CheckMark" Property="Visibility" Value="Visible"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Estilo para TextBox en celdas editables -->
+    <Style x:Key="TableEditingTextBoxStyle" TargetType="TextBox">
+        <Setter Property="Background" Value="{StaticResource TableCellEditBackground}"/>
+        <Setter Property="Foreground" Value="{StaticResource TableCellEditForeground}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource TableCellEditBorder}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Padding" Value="4,2"/>
+        <Setter Property="SelectionBrush" Value="{StaticResource TableCellEditSelection}"/>
+        <Style.Triggers>
+            <Trigger Property="IsFocused" Value="True">
+                <Setter Property="Background" Value="{StaticResource TableCellEditBackgroundFocused}"/>
+                <Setter Property="BorderBrush" Value="{StaticResource TableCellEditBorderFocused}"/>
+                <Setter Property="BorderThickness" Value="2"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!-- Estilo para ComboBox en celdas editables -->
+    <Style x:Key="TableEditingComboBoxStyle" TargetType="ComboBox">
+        <Setter Property="Background" Value="{StaticResource TableCellEditBackground}"/>
+        <Setter Property="Foreground" Value="{StaticResource TableCellEditForeground}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource TableCellEditBorder}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Padding" Value="4,2"/>
+        <Style.Triggers>
+            <Trigger Property="IsFocused" Value="True">
+                <Setter Property="Background" Value="{StaticResource TableCellEditBackgroundFocused}"/>
+                <Setter Property="BorderBrush" Value="{StaticResource TableCellEditBorderFocused}"/>
+                <Setter Property="BorderThickness" Value="2"/>
+            </Trigger>
+            <Trigger Property="IsDropDownOpen" Value="True">
+                <Setter Property="BorderBrush" Value="{StaticResource TableFilterBorderActive}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!-- Estilo para mostrar indicadores de validación -->
+    <Style x:Key="TableValidationErrorStyle" TargetType="Border">
+        <Setter Property="Background" Value="{StaticResource TableValidationErrorBackground}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource TableValidationErrorBorder}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="CornerRadius" Value="2"/>
+        <Setter Property="Margin" Value="2"/>
+        <Setter Property="Padding" Value="4,2"/>
+    </Style>
+
+    <Style x:Key="TableValidationWarningStyle" TargetType="Border">
+        <Setter Property="Background" Value="{StaticResource TableValidationWarningBackground}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource TableValidationWarningBorder}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="CornerRadius" Value="2"/>
+        <Setter Property="Margin" Value="2"/>
+        <Setter Property="Padding" Value="4,2"/>
+    </Style>
+
+    <!-- Template para estado de carga -->
+    <DataTemplate x:Key="TableLoadingTemplate">
+        <Border Background="{StaticResource TableLoadingBackground}"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Padding="20"
+                CornerRadius="4">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="⟳" 
+                          FontSize="16" 
+                          Foreground="{StaticResource TableLoadingForeground}"
+                          Margin="0,0,8,0">
+                    <TextBlock.RenderTransform>
+                        <RotateTransform CenterX="8" CenterY="8"/>
+                    </TextBlock.RenderTransform>
+                    <TextBlock.Triggers>
+                        <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+                            <BeginStoryboard>
+                                <Storyboard RepeatBehavior="Forever">
+                                    <DoubleAnimation Storyboard.TargetProperty="RenderTransform.Angle"
+                                                   From="0" To="360"
+                                                   Duration="0:0:1"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </TextBlock.Triggers>
+                </TextBlock>
+                <TextBlock Text="Cargando datos..." 
+                          Foreground="{StaticResource TableLoadingForeground}"
+                          VerticalAlignment="Center"/>
+            </StackPanel>
+        </Border>
+    </DataTemplate>
+
+    <!-- Template para estado vacío -->
+    <DataTemplate x:Key="TableEmptyStateTemplate">
+        <Border Background="{StaticResource TableEmptyStateBackground}"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Padding="40,20"
+                CornerRadius="4">
+            <StackPanel HorizontalAlignment="Center">
+                <TextBlock Text="📄" 
+                          FontSize="32" 
+                          Foreground="{StaticResource TableEmptyStateIcon}"
+                          HorizontalAlignment="Center"
+                          Margin="0,0,0,8"/>
+                <TextBlock Text="No hay datos para mostrar" 
+                          Foreground="{StaticResource TableEmptyStateForeground}"
+                          HorizontalAlignment="Center"
+                          FontSize="14"/>
+            </StackPanel>
+        </Border>
+    </DataTemplate>
 
 </ResourceDictionary>
