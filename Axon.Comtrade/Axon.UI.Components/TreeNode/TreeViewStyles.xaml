@@ -6,6 +6,183 @@
     <!-- Converters -->
     <local:LevelToIndentConverter x:Key="LevelToIndentConverter"/>
 
+    <!-- Estilo para el botón Add -->
+    <Style x:Key="TreeViewAddButtonStyle" TargetType="{x:Type Button}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Opacity" Value="0"/>
+        <Setter Property="Width" Value="24"/>
+        <Setter Property="Height" Value="24"/>
+        <Setter Property="Margin" Value="0,0"/>
+        <Setter Property="ToolTip" Value="Agregar elemento"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="{TemplateBinding Background}"
+                        CornerRadius="4"
+                        Padding="2">
+                        <Viewbox Width="20" Height="20">
+                            <Canvas Background="#01FFFFFF" Width="24" Height="24">
+                                <Path Fill="{TemplateBinding Foreground}" 
+                                  Data="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z"/>
+                            </Canvas>
+                        </Viewbox>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{StaticResource ColorNeutralBackground3Brush}"/>
+                <Setter Property="Opacity" Value="1"/>
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Background" Value="{StaticResource ColorNeutralBackground4Brush}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!-- Estilo para el Menu en TreeView -->
+    <Style x:Key="TreeViewMenuStyle" TargetType="{x:Type Menu}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Opacity" Value="0"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{StaticResource ColorNeutralBackground3Brush}"/>
+                <Setter Property="Opacity" Value="1"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!-- Estilo para el MenuItem raíz (el que muestra los tres puntos) -->
+    <Style x:Key="TreeViewRootMenuItemStyle" TargetType="{x:Type MenuItem}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Width" Value="24"/>
+        <Setter Property="Height" Value="24"/>
+        <Setter Property="Margin" Value="2,0"/>
+        <Setter Property="ToolTip" Value="Más opciones"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="MenuItem">
+                    <Border x:Name="Border"
+                        Background="{TemplateBinding Background}"
+                        CornerRadius="4"
+                        Padding="2">
+                        <Grid>
+                            <!-- Header del MenuItem (los tres puntos) -->
+                            <ContentPresenter x:Name="HeaderHost"
+                                        ContentSource="Header"
+                                        RecognizesAccessKey="True"/>
+
+                            <!-- Popup para los sub-items -->
+                            <Popup x:Name="Popup"
+                               Placement="Bottom"
+                               IsOpen="{TemplateBinding IsSubmenuOpen}"
+                               AllowsTransparency="True"
+                               Focusable="False"
+                               PopupAnimation="Fade">
+                                <Border x:Name="SubmenuBorder"
+                                    SnapsToDevicePixels="True"
+                                    Background="{StaticResource ColorNeutralBackground1Brush}"
+                                    BorderBrush="{StaticResource ColorNeutralStroke1Brush}"
+                                    BorderThickness="1"
+                                    CornerRadius="4"
+                                    Padding="2">
+                                    <StackPanel IsItemsHost="True"
+                                          KeyboardNavigation.DirectionalNavigation="Cycle"/>
+                                </Border>
+                            </Popup>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsHighlighted" Value="True">
+                            <Setter TargetName="Border" Property="Background" 
+                                Value="{StaticResource ColorNeutralBackground3Brush}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="Border" Property="Background" 
+                                Value="{StaticResource ColorNeutralBackground4Brush}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Estilo para los sub-MenuItems -->
+    <Style x:Key="TreeViewSubMenuItemStyle" TargetType="{x:Type MenuItem}">
+        <Setter Property="Foreground" Value="{StaticResource ColorNeutralForeground1Brush}"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Padding" Value="8,4"/>
+        <Setter Property="MinWidth" Value="150"/>
+        <Setter Property="Height" Value="32"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="MenuItem">
+                    <Border x:Name="Border"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="2"
+                        Margin="1">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <!-- Icono -->
+                            <ContentPresenter x:Name="Icon"
+                                        Grid.Column="0"
+                                        ContentSource="Icon"
+                                        Margin="4,0,8,0"
+                                        VerticalAlignment="Center"/>
+
+                            <!-- Texto -->
+                            <ContentPresenter x:Name="HeaderHost"
+                                        Grid.Column="1"
+                                        ContentSource="Header"
+                                        RecognizesAccessKey="True"
+                                        VerticalAlignment="Center"/>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsHighlighted" Value="True">
+                            <Setter TargetName="Border" Property="Background" 
+                                Value="{StaticResource ColorNeutralBackground2Brush}"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Foreground" 
+                                Value="{StaticResource ColorNeutralForegroundDisabled}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--estilo para separadores de menu-->
+    <Style x:Key="TreeViewMenuSeparatorStyle" TargetType="{x:Type Separator}">
+        <Setter Property="Background" Value="{StaticResource ColorNeutralStroke2Brush}"/>
+        <Setter Property="Height" Value="1"/>
+        <Setter Property="Margin" Value="4,2"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Separator">
+                    <Rectangle Fill="{TemplateBinding Background}" 
+                          Height="{TemplateBinding Height}"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <!-- ESTILO GENÉRICO PARA TreeViewItem -->
     <Style x:Key="GenericTreeViewItemStyle" TargetType="TreeViewItem">
         <Setter Property="Background" Value="Transparent"/>
@@ -39,7 +216,7 @@
                                                            Storyboard.TargetProperty="Opacity"
                                                            To="1"
                                                            Duration="0:0:0.2"/>
-                                            <DoubleAnimation Storyboard.TargetName="MenuButton"
+                                            <DoubleAnimation Storyboard.TargetName="MenuActions"
                                                            Storyboard.TargetProperty="Opacity"
                                                            To="1"
                                                            Duration="0:0:0.2"/>
@@ -54,7 +231,7 @@
                                                            Storyboard.TargetProperty="Opacity"
                                                            To="0"
                                                            Duration="0:0:0.2"/>
-                                            <DoubleAnimation Storyboard.TargetName="MenuButton"
+                                            <DoubleAnimation Storyboard.TargetName="MenuActions"
                                                            Storyboard.TargetProperty="Opacity"
                                                            To="0"
                                                            Duration="0:0:0.2"/>
@@ -130,75 +307,92 @@
 
                                     <!-- Botones de acción alineados a la derecha -->
                                     <StackPanel Orientation="Horizontal"
-                                              HorizontalAlignment="Right"
-                                              VerticalAlignment="Center"
-                                              Margin="8,0">
+            HorizontalAlignment="Right"
+            VerticalAlignment="Center" 
+            Background="Transparent"
+            Margin="8,0">
 
-                                        <!-- Botón para agregar -->
+                                        <!-- Botón para agregar (mantiene el estilo anterior) -->
                                         <Button x:Name="AddButton"
-                                              Background="Transparent"
-                                              Foreground="{StaticResource ColorNeutralForeground1Brush}"
-                                              Width="24"
-                                              Height="24"
-                                              Margin="2,0"
-                                              Command="{Binding AddChildCommand}"
-                                              Opacity="0"
-                                              BorderThickness="0"
-                                              ToolTip="Agregar elemento">
-                                            <Button.Template>
-                                                <ControlTemplate TargetType="Button">
-                                                    <Border Background="{TemplateBinding Background}"
-                                                            CornerRadius="{StaticResource BorderRadiusSmall}">
-                                                        <Viewbox Width="12" Height="12">
-                                                            <Path Data="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" 
-                                                                  Fill="{StaticResource ColorNeutralForeground1Brush}"/>
-                                                        </Viewbox>
-                                                    </Border>
-                                                    <ControlTemplate.Triggers>
-                                                        <Trigger Property="IsMouseOver" Value="True">
-                                                            <Setter Property="Background" Value="{StaticResource TreeViewButtonActionBackgroundHover}"/>
-                                                        </Trigger>
-                                                    </ControlTemplate.Triggers>
-                                                </ControlTemplate>
-                                            </Button.Template>
-                                        </Button>
+            Style="{StaticResource TreeViewAddButtonStyle}"
+            Foreground="{StaticResource ColorNeutralForeground1Brush}"
+            Tag="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z"
+            ToolTip="Agregar elemento"
+            Margin="0,0"
+            Command="{Binding AddChildCommand}"/>
 
-                                        <!-- Botón de menú -->
-                                        <Button x:Name="MenuButton"
-                                              Background="Transparent"
-                                              Foreground="{StaticResource ColorNeutralForeground1Brush}"
-                                              Width="24"
-                                              Height="24"
-                                              Margin="2,0"
-                                              Opacity="0"
-                                              BorderThickness="0"
-                                              ToolTip="Más opciones">
-                                            <Button.Template>
-                                                <ControlTemplate TargetType="Button">
-                                                    <Border Background="{TemplateBinding Background}"
-                                                            CornerRadius="{StaticResource BorderRadiusSmall}">
-                                                        <Viewbox Width="12" Height="12">
-                                                            <Path Data="M12,16A2,2 0 0,1 14,18A2,2 0 0,1 12,20A2,2 0 0,1 10,18A2,2 0 0,1 12,16M12,10A2,2 0 0,1 14,12A2,2 0 0,1 12,14A2,2 0 0,1 10,12A2,2 0 0,1 12,10M12,4A2,2 0 0,1 14,6A2,2 0 0,1 12,8A2,2 0 0,1 10,6A2,2 0 0,1 12,4Z" 
-                                                                  Fill="{StaticResource ColorNeutralForeground1Brush}"/>
+                                        <!-- NUEVO: Menu en lugar de Button con ContextMenu -->
+                                        <Menu x:Name="MenuActions"
+          Style="{StaticResource TreeViewMenuStyle}"
+          VerticalAlignment="Center">
+
+                                             <!--MenuItem raíz con los tres puntos--> 
+                                            <MenuItem Style="{StaticResource TreeViewRootMenuItemStyle}">
+                                                <MenuItem.Header>
+                                                    <Viewbox Width="20" Height="20">
+                                                        <Canvas Background="#01FFFFFF" Width="24" Height="24">
+                                                            <Path Fill="{StaticResource ColorNeutralForeground1Brush}" 
+                              Data="M12,16A2,2 0 0,1 14,18A2,2 0 0,1 12,20A2,2 0 0,1 10,18A2,2 0 0,1 12,16M12,10A2,2 0 0,1 14,12A2,2 0 0,1 12,14A2,2 0 0,1 10,12A2,2 0 0,1 12,10M12,4A2,2 0 0,1 14,6A2,2 0 0,1 12,8A2,2 0 0,1 10,6A2,2 0 0,1 12,4Z"/>
+                                                        </Canvas>
+                                                    </Viewbox>
+                                                </MenuItem.Header>
+
+                                                 <!--Sub-MenuItems--> 
+                                                <MenuItem Style="{StaticResource TreeViewSubMenuItemStyle}" 
+                      Header="Agregar elemento" 
+                      Command="{Binding AddChildCommand}">
+                                                    <MenuItem.Icon>
+                                                        <Viewbox Width="16" Height="16">
+                                                            <Canvas Width="24" Height="24">
+                                                                <Path Fill="{StaticResource ColorNeutralForeground1Brush}" 
+                                  Data="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z"/>
+                                                            </Canvas>
                                                         </Viewbox>
-                                                    </Border>
-                                                    <ControlTemplate.Triggers>
-                                                        <Trigger Property="IsMouseOver" Value="True">
-                                                            <Setter Property="Background" Value="{StaticResource TreeViewButtonActionBackgroundHover}"/>
-                                                        </Trigger>
-                                                    </ControlTemplate.Triggers>
-                                                </ControlTemplate>
-                                            </Button.Template>
-                                            <Button.ContextMenu>
-                                                <ContextMenu>
-                                                    <MenuItem Header="Agregar elemento" Command="{Binding AddChildCommand}"/>
-                                                    <MenuItem Header="Eliminar" Command="{Binding DeleteCommand}"/>
-                                                    <Separator/>
-                                                    <MenuItem Header="Mover arriba" Command="{Binding MoveUpCommand}"/>
-                                                    <MenuItem Header="Mover abajo" Command="{Binding MoveDownCommand}"/>
-                                                </ContextMenu>
-                                            </Button.ContextMenu>
-                                        </Button>
+                                                    </MenuItem.Icon>
+                                                </MenuItem>
+
+                                                <MenuItem Style="{StaticResource TreeViewSubMenuItemStyle}" 
+                      Header="Eliminar" 
+                      Command="{Binding DeleteCommand}">
+                                                    <MenuItem.Icon>
+                                                        <Viewbox Width="16" Height="16">
+                                                            <Canvas Width="24" Height="24">
+                                                                <Path Fill="{StaticResource ColorStatusDangerForeground1Brush}" 
+                                  Data="M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19M8,9H16V19H8V9M15.5,4L14.5,3H9.5L8.5,4H5V6H19V4H15.5Z"/>
+                                                            </Canvas>
+                                                        </Viewbox>
+                                                    </MenuItem.Icon>
+                                                </MenuItem>
+
+                                                <Separator Style="{StaticResource TreeViewMenuSeparatorStyle}"/>
+
+                                                <MenuItem Style="{StaticResource TreeViewSubMenuItemStyle}" 
+                      Header="Mover arriba" 
+                      Command="{Binding MoveUpCommand}">
+                                                    <MenuItem.Icon>
+                                                        <Viewbox Width="16" Height="16">
+                                                            <Canvas Width="24" Height="24">
+                                                                <Path Fill="{StaticResource ColorNeutralForeground1Brush}" 
+                                  Data="M7.41,15.41L12,10.83L16.59,15.41L18,14L12,8L6,14L7.41,15.41Z"/>
+                                                            </Canvas>
+                                                        </Viewbox>
+                                                    </MenuItem.Icon>
+                                                </MenuItem>
+
+                                                <MenuItem Style="{StaticResource TreeViewSubMenuItemStyle}" 
+                      Header="Mover abajo" 
+                      Command="{Binding MoveDownCommand}">
+                                                    <MenuItem.Icon>
+                                                        <Viewbox Width="16" Height="16">
+                                                            <Canvas Width="24" Height="24">
+                                                                <Path Fill="{StaticResource ColorNeutralForeground1Brush}" 
+                                  Data="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/>
+                                                            </Canvas>
+                                                        </Viewbox>
+                                                    </MenuItem.Icon>
+                                                </MenuItem>
+                                            </MenuItem>
+                                        </Menu>
                                     </StackPanel>
                                 </Grid>
                             </Border>
@@ -235,8 +429,6 @@
                         <!-- Estado seleccionado -->
                         <Trigger Property="IsSelected" Value="True">
                             <Setter TargetName="ItemBorder" Property="Background" Value="{StaticResource TreeViewNodeBackgroundSelected}"/>
-                            <Setter TargetName="AddButton" Property="Opacity" Value="1"/>
-                            <Setter TargetName="MenuButton" Property="Opacity" Value="1"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

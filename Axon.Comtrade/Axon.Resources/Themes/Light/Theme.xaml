@@ -99,7 +99,8 @@
     <SolidColorBrush x:Key="TreeViewNodeBackgroundSelected" Color="{DynamicResource ColorNeutralBackground3Selected}"/>
     <SolidColorBrush x:Key="TreeViewNodeForegroundHover" Color="{DynamicResource ColorNeutralForeground1}"/>
     <SolidColorBrush x:Key="TreeViewNodeBackgroundHover" Color="{DynamicResource ColorNeutralBackground3Hover}"/>
-    <SolidColorBrush x:Key="TreeViewButtonActionBackgroundHover" Color="{DynamicResource ColorNeutralForeground2}"/>
+    <SolidColorBrush x:Key="TreeViewButtonActionBackground" Color="{DynamicResource ColorNeutralBackground5}"/>
+    <SolidColorBrush x:Key="TreeViewButtonActionBackgroundHover" Color="{DynamicResource ColorNeutralBackground3Hover}"/>
 
     <!-- =============================================== -->
     <!-- TABLE/DATAGRID BRUSHES -->
