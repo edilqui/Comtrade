@@ -4,8 +4,8 @@
 
     <!-- Estilo principal del DataGrid -->
     <Style x:Key="EnhancedDataGridStyle" TargetType="DataGrid">
-        <Setter Property="Background" Value="{StaticResource NeutralBackground1Brush}"/>
-        <Setter Property="Foreground" Value="{StaticResource NeutralForeground1Brush}"/>
+        <Setter Property="Background" Value="{StaticResource ColorNeutralBackground1Brush}"/>
+        <Setter Property="Foreground" Value="{StaticResource ColorNeutralForeground1Brush}"/>
         <Setter Property="BorderBrush" Value="Transparent"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="RowDetailsVisibilityMode" Value="VisibleWhenSelected"/>
@@ -13,8 +13,8 @@
         <Setter Property="ScrollViewer.PanningMode" Value="Both"/>
         <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
         <Setter Property="GridLinesVisibility" Value="Horizontal"/>
-        <Setter Property="HorizontalGridLinesBrush" Value="{StaticResource NeutralForeground1Brush}"/>
-        <Setter Property="VerticalGridLinesBrush" Value="{StaticResource NeutralForeground1Brush}"/>
+        <Setter Property="HorizontalGridLinesBrush" Value="{StaticResource ColorNeutralForeground1Brush}"/>
+        <Setter Property="VerticalGridLinesBrush" Value="{StaticResource ColorNeutralForeground1Brush}"/>
         <Setter Property="CanUserAddRows" Value="False"/>
         <Setter Property="CanUserDeleteRows" Value="False"/>
         <Setter Property="AutoGenerateColumns" Value="False"/>
@@ -55,12 +55,12 @@
                                             <Button.Template>
                                                 <ControlTemplate TargetType="Button">
                                                     <Border x:Name="Border"
-                                                            Background="{StaticResource NeutralBackground3Brush}"
-                                                            BorderBrush="{StaticResource NeutralForeground4Brush}"
+                                                            Background="{StaticResource ColorNeutralBackground3Brush}"
+                                                            BorderBrush="{StaticResource  ColorNeutralForeground4Brush}"
                                                             BorderThickness="0,0,1,1"
                                                             SnapsToDevicePixels="True">
                                                         <Polygon x:Name="Arrow"
-                                                                Fill="{StaticResource NeutralForeground2Brush}"
+                                                                Fill="{StaticResource ColorNeutralForeground2Brush}"
                                                                 HorizontalAlignment="Right"
                                                                 Margin="8,8,3,3"
                                                                 Opacity="0.15"
@@ -70,11 +70,11 @@
                                                     </Border>
                                                     <ControlTemplate.Triggers>
                                                         <Trigger Property="IsMouseOver" Value="True">
-                                                            <Setter TargetName="Border" Property="Background" Value="{StaticResource NeutralBackground2Brush}"/>
+                                                            <Setter TargetName="Border" Property="Background" Value="{StaticResource ColorNeutralBackground2Brush}"/>
                                                             <Setter TargetName="Arrow" Property="Opacity" Value="0.3"/>
                                                         </Trigger>
                                                         <Trigger Property="IsPressed" Value="True">
-                                                            <Setter TargetName="Border" Property="Background" Value="{StaticResource NeutralBackground4Brush}"/>
+                                                            <Setter TargetName="Border" Property="Background" Value="{StaticResource ColorNeutralBackground4Brush}"/>
                                                             <Setter TargetName="Arrow" Property="Opacity" Value="0.5"/>
                                                         </Trigger>
                                                     </ControlTemplate.Triggers>
@@ -122,7 +122,7 @@
     <!-- Estilo para las celdas -->
     <Style x:Key="EnhancedDataGridCellStyle" TargetType="DataGridCell">
         <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="BorderBrush" Value="{DynamicResource NeutralForeground4Brush}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource  ColorNeutralForeground4Brush}"/>
         <Setter Property="BorderThickness" Value="0,1,1,0"/>
         <Setter Property="Padding" Value="8,6"/>
         <Setter Property="Template">
@@ -137,8 +137,8 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsSelected" Value="True">
-                            <Setter Property="Background" Value="{StaticResource BrandBackground2Brush}"/>
-                            <Setter Property="Foreground" Value="{StaticResource NeutralForeground1Brush}"/>
+                            <Setter Property="Background" Value="{StaticResource ColorBrandBackground2Brush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource ColorNeutralForeground1Brush}"/>
                         </Trigger>
                         <Trigger Property="IsKeyboardFocusWithin" Value="True">
                             <Setter Property="BorderBrush" Value="{StaticResource NeutralForeground3Brush}"/>
@@ -149,7 +149,7 @@
                                 <Condition Property="IsSelected" Value="True"/>
                                 <Condition Property="Selector.IsSelectionActive" Value="False"/>
                             </MultiTrigger.Conditions>
-                            <Setter Property="Background" Value="{StaticResource NeutralBackground4Brush}"/>
+                            <Setter Property="Background" Value="{StaticResource ColorNeutralBackground4Brush}"/>
                         </MultiTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -159,8 +159,8 @@
 
     <!-- Estilo para las filas -->
     <Style x:Key="EnhancedDataGridRowStyle" TargetType="DataGridRow">
-        <Setter Property="Background" Value="{StaticResource NeutralBackground1Brush}"/>
-        <Setter Property="Foreground" Value="{DynamicResource NeutralForeground1Brush}"/>
+        <Setter Property="Background" Value="{StaticResource ColorNeutralBackground1Brush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource ColorNeutralForeground1Brush}"/>
         <Setter Property="SnapsToDevicePixels" Value="true"/>
         <Setter Property="Validation.ErrorTemplate" Value="{x:Null}"/>
         <Setter Property="ValidationErrorTemplate">
@@ -168,7 +168,7 @@
                 <ControlTemplate>
                     <TextBlock Margin="2,0,0,0"
                              VerticalAlignment="Center"
-                             Foreground="{StaticResource NeutralForeground1Brush}"
+                             Foreground="{StaticResource ColorNeutralForeground1Brush}"
                              Text="!"/>
                 </ControlTemplate>
             </Setter.Value>
@@ -212,17 +212,17 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="DGR_Border" Property="Background" Value="{StaticResource NeutralBackground3Brush}"/>
+                            <Setter TargetName="DGR_Border" Property="Background" Value="{StaticResource ColorNeutralBackground3Brush}"/>
                         </Trigger>
                         <Trigger Property="IsSelected" Value="True">
-                            <Setter TargetName="DGR_Border" Property="Background" Value="{StaticResource NeutralBackground2Brush}"/>
+                            <Setter TargetName="DGR_Border" Property="Background" Value="{StaticResource ColorNeutralBackground2Brush}"/>
                         </Trigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
                                 <Condition Property="IsSelected" Value="True"/>
                                 <Condition Property="Selector.IsSelectionActive" Value="False"/>
                             </MultiTrigger.Conditions>
-                            <Setter TargetName="DGR_Border" Property="Background" Value="{StaticResource NeutralBackground4Brush}"/>
+                            <Setter TargetName="DGR_Border" Property="Background" Value="{StaticResource ColorNeutralBackground4Brush}"/>
                         </MultiTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -232,9 +232,9 @@
 
     <!-- CORRECCIÓN 4: Estilo de headers simplificado sin filtros por defecto -->
     <Style x:Key="EnhancedDataGridColumnHeaderStyle" TargetType="DataGridColumnHeader">
-        <Setter Property="Background" Value="{StaticResource NeutralBackground3Brush}"/>
-        <Setter Property="Foreground" Value="{StaticResource NeutralForeground1Brush}"/>
-        <Setter Property="BorderBrush" Value="{StaticResource NeutralForeground4Brush}"/>
+        <Setter Property="Background" Value="{StaticResource ColorNeutralBackground3Brush}"/>
+        <Setter Property="Foreground" Value="{StaticResource ColorNeutralForeground1Brush}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource  ColorNeutralForeground4Brush}"/>
         <Setter Property="BorderThickness" Value="0,0,1,1"/>
         <Setter Property="Padding" Value="8,12"/>
         <Setter Property="HorizontalContentAlignment" Value="Left"/>
@@ -284,7 +284,7 @@
                     <ControlTemplate.Triggers>
                         <!-- Hover Effect -->
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="HeaderBorder" Property="Background" Value="{StaticResource NeutralBackground2Brush}"/>
+                            <Setter TargetName="HeaderBorder" Property="Background" Value="{StaticResource ColorNeutralBackground2Brush}"/>
                         </Trigger>
 
                         <!-- Sort Direction Triggers -->
@@ -342,9 +342,9 @@
                                 <!-- Filter TextBox -->
                                 <TextBox x:Name="FilterTextBox"
                                        Grid.Row="1"
-                                       Background="{StaticResource NeutralBackground1Brush}"
-                                       BorderBrush="{StaticResource NeutralBackground1Brush}"
-                                       Foreground="{StaticResource NeutralForeground1Brush}"
+                                       Background="{StaticResource ColorNeutralBackground1Brush}"
+                                       BorderBrush="{StaticResource ColorNeutralBackground1Brush}"
+                                       Foreground="{StaticResource ColorNeutralForeground1Brush}"
                                        BorderThickness="1"
                                        Margin="4,4,4,8"
                                        Padding="6,4"
@@ -370,7 +370,7 @@
                     <ControlTemplate.Triggers>
                         <!-- Hover Effect -->
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="HeaderBorder" Property="Background" Value="{StaticResource NeutralBackground2Brush}"/>
+                            <Setter TargetName="HeaderBorder" Property="Background" Value="{StaticResource ColorNeutralBackground2Brush}"/>
                         </Trigger>
 
                         <!-- Sort Direction Triggers -->
@@ -391,11 +391,11 @@
     <!-- ESTILO CORREGIDO PARA ROW HEADERS -->
     <Style x:Key="EnhancedDataGridRowHeaderStyle" TargetType="DataGridRowHeader">
         <!-- CORRECCIÓN 1: Background más visible -->
-        <Setter Property="Background" Value="{StaticResource NeutralBackground3Brush}"/>
-        <Setter Property="Foreground" Value="{StaticResource NeutralForeground1Brush}"/>
+        <Setter Property="Background" Value="{StaticResource ColorNeutralBackground3Brush}"/>
+        <Setter Property="Foreground" Value="{StaticResource ColorNeutralForeground1Brush}"/>
 
         <!-- CORRECCIÓN 2: BorderBrush visible en lugar de transparente -->
-        <Setter Property="BorderBrush" Value="{StaticResource NeutralForeground4Brush}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource  ColorNeutralForeground4Brush}"/>
         <Setter Property="BorderThickness" Value="0,1,1,1"/>
 
         <!-- CORRECCIÓN 3: Width más ancho -->
@@ -422,7 +422,7 @@
                             <Rectangle x:Name="SelectionIndicator"
                                      Width="3"
                                      HorizontalAlignment="Left"
-                                     Fill="{StaticResource BrandBackground2Brush}"
+                                     Fill="{StaticResource ColorBrandBackground2Brush}"
                                      Visibility="Collapsed"/>
 
                             <!-- Contenido del header (normalmente vacío, pero puede mostrar índice) -->
@@ -435,13 +435,13 @@
                     <ControlTemplate.Triggers>
                         <!-- CORRECCIÓN 5: Triggers más visibles -->
                         <Trigger Property="IsRowSelected" Value="True">
-                            <Setter TargetName="RowHeaderBorder" Property="Background" Value="{StaticResource BrandBackground2Brush}"/>
+                            <Setter TargetName="RowHeaderBorder" Property="Background" Value="{StaticResource ColorBrandBackground2Brush}"/>
                             <Setter Property="Foreground" Value="{StaticResource NeutralForeground1OnBrandBrush}"/>
                             <Setter TargetName="SelectionIndicator" Property="Visibility" Value="Visible"/>
                         </Trigger>
 
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="RowHeaderBorder" Property="Background" Value="{StaticResource NeutralBackground2Brush}"/>
+                            <Setter TargetName="RowHeaderBorder" Property="Background" Value="{StaticResource ColorNeutralBackground2Brush}"/>
                         </Trigger>
 
                         <!-- Estado cuando la fila está seleccionada pero el control no tiene foco -->
@@ -451,7 +451,7 @@
                                 <Condition Property="Selector.IsSelectionActive" Value="False" SourceName="{x:Static DataGrid.DataGridProperty}"/>
                             </MultiTrigger.Conditions>
                             <Setter TargetName="RowHeaderBorder" Property="Background" Value="{StaticResource NeutralBackground4Brush}"/>
-                            <Setter Property="Foreground" Value="{StaticResource NeutralForeground2Brush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource ColorNeutralForeground2Brush}"/>
                         </MultiTrigger>-->
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

@@ -7,7 +7,8 @@
         <ResourceDictionary Source="pack://application:,,,/Axon.Resources;component/Themes/DesignTokens.xaml"/>
 
         <!-- Default Theme (Dark) -->
-        <ResourceDictionary Source="pack://application:,,,/Axon.Resources;component/Themes/Dark/Theme.xaml"/>
+        <!--<ResourceDi ctionary Source="pack://application:,,,/Axon.Resources;component/Themes/Dark/Theme.xaml"/>-->
+        <ResourceDictionary Source="pack://application:,,,/Axon.Resources;component/Themes/Light/Theme.xaml"/>
 
         <!-- Component Styles -->
         <ResourceDictionary Source="pack://application:,,,/Axon.Resources;component/Styles/ButtonStyles.xaml"/>

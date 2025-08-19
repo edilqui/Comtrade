@@ -9,7 +9,7 @@
     <!-- ESTILO GENÉRICO PARA TreeViewItem -->
     <Style x:Key="GenericTreeViewItemStyle" TargetType="TreeViewItem">
         <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="Foreground" Value="{StaticResource NeutralForeground1Brush}"/>
+        <Setter Property="Foreground" Value="{StaticResource ColorNeutralForeground1Brush}"/>
         <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}"/>
         <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}"/>
         <Setter Property="Template">
@@ -116,14 +116,14 @@
                                               Margin="0,0,8,0">
                                             <Viewbox Width="16" Height="16">
                                                 <Path Data="{Binding IconPath}" 
-                                                      Fill="{StaticResource NeutralForeground1Brush}"
+                                                      Fill="{StaticResource ColorNeutralForeground1Brush}"
                                                       Stretch="Uniform"/>
                                             </Viewbox>
                                         </Grid>
 
                                         <!-- Texto del nodo -->
                                         <TextBlock Text="{Binding Title}"
-                                                 Foreground="{StaticResource NeutralForeground1Brush}"
+                                                 Foreground="{StaticResource ColorNeutralForeground1Brush}"
                                                  VerticalAlignment="Center"
                                                  FontSize="13"/>
                                     </StackPanel>
@@ -136,8 +136,8 @@
 
                                         <!-- Botón para agregar -->
                                         <Button x:Name="AddButton"
-                                              Background="{StaticResource NeutralBackground1Brush}"
-                                              Foreground="{StaticResource NeutralForeground1Brush}"
+                                              Background="{StaticResource ColorNeutralBackground1Brush}"
+                                              Foreground="{StaticResource ColorNeutralForeground1Brush}"
                                               Width="24"
                                               Height="24"
                                               Margin="2,0"
@@ -151,7 +151,7 @@
                                                             CornerRadius="{StaticResource BorderRadiusSmall}">
                                                         <Viewbox Width="12" Height="12">
                                                             <Path Data="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" 
-                                                                  Fill="{StaticResource NeutralForeground1Brush}"/>
+                                                                  Fill="{StaticResource ColorNeutralForeground1Brush}"/>
                                                         </Viewbox>
                                                     </Border>
                                                     <ControlTemplate.Triggers>
@@ -165,8 +165,8 @@
 
                                         <!-- Botón de menú -->
                                         <Button x:Name="MenuButton"
-                                              Background="{StaticResource NeutralBackground1Brush}"
-                                              Foreground="{StaticResource NeutralForeground1Brush}"
+                                              Background="{StaticResource ColorNeutralBackground1Brush}"
+                                              Foreground="{StaticResource ColorNeutralForeground1Brush}"
                                               Width="24"
                                               Height="24"
                                               Margin="2,0"
@@ -179,7 +179,7 @@
                                                             CornerRadius="{StaticResource BorderRadiusSmall}">
                                                         <Viewbox Width="12" Height="12">
                                                             <Path Data="M12,16A2,2 0 0,1 14,18A2,2 0 0,1 12,20A2,2 0 0,1 10,18A2,2 0 0,1 12,16M12,10A2,2 0 0,1 14,12A2,2 0 0,1 12,14A2,2 0 0,1 10,12A2,2 0 0,1 12,10M12,4A2,2 0 0,1 14,6A2,2 0 0,1 12,8A2,2 0 0,1 10,6A2,2 0 0,1 12,4Z" 
-                                                                  Fill="{StaticResource NeutralForeground1Brush}"/>
+                                                                  Fill="{StaticResource ColorNeutralForeground1Brush}"/>
                                                         </Viewbox>
                                                     </Border>
                                                     <ControlTemplate.Triggers>
@@ -246,9 +246,9 @@
 
     <!-- ESTILO GENÉRICO PARA TreeView -->
     <Style x:Key="GenericTreeViewStyle" TargetType="TreeView">
-        <Setter Property="Background" Value="{StaticResource NeutralBackground1Brush}"/>
-        <Setter Property="Foreground" Value="{StaticResource NeutralForeground1Brush}"/>
-        <Setter Property="BorderBrush" Value="{StaticResource NeutralBackground1Brush}"/>
+        <Setter Property="Background" Value="{StaticResource ColorNeutralBackground1Brush}"/>
+        <Setter Property="Foreground" Value="{StaticResource ColorNeutralForeground1Brush}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource ColorNeutralBackground1Brush}"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="ItemContainerStyle" Value="{StaticResource GenericTreeViewItemStyle}"/>
         <!-- Template jerárquico genérico -->

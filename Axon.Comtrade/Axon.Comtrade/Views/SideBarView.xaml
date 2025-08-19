@@ -47,7 +47,7 @@
                 <nav:NavigationItem.HomeFilledIcon>
                     <Viewbox Height="24" Width="24">
                         <Path Data="M10,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V8C22,6.89 21.1,6 20,6H12L10,4Z" 
-                          Fill="{StaticResource BrandForeground1Brush}" Width="24" Height="24"/>
+                          Fill="{StaticResource ColorBrandForeground1Brush}" Width="24" Height="24"/>
                     </Viewbox>
                 </nav:NavigationItem.HomeFilledIcon>
             </nav:NavigationItem>
@@ -61,7 +61,7 @@
                 <nav:NavigationItem.HomeFilledIcon>
                     <Viewbox Height="24" Width="24">
                         <Path Data="M13,9V3.5L18.5,9M6,2C4.89,2 4,2.89 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2H6Z" 
-                          Fill="{StaticResource BrandForeground1Brush}" Width="24" Height="24"/>
+                          Fill="{StaticResource ColorBrandForeground1Brush}" Width="24" Height="24"/>
                     </Viewbox>
                 </nav:NavigationItem.HomeFilledIcon>
             </nav:NavigationItem>
@@ -75,7 +75,7 @@
                 <nav:NavigationItem.HomeFilledIcon>
                     <Viewbox Height="24" Width="24">
                         <Path Data="M17,7H22V17H17V19A1,1 0 0,0 18,20H20V22H17.5C16.95,22 16,21.55 16,21C16,21.55 15.05,22 14.5,22H12V20H14A1,1 0 0,0 15,19V5A1,1 0 0,0 14,4H12V2H14.5C15.05,2 16,2.45 16,3C16,2.45 16.95,2 17.5,2H20V4H18A1,1 0 0,0 17,5V7M2,7H13V9H4V15H13V17H2V7M20,15V9H17V15H20Z" 
-                          Fill="{StaticResource BrandForeground1Brush}" Width="24" Height="24"/>
+                          Fill="{StaticResource ColorBrandForeground1Brush}" Width="24" Height="24"/>
                     </Viewbox>
                 </nav:NavigationItem.HomeFilledIcon>
             </nav:NavigationItem>
@@ -89,7 +89,7 @@
                 <nav:NavigationItem.HomeFilledIcon>
                     <Viewbox Height="24" Width="24">
                         <Path Data="M5,2V13H8V22L15,10H11L15,2M17,15H19V17H17V15M17,7H19V13H17V7Z" 
-                          Fill="{StaticResource BrandForeground1Brush}" Width="24" Height="24"/>
+                          Fill="{StaticResource ColorBrandForeground1Brush}" Width="24" Height="24"/>
                     </Viewbox>
                 </nav:NavigationItem.HomeFilledIcon>
             </nav:NavigationItem>
@@ -105,7 +105,7 @@
                 <nav:NavigationItem.HomeFilledIcon>
                     <Viewbox Height="24" Width="24">
                         <Path Data="M13,9V3.5L18.5,9M6,2C4.89,2 4,2.89 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2H6Z" 
-                          Fill="{StaticResource BrandForeground1Brush}" Width="24" Height="24"/>
+                          Fill="{StaticResource ColorBrandForeground1Brush}" Width="24" Height="24"/>
                     </Viewbox>
                 </nav:NavigationItem.HomeFilledIcon>
             </nav:NavigationItem>

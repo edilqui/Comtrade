@@ -39,7 +39,7 @@
             <customGrid:EnhancedCustomDataGrid x:Name="MainDataGrid" 
                                     Background="#FF1E1E1E"
                                     Foreground="White"
-                                    BorderBrush="#FF464646"
+                                    BorderBrush="{DynamicResource ColorNeutralStrokeAccessibleBrush}"
                                     BorderThickness="1"
                                     GridLinesVisibility="Horizontal"
                                     HorizontalGridLinesBrush="#FF323232"
@@ -72,7 +72,7 @@
                                                             <!-- Header clickeable -->
                                                             <Border x:Name="HeaderBorder" 
                                                                     Grid.Row="0"
-                                                                    Background="{DynamicResource NeutralBackground3Brush}"
+                                                                    Background="{DynamicResource ColorNeutralBackground3Brush}"
                                                                     BorderBrush="DarkRed"
                                                                     BorderThickness="0,0,0,0"
                                                                     Padding="0,6"

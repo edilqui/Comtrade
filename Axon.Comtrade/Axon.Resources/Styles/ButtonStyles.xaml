@@ -193,7 +193,7 @@
     <!-- =================================== -->
     <Style x:Key="OutlineButtonStyle" TargetType="Button" BasedOn="{StaticResource BaseButtonStyle}">
         <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="Foreground" Value="{StaticResource BrandForeground1Brush}"/>
+        <Setter Property="Foreground" Value="{StaticResource ColorBrandForeground1}"/>
         <Setter Property="BorderBrush" Value="{StaticResource BrandStroke1Brush}"/>
         <Setter Property="Template">
             <Setter.Value>

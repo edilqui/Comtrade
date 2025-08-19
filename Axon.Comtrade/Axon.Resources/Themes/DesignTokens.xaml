@@ -107,7 +107,7 @@
 
     <!-- =================================== -->
     <!-- COLORS - NEUTRAL FOREGROUND -->
-    <!-- =================================== -->
+    <!-- =================================== --><!--
     <Color x:Key="ColorNeutralForeground1">#FFFFFF</Color>
     <Color x:Key="ColorNeutralForeground1Hover">#FFFFFF</Color>
     <Color x:Key="ColorNeutralForeground1Pressed">#FFFFFF</Color>
@@ -123,9 +123,9 @@
     <Color x:Key="ColorNeutralForeground4">#999999</Color>
     <Color x:Key="ColorNeutralForegroundDisabled">#5C5C5C</Color>
 
-    <!-- =================================== -->
+    --><!-- =================================== -->
     <!-- COLORS - BRAND FOREGROUND -->
-    <!-- =================================== -->
+    <!-- =================================== --><!--
     <Color x:Key="ColorBrandForegroundLink">#9F64D3</Color>
     <Color x:Key="ColorBrandForegroundLinkHover">#AB76D9</Color>
     <Color x:Key="ColorBrandForegroundLinkPressed">#9352CD</Color>
@@ -135,9 +135,9 @@
     <Color x:Key="ColorBrandForeground2Hover">#C399E3</Color>
     <Color x:Key="ColorBrandForeground2Pressed">#E4CFF3</Color>
 
-    <!-- =================================== -->
+    --><!-- =================================== -->
     <!-- COLORS - NEUTRAL BACKGROUND -->
-    <!-- =================================== -->
+    <!-- =================================== --><!--
     <Color x:Key="ColorNeutralBackground1">#292929</Color>
     <Color x:Key="ColorNeutralBackground1Hover">#3D3D3D</Color>
     <Color x:Key="ColorNeutralBackground1Pressed">#1F1F1F</Color>
@@ -160,9 +160,9 @@
     <Color x:Key="ColorNeutralBackground5Selected">#0F0F0F</Color>
     <Color x:Key="ColorNeutralBackground6">#333333</Color>
 
-    <!-- =================================== -->
+    --><!-- =================================== -->
     <!-- COLORS - BRAND BACKGROUND -->
-    <!-- =================================== -->
+    <!-- =================================== --><!--
     <Color x:Key="ColorBrandBackground">#782BC2</Color>
     <Color x:Key="ColorBrandBackgroundHover">#863FC8</Color>
     <Color x:Key="ColorBrandBackgroundPressed">#461278</Color>
@@ -171,17 +171,17 @@
     <Color x:Key="ColorBrandBackground2Hover">#461278</Color>
     <Color x:Key="ColorBrandBackground2Pressed">#050107</Color>
 
-    <!-- =================================== -->
+    --><!-- =================================== -->
     <!-- COLORS - SUBTLE BACKGROUND -->
-    <!-- =================================== -->
+    <!-- =================================== --><!--
     <Color x:Key="ColorSubtleBackground">Transparent</Color>
     <Color x:Key="ColorSubtleBackgroundHover">#383838</Color>
     <Color x:Key="ColorSubtleBackgroundPressed">#2E2E2E</Color>
     <Color x:Key="ColorSubtleBackgroundSelected">#333333</Color>
 
-    <!-- =================================== -->
+    --><!-- =================================== -->
     <!-- COLORS - NEUTRAL STROKE -->
-    <!-- =================================== -->
+    <!-- =================================== --><!--
     <Color x:Key="ColorNeutralStrokeAccessible">#ADADAD</Color>
     <Color x:Key="ColorNeutralStrokeAccessibleHover">#BDBDBD</Color>
     <Color x:Key="ColorNeutralStrokeAccessiblePressed">#B3B3B3</Color>
@@ -194,17 +194,17 @@
     <Color x:Key="ColorNeutralStroke3">#3D3D3D</Color>
     <Color x:Key="ColorNeutralStrokeSubtle">#0A0A0A</Color>
 
-    <!-- =================================== -->
+    --><!-- =================================== -->
     <!-- COLORS - BRAND STROKE -->
-    <!-- =================================== -->
+    <!-- =================================== --><!--
     <Color x:Key="ColorBrandStroke1">#9F64D3</Color>
     <Color x:Key="ColorBrandStroke2">#580F9B</Color>
     <Color x:Key="ColorBrandStroke2Hover">#580F9B</Color>
     <Color x:Key="ColorBrandStroke2Pressed">#351256</Color>
 
-    <!-- =================================== -->
+    --><!-- =================================== -->
     <!-- COLORS - STATUS SUCCESS -->
-    <!-- =================================== -->
+    <!-- =================================== --><!--
     <Color x:Key="ColorStatusSuccessBackground1">#052505</Color>
     <Color x:Key="ColorStatusSuccessBackground2">#094509</Color>
     <Color x:Key="ColorStatusSuccessBackground3">#107C10</Color>
@@ -213,9 +213,9 @@
     <Color x:Key="ColorStatusSuccessBorder1">#107C10</Color>
     <Color x:Key="ColorStatusSuccessBorder2">#9FD89F</Color>
 
-    <!-- =================================== -->
+    --><!-- =================================== -->
     <!-- COLORS - STATUS WARNING -->
-    <!-- =================================== -->
+    <!-- =================================== --><!--
     <Color x:Key="ColorStatusWarningBackground1">#4A1E04</Color>
     <Color x:Key="ColorStatusWarningBackground2">#8A3707</Color>
     <Color x:Key="ColorStatusWarningBackground3">#F7630C</Color>
@@ -224,9 +224,9 @@
     <Color x:Key="ColorStatusWarningBorder1">#F7630C</Color>
     <Color x:Key="ColorStatusWarningBorder2">#F98845</Color>
 
-    <!-- =================================== -->
+    --><!-- =================================== -->
     <!-- COLORS - STATUS DANGER -->
-    <!-- =================================== -->
+    <!-- =================================== --><!--
     <Color x:Key="ColorStatusDangerBackground1">#3B0509</Color>
     <Color x:Key="ColorStatusDangerBackground2">#6E0811</Color>
     <Color x:Key="ColorStatusDangerBackground3">#C50F1F</Color>
@@ -235,61 +235,61 @@
     <Color x:Key="ColorStatusDangerBorder1">#C50F1F</Color>
     <Color x:Key="ColorStatusDangerBorder2">#DC626D</Color>
 
-    <!-- =================================== -->
+    --><!-- =================================== -->
     <!-- BRUSHES - NEUTRAL FOREGROUND -->
-    <!-- =================================== -->
-    <SolidColorBrush x:Key="NeutralForeground1Brush" Color="{StaticResource ColorNeutralForeground1}"/>
+    <!-- =================================== --><!--
+    <SolidColorBrush x:Key="ColorNeutralForeground1" Color="{StaticResource ColorNeutralForeground1}"/>
     <SolidColorBrush x:Key="NeutralForeground2Brush" Color="{StaticResource ColorNeutralForeground2}"/>
     <SolidColorBrush x:Key="NeutralForeground3Brush" Color="{StaticResource ColorNeutralForeground3}"/>
     <SolidColorBrush x:Key="NeutralForeground4Brush" Color="{StaticResource ColorNeutralForeground4}"/>
     <SolidColorBrush x:Key="NeutralForegroundDisabledBrush" Color="{StaticResource ColorNeutralForegroundDisabled}"/>
 
-    <!-- =================================== -->
+    --><!-- =================================== -->
     <!-- BRUSHES - BRAND FOREGROUND -->
-    <!-- =================================== -->
+    <!-- =================================== --><!--
     <SolidColorBrush x:Key="BrandForegroundLinkBrush" Color="{StaticResource ColorBrandForegroundLink}"/>
-    <SolidColorBrush x:Key="BrandForeground1Brush" Color="{StaticResource ColorBrandForeground1}"/>
+    <SolidColorBrush x:Key="ColorBrandForeground1" Color="{StaticResource ColorBrandForeground1}"/>
     <SolidColorBrush x:Key="BrandForeground2Brush" Color="{StaticResource ColorBrandForeground2}"/>
 
-    <!-- =================================== -->
+    --><!-- =================================== -->
     <!-- BRUSHES - NEUTRAL BACKGROUND -->
-    <!-- =================================== -->
-    <SolidColorBrush x:Key="NeutralBackground1Brush" Color="{StaticResource ColorNeutralBackground1}"/>
+    <!-- =================================== --><!--
+    <SolidColorBrush x:Key="ColorNeutralBackground1" Color="{StaticResource ColorNeutralBackground1}"/>
     <SolidColorBrush x:Key="NeutralBackground2Brush" Color="{StaticResource ColorNeutralBackground2}"/>
     <SolidColorBrush x:Key="NeutralBackground3Brush" Color="{StaticResource ColorNeutralBackground3}"/>
     <SolidColorBrush x:Key="NeutralBackground4Brush" Color="{StaticResource ColorNeutralBackground4}"/>
     <SolidColorBrush x:Key="NeutralBackground5Brush" Color="{StaticResource ColorNeutralBackground5}"/>
     <SolidColorBrush x:Key="NeutralBackground6Brush" Color="{StaticResource ColorNeutralBackground6}"/>
 
-    <!-- =================================== -->
+    --><!-- =================================== -->
     <!-- BRUSHES - BRAND BACKGROUND -->
-    <!-- =================================== -->
+    <!-- =================================== --><!--
     <SolidColorBrush x:Key="BrandBackgroundBrush" Color="{StaticResource ColorBrandBackground}"/>
     <SolidColorBrush x:Key="BrandBackground2Brush" Color="{StaticResource ColorBrandBackground2}"/>
 
-    <!-- =================================== -->
+    --><!-- =================================== -->
     <!-- BRUSHES - SUBTLE BACKGROUND -->
-    <!-- =================================== -->
+    <!-- =================================== --><!--
     <SolidColorBrush x:Key="SubtleBackgroundBrush" Color="{StaticResource ColorSubtleBackground}"/>
 
-    <!-- =================================== -->
+    --><!-- =================================== -->
     <!-- BRUSHES - NEUTRAL STROKE -->
-    <!-- =================================== -->
+    <!-- =================================== --><!--
     <SolidColorBrush x:Key="NeutralStrokeAccessibleBrush" Color="{StaticResource ColorNeutralStrokeAccessible}"/>
     <SolidColorBrush x:Key="NeutralStroke1Brush" Color="{StaticResource ColorNeutralStroke1}"/>
     <SolidColorBrush x:Key="NeutralStroke2Brush" Color="{StaticResource ColorNeutralStroke2}"/>
     <SolidColorBrush x:Key="NeutralStroke3Brush" Color="{StaticResource ColorNeutralStroke3}"/>
     <SolidColorBrush x:Key="NeutralStrokeSubtleBrush" Color="{StaticResource ColorNeutralStrokeSubtle}"/>
 
-    <!-- =================================== -->
+    --><!-- =================================== -->
     <!-- BRUSHES - BRAND STROKE -->
-    <!-- =================================== -->
+    <!-- =================================== --><!--
     <SolidColorBrush x:Key="BrandStroke1Brush" Color="{StaticResource ColorBrandStroke1}"/>
     <SolidColorBrush x:Key="BrandStroke2Brush" Color="{StaticResource ColorBrandStroke2}"/>
 
-    <!-- =================================== -->
+    --><!-- =================================== -->
     <!-- BRUSHES - STATUS -->
-    <!-- =================================== -->
+    <!-- =================================== --><!--
     <SolidColorBrush x:Key="StatusSuccessBackground1Brush" Color="{StaticResource ColorStatusSuccessBackground1}"/>
     <SolidColorBrush x:Key="StatusSuccessBackground2Brush" Color="{StaticResource ColorStatusSuccessBackground2}"/>
     <SolidColorBrush x:Key="StatusSuccessBackground3Brush" Color="{StaticResource ColorStatusSuccessBackground3}"/>
@@ -306,7 +306,7 @@
     <SolidColorBrush x:Key="StatusDangerBackground2Brush" Color="{StaticResource ColorStatusDangerBackground2}"/>
     <SolidColorBrush x:Key="StatusDangerBackground3Brush" Color="{StaticResource ColorStatusDangerBackground3}"/>
     <SolidColorBrush x:Key="StatusDangerForeground1Brush" Color="{StaticResource ColorStatusDangerForeground1}"/>
-    <SolidColorBrush x:Key="StatusDangerForeground2Brush" Color="{StaticResource ColorStatusDangerForeground2}"/>
+    <SolidColorBrush x:Key="StatusDangerForeground2Brush" Color="{StaticResource ColorStatusDangerForeground2}"/>-->
 
     <!-- =================================== -->
     <!-- SHADOWS -->

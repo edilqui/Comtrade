@@ -15,7 +15,7 @@
 
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid Margin="0" Background="{DynamicResource NeutralBackground2Brush}">
+    <Grid Margin="0" Background="{DynamicResource ColorNeutralBackground2Brush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -28,7 +28,7 @@
                    Text="Dispositivos" 
                    FontSize="16" 
                    FontWeight="Bold" 
-                   Foreground="{StaticResource NeutralForeground1Brush}" 
+                   Foreground="{StaticResource ColorNeutralForeground1Brush}" 
                    Margin="8,0,0,0"/>
         </Border>
 
@@ -63,8 +63,8 @@
 
         <!-- TreeView Principal -->
         <Border Grid.Row="1"
-                Background="{StaticResource NeutralBackground1Brush}"
-                BorderBrush="{StaticResource NeutralBackground1Brush}"
+                Background="{StaticResource ColorNeutralBackground1Brush}"
+                BorderBrush="{StaticResource ColorNeutralBackground1Brush}"
                 BorderThickness="1"
                 CornerRadius="{StaticResource BorderRadiusSmall}">
 

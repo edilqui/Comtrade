@@ -9,7 +9,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type GroupItem}">
                     <Expander IsExpanded="True" 
-                              Background="{StaticResource NeutralBackground2Brush}"
+                              Background="{StaticResource ColorNeutralBackground2Brush}"
                               BorderBrush="Transparent"
                               BorderThickness="0,0,0,1">
                         <Expander.Header>
@@ -18,10 +18,10 @@
                                          Text="{Binding Path=Name}" 
                                          Margin="5,0,0,0" 
                                          Width="100"
-                                         Foreground="{StaticResource NeutralForeground1Brush}"/>
+                                         Foreground="{StaticResource ColorNeutralForeground1Brush}"/>
                                 <TextBlock FontWeight="Bold" 
                                          Text="{Binding Path=ItemCount, StringFormat='({0} elementos)'}" 
-                                         Foreground="{StaticResource NeutralForeground2Brush}"/>
+                                         Foreground="{StaticResource ColorNeutralForeground2Brush}"/>
                             </DockPanel>
                         </Expander.Header>
                         <Expander.Content>
@@ -37,10 +37,10 @@
 
     <!-- Estilo específico para filas dentro de grupos -->
     <Style x:Key="GroupedDataGridRowStyle" TargetType="DataGridRow" BasedOn="{StaticResource EnhancedDataGridRowStyle}">
-        <Setter Property="Background" Value="{StaticResource NeutralBackground1Brush}"/>
+        <Setter Property="Background" Value="{StaticResource ColorNeutralBackground1}"/>
         <Style.Triggers>
             <Trigger Property="AlternationIndex" Value="1">
-                <Setter Property="Background" Value="{StaticResource NeutralBackground2Brush}"/>
+                <Setter Property="Background" Value="{StaticResource ColorNeutralBackground2Brush}"/>
             </Trigger>
         </Style.Triggers>
     </Style>
@@ -61,7 +61,7 @@
                             <Expander IsExpanded="True">
                                 <Expander.Style>
                                     <Style TargetType="Expander">
-                                        <Setter Property="Background" Value="{StaticResource NeutralBackground2Brush}"/>
+                                        <Setter Property="Background" Value="{StaticResource ColorNeutralBackground2Brush}"/>
                                         <Setter Property="BorderBrush" Value="Transparent"/>
                                         <Setter Property="BorderThickness" Value="0,0,0,1"/>
                                         <Setter Property="Padding" Value="8,4"/>
@@ -84,7 +84,7 @@
                                                                             <Path x:Name="ExpandPath"
                                                                                   HorizontalAlignment="Center"
                                                                                   VerticalAlignment="Center"
-                                                                                  Fill="{StaticResource NeutralForeground1Brush}"
+                                                                                  Fill="{StaticResource ColorNeutralForeground1}"
                                                                                   Data="M 4 6 L 6 4 L 6 8 Z"/>
                                                                         </Border>
                                                                         <ControlTemplate.Triggers>
@@ -115,11 +115,11 @@
                                         <TextBlock Text="{Binding Name}" 
                                                  FontWeight="SemiBold"
                                                  FontSize="14"
-                                                 Foreground="{StaticResource NeutralForeground1Brush}"
+                                                 Foreground="{StaticResource ColorNeutralForeground1Brush}"
                                                  VerticalAlignment="Center"/>
                                         <TextBlock Text="{Binding ItemCount, StringFormat=' ({0} elementos)'}" 
                                                  FontSize="12"
-                                                 Foreground="{StaticResource NeutralForeground2Brush}"
+                                                 Foreground="{StaticResource ColorNeutralForeground2Brush}"
                                                  VerticalAlignment="Center"
                                                  Margin="8,0,0,0"/>
                                     </StackPanel>

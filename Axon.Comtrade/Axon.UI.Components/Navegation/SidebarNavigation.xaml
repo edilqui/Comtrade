@@ -10,15 +10,13 @@
         <!-- AGREGAR ESTAS REFERENCIAS -->
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/Axon.Resources;component/Themes/DesignTokens.xaml"/>
-                <ResourceDictionary Source="pack://application:,,,/Axon.Resources;component/Themes/Dark/Theme.xaml"/>
-                <ResourceDictionary Source="pack://application:,,,/Axon.Resources;component/Styles/ButtonStyles.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Axon.Resources;component/Themes/Generic.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
             <!-- Estilo para el Tooltip -->
             <Style x:Key="NavigationTooltipStyle" TargetType="ToolTip">
-                <Setter Property="Background" Value="{StaticResource NeutralBackground1Brush}"/>
-                <Setter Property="BorderBrush" Value="{StaticResource NeutralBackground1Brush}"/>
+                <Setter Property="Background" Value="{StaticResource ColorNeutralBackground1Brush}"/>
+                <Setter Property="BorderBrush" Value="{StaticResource ColorNeutralBackground1Brush}"/>
                 <Setter Property="BorderThickness" Value="1"/>
                 <Setter Property="Padding" Value="12,8"/>
                 <Setter Property="MaxWidth" Value="200"/>
@@ -105,7 +103,7 @@
                                 <Trigger Property="IsMouseOver" Value="True">
                                     <Setter TargetName="ButtonBorder" Property="Background" Value="{StaticResource HoverBrush}"/>
                                     <!--<Setter TargetName="SelectionIndicator" Property="BorderBrush" Value="{StaticResource PrimaryBrush}"/>-->
-                                    <Setter Property="Foreground" Value="{StaticResource BrandForeground1Brush}"/>
+                                    <Setter Property="Foreground" Value="{StaticResource ColorBrandForeground1Brush}"/>
                                     <Setter TargetName="SelectedIconPresenter" Property="Visibility" Value="Visible"/>
                                     <Setter TargetName="IconPresenter" Property="Visibility" Value="Collapsed"/>
                                 </Trigger>
@@ -115,7 +113,7 @@
                                 <!-- Trigger para item seleccionado -->
                                 <DataTrigger Binding="{Binding IsSelected}" Value="True">
                                     <Setter TargetName="ButtonBorder" Property="Background" Value="{StaticResource NavigationItemBackgroundSelected}"/>
-                                    <Setter Property="Foreground" Value="{StaticResource BrandForeground1Brush}"/>
+                                    <Setter Property="Foreground" Value="{StaticResource ColorBrandForeground1Brush}"/>
                                     <Setter TargetName="SelectionIndicator" Property="BorderBrush" Value="{StaticResource PrimaryBrush}"/>
                                     <Setter TargetName="SelectedIconPresenter" Property="Visibility" Value="Visible"/>
                                     <Setter TargetName="IconPresenter" Property="Visibility" Value="Collapsed"/>
