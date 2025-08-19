@@ -75,7 +75,6 @@ namespace Axon.Resources
                     var resourcesToRemove = new string[]
                     {
                     "pack://application:,,,/MyApp.Resources;component/Themes/Light/Theme.xaml",
-                    "pack://application:,,,/MyApp.Resources;component/Themes/Dark/Theme.xaml"
                     };
 
                     for (int i = app.Resources.MergedDictionaries.Count - 1; i >= 0; i--)

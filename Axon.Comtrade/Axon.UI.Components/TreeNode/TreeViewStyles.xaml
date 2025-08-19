@@ -123,7 +123,7 @@
 
                                         <!-- Texto del nodo -->
                                         <TextBlock Text="{Binding Title}"
-                                                 Foreground="{StaticResource ColorNeutralForeground1Brush}"
+                                                 Foreground="{StaticResource TreeViewNodeForeground}"
                                                  VerticalAlignment="Center"
                                                  FontSize="13"/>
                                     </StackPanel>
@@ -136,7 +136,7 @@
 
                                         <!-- Botón para agregar -->
                                         <Button x:Name="AddButton"
-                                              Background="{StaticResource ColorNeutralBackground1Brush}"
+                                              Background="Transparent"
                                               Foreground="{StaticResource ColorNeutralForeground1Brush}"
                                               Width="24"
                                               Height="24"
@@ -156,7 +156,7 @@
                                                     </Border>
                                                     <ControlTemplate.Triggers>
                                                         <Trigger Property="IsMouseOver" Value="True">
-                                                            <Setter Property="Background" Value="{StaticResource HoverBrush}"/>
+                                                            <Setter Property="Background" Value="{StaticResource TreeViewButtonActionBackgroundHover}"/>
                                                         </Trigger>
                                                     </ControlTemplate.Triggers>
                                                 </ControlTemplate>
@@ -165,7 +165,7 @@
 
                                         <!-- Botón de menú -->
                                         <Button x:Name="MenuButton"
-                                              Background="{StaticResource ColorNeutralBackground1Brush}"
+                                              Background="Transparent"
                                               Foreground="{StaticResource ColorNeutralForeground1Brush}"
                                               Width="24"
                                               Height="24"
@@ -184,7 +184,7 @@
                                                     </Border>
                                                     <ControlTemplate.Triggers>
                                                         <Trigger Property="IsMouseOver" Value="True">
-                                                            <Setter Property="Background" Value="{StaticResource HoverBrush}"/>
+                                                            <Setter Property="Background" Value="{StaticResource TreeViewButtonActionBackgroundHover}"/>
                                                         </Trigger>
                                                     </ControlTemplate.Triggers>
                                                 </ControlTemplate>
@@ -229,12 +229,12 @@
 
                         <!-- Efectos de hover en el área específica -->
                         <Trigger SourceName="HoverArea" Property="IsMouseOver" Value="True">
-                            <Setter TargetName="ItemBorder" Property="Background" Value="{StaticResource HoverBrush}"/>
+                            <Setter TargetName="ItemBorder" Property="Background" Value="{StaticResource TreeViewNodeBackgroundHover}"/>
                         </Trigger>
 
                         <!-- Estado seleccionado -->
                         <Trigger Property="IsSelected" Value="True">
-                            <Setter TargetName="ItemBorder" Property="Background" Value="{StaticResource NavigationItemBackgroundSelected}"/>
+                            <Setter TargetName="ItemBorder" Property="Background" Value="{StaticResource TreeViewNodeBackgroundSelected}"/>
                             <Setter TargetName="AddButton" Property="Opacity" Value="1"/>
                             <Setter TargetName="MenuButton" Property="Opacity" Value="1"/>
                         </Trigger>
@@ -246,9 +246,9 @@
 
     <!-- ESTILO GENÉRICO PARA TreeView -->
     <Style x:Key="GenericTreeViewStyle" TargetType="TreeView">
-        <Setter Property="Background" Value="{StaticResource ColorNeutralBackground1Brush}"/>
-        <Setter Property="Foreground" Value="{StaticResource ColorNeutralForeground1Brush}"/>
-        <Setter Property="BorderBrush" Value="{StaticResource ColorNeutralBackground1Brush}"/>
+        <Setter Property="Background" Value="{StaticResource ColorNeutralBackground3Brush}"/>
+        <Setter Property="Foreground" Value="{StaticResource ColorNeutralForeground2Brush}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource ColorNeutralBackground3Brush}"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="ItemContainerStyle" Value="{StaticResource GenericTreeViewItemStyle}"/>
         <!-- Template jerárquico genérico -->

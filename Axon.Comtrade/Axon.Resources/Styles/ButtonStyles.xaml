@@ -4,7 +4,7 @@
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/Axon.Resources;component/Themes/DesignTokens.xaml"/>
-        <ResourceDictionary Source="pack://application:,,,/Axon.Resources;component/Themes/Dark/Theme.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Axon.Resources;component/Themes/Light/Theme.xaml"/>
     </ResourceDictionary.MergedDictionaries>
     
     <!-- =================================== -->
