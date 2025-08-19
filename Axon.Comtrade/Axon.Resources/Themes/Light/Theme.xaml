@@ -101,11 +101,141 @@
     <SolidColorBrush x:Key="TreeViewNodeBackgroundHover" Color="{DynamicResource ColorNeutralBackground3Hover}"/>
     <SolidColorBrush x:Key="TreeViewButtonActionBackgroundHover" Color="{DynamicResource ColorNeutralForeground2}"/>
 
-    <!-- Table/DataGrid Brushes -->
+    <!-- =============================================== -->
+    <!-- TABLE/DATAGRID BRUSHES -->
+    <!-- =============================================== -->
+
+    <!-- Header Brushes -->
     <SolidColorBrush x:Key="TableHeaderBackground" Color="{DynamicResource ColorNeutralBackground3}"/>
+    <SolidColorBrush x:Key="TableHeaderBackgroundHover" Color="{DynamicResource ColorNeutralBackground3Hover}"/>
+    <SolidColorBrush x:Key="TableHeaderBackgroundPressed" Color="{DynamicResource ColorNeutralBackground3Pressed}"/>
+    <SolidColorBrush x:Key="TableHeaderForeground" Color="{DynamicResource ColorNeutralForeground1}"/>
+    <SolidColorBrush x:Key="TableHeaderForegroundHover" Color="{DynamicResource ColorNeutralForeground1Hover}"/>
+    <SolidColorBrush x:Key="TableHeaderBorder" Color="{DynamicResource ColorNeutralStroke2}"/>
+    <SolidColorBrush x:Key="TableHeaderBorderHover" Color="{DynamicResource ColorNeutralStroke1}"/>
+    <SolidColorBrush x:Key="TableHeaderSortArrow" Color="{DynamicResource ColorNeutralForeground2}"/>
+    <SolidColorBrush x:Key="TableHeaderSortArrowActive" Color="{DynamicResource ColorBrandForeground1}"/>
+
+    <!-- Row Brushes -->
     <SolidColorBrush x:Key="TableRowBackground" Color="{DynamicResource ColorNeutralBackground1}"/>
     <SolidColorBrush x:Key="TableRowBackgroundAlternate" Color="{DynamicResource ColorNeutralBackground1Hover}"/>
+    <SolidColorBrush x:Key="TableRowBackgroundHover" Color="{DynamicResource ColorSubtleBackgroundHover}"/>
     <SolidColorBrush x:Key="TableRowBackgroundSelected" Color="{DynamicResource ColorSubtleBackgroundSelected}"/>
+    <SolidColorBrush x:Key="TableRowBackgroundSelectedHover" Color="{DynamicResource ColorNeutralBackground1Selected}"/>
+    <SolidColorBrush x:Key="TableRowBackgroundFocused" Color="{DynamicResource ColorBrandBackground2}"/>
+    <SolidColorBrush x:Key="TableRowBackgroundDisabled" Color="{DynamicResource ColorNeutralBackgroundDisabled}"/>
+
+    <!-- Cell Brushes -->
+    <SolidColorBrush x:Key="TableCellForeground" Color="{DynamicResource ColorNeutralForeground1}"/>
+    <SolidColorBrush x:Key="TableCellForegroundSelected" Color="{DynamicResource ColorNeutralForeground1Selected}"/>
+    <SolidColorBrush x:Key="TableCellForegroundDisabled" Color="{DynamicResource ColorNeutralForegroundDisabled}"/>
+    <SolidColorBrush x:Key="TableCellForegroundError" Color="{DynamicResource ColorStatusDangerForeground1}"/>
+    <SolidColorBrush x:Key="TableCellForegroundWarning" Color="{DynamicResource ColorStatusWarningForeground1}"/>
+    <SolidColorBrush x:Key="TableCellForegroundSuccess" Color="{DynamicResource ColorStatusSuccessForeground1}"/>
+
+    <!-- Border Brushes -->
     <SolidColorBrush x:Key="TableBorder" Color="{DynamicResource ColorNeutralStroke2}"/>
+    <SolidColorBrush x:Key="TableBorderHover" Color="{DynamicResource ColorNeutralStroke1}"/>
+    <SolidColorBrush x:Key="TableBorderSelected" Color="{DynamicResource ColorBrandStroke1}"/>
+    <SolidColorBrush x:Key="TableBorderFocused" Color="{DynamicResource ColorBrandStroke1}"/>
+    <SolidColorBrush x:Key="TableBorderError" Color="{DynamicResource ColorStatusDangerBorder2}"/>
+    <SolidColorBrush x:Key="TableCellBorder" Color="{DynamicResource ColorNeutralStroke3}"/>
+    <SolidColorBrush x:Key="TableCellBorderSelected" Color="{DynamicResource ColorBrandStroke2}"/>
+
+    <!-- Scrollbar Brushes -->
+    <SolidColorBrush x:Key="TableScrollbarTrack" Color="{DynamicResource ColorNeutralBackground3}"/>
+    <SolidColorBrush x:Key="TableScrollbarThumb" Color="{DynamicResource ColorNeutralBackground5}"/>
+    <SolidColorBrush x:Key="TableScrollbarThumbHover" Color="{DynamicResource ColorNeutralBackground6}"/>
+    <SolidColorBrush x:Key="TableScrollbarThumbPressed" Color="{DynamicResource ColorNeutralForeground4}"/>
+    <SolidColorBrush x:Key="TableScrollbarButton" Color="{DynamicResource ColorNeutralBackground4}"/>
+    <SolidColorBrush x:Key="TableScrollbarButtonHover" Color="{DynamicResource ColorNeutralBackground4Hover}"/>
+    <SolidColorBrush x:Key="TableScrollbarButtonPressed" Color="{DynamicResource ColorNeutralBackground4Pressed}"/>
+    <SolidColorBrush x:Key="TableScrollbarArrow" Color="{DynamicResource ColorNeutralForeground3}"/>
+    <SolidColorBrush x:Key="TableScrollbarArrowHover" Color="{DynamicResource ColorNeutralForeground2}"/>
+    <SolidColorBrush x:Key="TableScrollbarArrowPressed" Color="{DynamicResource ColorNeutralForeground1}"/>
+
+    <!-- Edit Mode Brushes -->
+    <SolidColorBrush x:Key="TableCellEditBackground" Color="{DynamicResource ColorNeutralBackground1}"/>
+    <SolidColorBrush x:Key="TableCellEditBackgroundFocused" Color="{DynamicResource ColorNeutralBackground1}"/>
+    <SolidColorBrush x:Key="TableCellEditBorder" Color="{DynamicResource ColorBrandStroke1}"/>
+    <SolidColorBrush x:Key="TableCellEditBorderFocused" Color="{DynamicResource ColorBrandStroke1}"/>
+    <SolidColorBrush x:Key="TableCellEditForeground" Color="{DynamicResource ColorNeutralForeground1}"/>
+    <SolidColorBrush x:Key="TableCellEditSelection" Color="{DynamicResource ColorBrandBackground2}"/>
+
+    <!-- Selection Brushes -->
+    <SolidColorBrush x:Key="TableSelectionBackground" Color="{DynamicResource ColorBrandBackground2}"/>
+    <SolidColorBrush x:Key="TableSelectionBackgroundInactive" Color="{DynamicResource ColorNeutralBackground5}"/>
+    <SolidColorBrush x:Key="TableSelectionBorder" Color="{DynamicResource ColorBrandStroke1}"/>
+    <SolidColorBrush x:Key="TableSelectionBorderInactive" Color="{DynamicResource ColorNeutralStroke1}"/>
+    <SolidColorBrush x:Key="TableMultiSelectionBackground" Color="{DynamicResource ColorBrandBackground2}"/>
+    <SolidColorBrush x:Key="TableMultiSelectionBorder" Color="{DynamicResource ColorBrandStroke2}"/>
+
+    <!-- Focus Brushes -->
+    <SolidColorBrush x:Key="TableFocusVisual" Color="{DynamicResource ColorStrokeFocus2}"/>
+    <SolidColorBrush x:Key="TableFocusVisualSecondary" Color="{DynamicResource ColorStrokeFocus1}"/>
+    <SolidColorBrush x:Key="TableCellFocusVisual" Color="{DynamicResource ColorBrandStroke1}"/>
+    <SolidColorBrush x:Key="TableRowFocusVisual" Color="{DynamicResource ColorBrandStroke2}"/>
+
+    <!-- Grouping Brushes -->
+    <SolidColorBrush x:Key="TableGroupHeaderBackground" Color="{DynamicResource ColorNeutralBackground2}"/>
+    <SolidColorBrush x:Key="TableGroupHeaderBackgroundHover" Color="{DynamicResource ColorNeutralBackground2Hover}"/>
+    <SolidColorBrush x:Key="TableGroupHeaderBackgroundExpanded" Color="{DynamicResource ColorNeutralBackground2Selected}"/>
+    <SolidColorBrush x:Key="TableGroupHeaderForeground" Color="{DynamicResource ColorNeutralForeground1}"/>
+    <SolidColorBrush x:Key="TableGroupHeaderBorder" Color="{DynamicResource ColorNeutralStroke2}"/>
+    <SolidColorBrush x:Key="TableGroupExpander" Color="{DynamicResource ColorNeutralForeground3}"/>
+    <SolidColorBrush x:Key="TableGroupExpanderHover" Color="{DynamicResource ColorNeutralForeground2}"/>
+    <SolidColorBrush x:Key="TableGroupExpanderPressed" Color="{DynamicResource ColorBrandForeground1}"/>
+
+    <!-- Filter Brushes -->
+    <SolidColorBrush x:Key="TableFilterBackground" Color="{DynamicResource ColorNeutralBackground1}"/>
+    <SolidColorBrush x:Key="TableFilterBackgroundHover" Color="{DynamicResource ColorNeutralBackground1Hover}"/>
+    <SolidColorBrush x:Key="TableFilterBackgroundActive" Color="{DynamicResource ColorBrandBackground2}"/>
+    <SolidColorBrush x:Key="TableFilterBorder" Color="{DynamicResource ColorNeutralStroke1}"/>
+    <SolidColorBrush x:Key="TableFilterBorderHover" Color="{DynamicResource ColorNeutralStrokeAccessible}"/>
+    <SolidColorBrush x:Key="TableFilterBorderActive" Color="{DynamicResource ColorBrandStroke1}"/>
+    <SolidColorBrush x:Key="TableFilterIcon" Color="{DynamicResource ColorNeutralForeground3}"/>
+    <SolidColorBrush x:Key="TableFilterIconHover" Color="{DynamicResource ColorNeutralForeground2}"/>
+    <SolidColorBrush x:Key="TableFilterIconActive" Color="{DynamicResource ColorBrandForeground1}"/>
+
+    <!-- Resize Brushes -->
+    <SolidColorBrush x:Key="TableResizeGrip" Color="{DynamicResource ColorNeutralStroke1}"/>
+    <SolidColorBrush x:Key="TableResizeGripHover" Color="{DynamicResource ColorNeutralStrokeAccessible}"/>
+    <SolidColorBrush x:Key="TableResizeGripActive" Color="{DynamicResource ColorBrandStroke1}"/>
+    <SolidColorBrush x:Key="TableColumnSeparator" Color="{DynamicResource ColorNeutralStroke3}"/>
+    <SolidColorBrush x:Key="TableRowSeparator" Color="{DynamicResource ColorNeutralStroke3}"/>
+
+    <!-- Status Indicator Brushes -->
+    <SolidColorBrush x:Key="TableIndicatorNew" Color="{DynamicResource ColorStatusSuccessBorder2}"/>
+    <SolidColorBrush x:Key="TableIndicatorModified" Color="{DynamicResource ColorStatusWarningBorder2}"/>
+    <SolidColorBrush x:Key="TableIndicatorDeleted" Color="{DynamicResource ColorStatusDangerBorder2}"/>
+    <SolidColorBrush x:Key="TableIndicatorError" Color="{DynamicResource ColorStatusDangerBackground3}"/>
+    <SolidColorBrush x:Key="TableIndicatorWarning" Color="{DynamicResource ColorStatusWarningBackground3}"/>
+    <SolidColorBrush x:Key="TableIndicatorSuccess" Color="{DynamicResource ColorStatusSuccessBackground3}"/>
+
+    <!-- Validation Brushes -->
+    <SolidColorBrush x:Key="TableValidationErrorBackground" Color="{DynamicResource ColorStatusDangerBackground1}"/>
+    <SolidColorBrush x:Key="TableValidationErrorBorder" Color="{DynamicResource ColorStatusDangerBorder2}"/>
+    <SolidColorBrush x:Key="TableValidationErrorForeground" Color="{DynamicResource ColorStatusDangerForeground1}"/>
+    <SolidColorBrush x:Key="TableValidationWarningBackground" Color="{DynamicResource ColorStatusWarningBackground1}"/>
+    <SolidColorBrush x:Key="TableValidationWarningBorder" Color="{DynamicResource ColorStatusWarningBorder2}"/>
+    <SolidColorBrush x:Key="TableValidationWarningForeground" Color="{DynamicResource ColorStatusWarningForeground1}"/>
+
+    <!-- Loading/Empty State Brushes -->
+    <SolidColorBrush x:Key="TableLoadingBackground" Color="{DynamicResource ColorNeutralBackground2}"/>
+    <SolidColorBrush x:Key="TableLoadingForeground" Color="{DynamicResource ColorNeutralForeground3}"/>
+    <SolidColorBrush x:Key="TableEmptyStateBackground" Color="{DynamicResource ColorNeutralBackground1}"/>
+    <SolidColorBrush x:Key="TableEmptyStateForeground" Color="{DynamicResource ColorNeutralForeground3}"/>
+    <SolidColorBrush x:Key="TableEmptyStateIcon" Color="{DynamicResource ColorNeutralForeground4}"/>
+
+    <!-- Checkbox/Selection Control Brushes -->
+    <SolidColorBrush x:Key="TableCheckboxBackground" Color="{DynamicResource ColorNeutralBackground1}"/>
+    <SolidColorBrush x:Key="TableCheckboxBackgroundHover" Color="{DynamicResource ColorNeutralBackground1Hover}"/>
+    <SolidColorBrush x:Key="TableCheckboxBackgroundChecked" Color="{DynamicResource ColorBrandBackground}"/>
+    <SolidColorBrush x:Key="TableCheckboxBackgroundCheckedHover" Color="{DynamicResource ColorBrandBackgroundHover}"/>
+    <SolidColorBrush x:Key="TableCheckboxBorder" Color="{DynamicResource ColorNeutralStrokeAccessible}"/>
+    <SolidColorBrush x:Key="TableCheckboxBorderHover" Color="{DynamicResource ColorBrandStroke1}"/>
+    <SolidColorBrush x:Key="TableCheckboxBorderChecked" Color="{DynamicResource ColorBrandStroke1}"/>
+    <SolidColorBrush x:Key="TableCheckboxCheckmark" Color="{DynamicResource ColorNeutralForegroundOnBrand}"/>
+    <SolidColorBrush x:Key="TableCheckboxIndeterminate" Color="{DynamicResource ColorNeutralForeground2}"/>
 
 </ResourceDictionary>
