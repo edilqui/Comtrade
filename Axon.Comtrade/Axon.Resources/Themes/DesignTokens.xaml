@@ -79,6 +79,8 @@
     <sys:Double x:Key="SpacingVerticalXL">20</sys:Double>
     <sys:Double x:Key="SpacingVerticalXXL">24</sys:Double>
     <sys:Double x:Key="SpacingVerticalXXXL">32</sys:Double>
+    <sys:Double x:Key="SpacingVerticalXXXXL">40</sys:Double>
+    <sys:Double x:Key="SpacingVerticalXXXXXL">48</sys:Double>
 
     <!-- =================================== -->
     <!-- ANIMATION DURATIONS -->
@@ -370,5 +372,7 @@
     <Thickness x:Key="MarginXL">20</Thickness>
     <Thickness x:Key="MarginXXL">24</Thickness>
     <Thickness x:Key="MarginXXXL">32</Thickness>
+
+    <Thickness x:Key="MarginSHorizontal">8,0</Thickness>
 
 </ResourceDictionary>

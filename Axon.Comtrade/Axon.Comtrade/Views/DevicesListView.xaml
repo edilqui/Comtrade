@@ -11,20 +11,83 @@
     <Grid Grid.Column="2" Background="{DynamicResource NeutralBackground2Brush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <!-- Panel de control -->
-        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="8" HorizontalAlignment="Right">
-            <Button Content="Primary 12341234234243543"
-                    Style="{DynamicResource PrimaryButtonStyle}"
-                Command="{Binding GroupByGroupCommand}"
-                Padding="16,0" Margin="4,0"/>
-            <Button Content="Secundary 123445656723453245"
+        <Border Grid.Row="0"
+                BorderThickness="0,0,0,1"
+                BorderBrush="{DynamicResource BorderBrush}"
+                Height="{StaticResource SpacingVerticalXXXXXL}">
+            <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="8" HorizontalAlignment="Left">
+
+                <Button Style="{StaticResource IconButtonStyle}" Padding="16,4" x:Name="buttonSlider">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Viewbox Height="24" Width="24">
+                            <Path Data="M20 4H4A2 2 0 0 0 2 6V18A2 2 0 0 0 4 20H20A2 2 0 0 0 22 18V6A2 2 0 0 0 20 4M20 18H9V6H20Z" 
+                          Fill="{DynamicResource TextSecondaryBrush}"
+                          Width="24" Height="24"/>
+                        </Viewbox>
+                    </Grid>
+                </Button>
+                <Button Style="{StaticResource GhostButtonStyle}" Padding="16,4">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Viewbox Height="24" Width="24" Margin="0,0,4,0">
+                            <Path Data="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" 
+                          Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"
+                          Width="24" Height="24"/>
+                        </Viewbox>
+                        <TextBlock Grid.Column="1" Text="Subestación" VerticalAlignment="Center"/>
+                    </Grid>
+                </Button>
+            </StackPanel>
+        </Border>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="{StaticResource MarginS}"  HorizontalAlignment="Left"
+                    >
+
+            <Button Style="{StaticResource PrimaryButtonStyle}" Padding="16,4">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Viewbox Height="24" Width="24" Margin="0,0,4,0">
+                        <Path Data="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" 
+                          Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"
+                          Width="24" Height="24"/>
+                    </Viewbox>
+                    <TextBlock Grid.Column="1" Text="Nuevo Dispositivo" VerticalAlignment="Center"/>
+                </Grid>
+            </Button>
+            <Button Style="{StaticResource SecondaryButtonStyle}" Padding="16,4" Margin="{StaticResource MarginSHorizontal}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Viewbox Height="24" Width="24" Margin="0,0,4,0">
+                        <Path Data="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" 
+                          Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"
+                          Width="24" Height="24"/>
+                    </Viewbox>
+                    <TextBlock Grid.Column="1" Text="Importar Dispositivos" VerticalAlignment="Center"/>
+                </Grid>
+            </Button>
+            <!--<Button Content="Secundary 123445656723453245"
                     Style="{DynamicResource SecondaryButtonStyle}"
                 Command="{Binding GroupByGroupCommand}"
                 Padding="8,4" Margin="4,0"/>
-            
+
             <Button Content="Agrupar por Grupo"
                     Style="{DynamicResource OutlineButtonStyle}"
                 Command="{Binding GroupByGroupCommand}"
@@ -39,10 +102,11 @@
                  Margin="4,0"/>
             <ToggleButton Content="Agrupación" 
                       IsChecked="{Binding ShowGrouping}"
-                      Padding="8,4" Margin="4,0"/>
+                      Padding="8,4" Margin="4,0"/>-->
         </StackPanel>
 
-        <Border Grid.Row="1"
+        <Border Grid.Row="2"
+             Margin="{StaticResource MarginS}"
             BorderBrush="#FF6B6B6B"
             Background="#FF2A2A2A"
             BorderThickness="0"
