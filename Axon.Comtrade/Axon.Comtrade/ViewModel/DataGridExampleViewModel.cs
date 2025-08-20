@@ -14,9 +14,10 @@ namespace Axon.Comtrade.ViewModel
     public class DataGridExampleViewModel : INotifyPropertyChanged
     {
         private bool _showFilters = true;
-        private bool _showGrouping = true; // ✅ CAMBIO: Habilitado por defecto
+        private bool _showGrouping = true;
         private int _selectedItemsCount;
         private ICollectionView _dataView;
+        private string _currentTopologyFilter;
 
         public ObservableCollection<DeviceItemModel> DataItems { get; set; }
 
@@ -44,17 +45,27 @@ namespace Axon.Comtrade.ViewModel
             set => SetProperty(ref _selectedItemsCount, value);
         }
 
+        /// <summary>
+        /// Filtro de topología actual aplicado
+        /// </summary>
+        public string CurrentTopologyFilter
+        {
+            get => _currentTopologyFilter;
+            set => SetProperty(ref _currentTopologyFilter, value);
+        }
+
         // Comandos
         public ICommand ToggleFiltersCommand { get; private set; }
         public ICommand ToggleGroupingCommand { get; private set; }
         public ICommand ExportCommand { get; private set; }
         public ICommand ConfigureCommand { get; private set; }
         public ICommand DeleteCommand { get; private set; }
+        public ICommand ClearFilterCommand { get; private set; }
 
         public DataGridExampleViewModel()
         {
             InitializeCommands();
-            LoadSampleData();
+            DataItems = new ObservableCollection<DeviceItemModel>();
             SetupCollectionView();
         }
 
@@ -65,38 +76,61 @@ namespace Axon.Comtrade.ViewModel
             ExportCommand = new RelayCommand(ExportData);
             ConfigureCommand = new RelayCommand<DeviceItemModel>(ConfigureDevice);
             DeleteCommand = new RelayCommand<DeviceItemModel>(DeleteDevice);
+            ClearFilterCommand = new RelayCommand(ClearTopologyFilter);
         }
 
-        private void LoadSampleData()
+        /// <summary>
+        /// Actualiza la lista de dispositivos desde el filtro de topología
+        /// </summary>
+        public void UpdateDevicesFromTopology(List<DeviceItemModel> filteredDevices)
         {
-            DataItems = new ObservableCollection<DeviceItemModel>
+            DataItems.Clear();
+
+            if (filteredDevices != null)
             {
-                // Grupo Bahía/IEC-61850
-                new DeviceItemModel { IsEnabled = true, DeviceName = "IED Dispositivo 001", IPAddress = "127.0.0.1", Port = 2405, Protocol = "IEC-61850", Group = "Bahía/IEC-61850" },
-                new DeviceItemModel { IsEnabled = true, DeviceName = "IED Dispositivo 002", IPAddress = "127.0.0.1", Port = 2405, Protocol = "IEC-61850", Group = "Bahía/IEC-61850" },
-                new DeviceItemModel { IsEnabled = true, DeviceName = "IED Dispositivo 003", IPAddress = "127.0.0.1", Port = 2405, Protocol = "IEC-61850", Group = "Bahía/IEC-61850" },
-                new DeviceItemModel { IsEnabled = true, DeviceName = "IED Dispositivo 004", IPAddress = "127.0.0.1", Port = 2405, Protocol = "IEC-61850", Group = "Bahía/IEC-61850" },
-
-                // Grupo Bahía/FTP
-                new DeviceItemModel { IsEnabled = true, DeviceName = "FTP Server 001", IPAddress = "192.168.1.100", Port = 21, Protocol = "FTP", Group = "Bahía/FTP" },
-                new DeviceItemModel { IsEnabled = false, DeviceName = "FTP Server 002", IPAddress = "192.168.1.101", Port = 21, Protocol = "FTP", Group = "Bahía/FTP" },
-                new DeviceItemModel { IsEnabled = true, DeviceName = "FTP Server 003", IPAddress = "192.168.1.102", Port = 21, Protocol = "FTP", Group = "Bahía/FTP" },
-
-                // Grupo Bahía/TFTP
-                new DeviceItemModel { IsEnabled = true, DeviceName = "TFTP Server 001", IPAddress = "10.0.0.50", Port = 69, Protocol = "TFTP", Group = "Bahía/TFTP" },
-                new DeviceItemModel { IsEnabled = true, DeviceName = "TFTP Server 002", IPAddress = "10.0.0.51", Port = 69, Protocol = "TFTP", Group = "Bahía/TFTP" },
-
-                // Sin agrupar
-                new DeviceItemModel { IsEnabled = false, DeviceName = "MODBUS Device", IPAddress = "172.16.0.10", Port = 502, Protocol = "MODBUS", Group = "Otros" },
-            };
+                foreach (var device in filteredDevices)
+                {
+                    DataItems.Add(device);
+                }
+            }
 
             OnPropertyChanged(nameof(ItemCount));
+            _dataView?.Refresh();
         }
+
+        /// <summary>
+        /// Establece el filtro de topología actual
+        /// </summary>
+        public void SetTopologyFilter(string topologyPath)
+        {
+            CurrentTopologyFilter = string.IsNullOrEmpty(topologyPath) ?
+                "Todos los dispositivos" :
+                $"Filtrado por: {topologyPath}";
+        }
+
+        /// <summary>
+        /// Limpia el filtro de topología
+        /// </summary>
+        private void ClearTopologyFilter()
+        {
+            // Este comando podría comunicarse de vuelta con DevicesExplorerViewModel
+            // para limpiar la selección del árbol
+            CurrentTopologyFilter = "Todos los dispositivos";
+            OnTopologyFilterCleared?.Invoke();
+        }
+
+        /// <summary>
+        /// Evento que se dispara cuando se limpia el filtro de topología
+        /// </summary>
+        public event Action OnTopologyFilterCleared;
 
         private void SetupCollectionView()
         {
-            _dataView = CollectionViewSource.GetDefaultView(DataItems);
-            UpdateGrouping();
+            if (DataItems != null)
+            {
+                _dataView = CollectionViewSource.GetDefaultView(DataItems);
+                UpdateGrouping();
+            }
         }
 
         private void UpdateGrouping()
@@ -108,46 +142,11 @@ namespace Axon.Comtrade.ViewModel
                 if (ShowGrouping)
                 {
                     _dataView.GroupDescriptions.Add(new PropertyGroupDescription("Group"));
-                    // ✅ CAMBIO: Forzar refresh después de agrupar
                     _dataView.Refresh();
                 }
-
-                DiagnoseGrouping();
             }
         }
 
-        public void DiagnoseGrouping()
-        {
-            System.Diagnostics.Debug.WriteLine("=== DIAGNÓSTICO DE AGRUPACIÓN ===");
-            System.Diagnostics.Debug.WriteLine($"ShowGrouping: {ShowGrouping}");
-            System.Diagnostics.Debug.WriteLine($"DataItems.Count: {DataItems?.Count ?? 0}");
-
-            if (_dataView != null)
-            {
-                System.Diagnostics.Debug.WriteLine($"GroupDescriptions.Count: {_dataView.GroupDescriptions.Count}");
-
-                foreach (var groupDesc in _dataView.GroupDescriptions)
-                {
-                    if (groupDesc is PropertyGroupDescription pgd)
-                    {
-                        System.Diagnostics.Debug.WriteLine($"Agrupando por: {pgd.PropertyName}");
-                    }
-                }
-
-                System.Diagnostics.Debug.WriteLine($"Groups in CollectionView: {_dataView.Groups?.Count ?? 0}");
-
-                if (_dataView.Groups != null)
-                {
-                    foreach (CollectionViewGroup group in _dataView.Groups)
-                    {
-                        System.Diagnostics.Debug.WriteLine($"Grupo: {group.Name}, Items: {group.ItemCount}");
-                    }
-                }
-            }
-            System.Diagnostics.Debug.WriteLine("=== FIN DIAGNÓSTICO ===");
-        }
-
-        // ✅ CAMBIO: Método público para configurar agrupación
         public void GroupBy(string propertyName)
         {
             if (_dataView != null)
@@ -168,23 +167,21 @@ namespace Axon.Comtrade.ViewModel
 
         private void ExportData()
         {
-            // Implementar exportación a Excel/CSV
             try
             {
-                // Ejemplo de exportación básica
                 var data = new System.Text.StringBuilder();
-                data.AppendLine("Enabled,Dispositivo,IP,Port,Protocolo");
+                data.AppendLine("Enabled,Dispositivo,IP,Port,Protocolo,Grupo");
 
                 foreach (var item in DataItems)
                 {
-                    data.AppendLine($"{item.IsEnabled},{item.DeviceName},{item.IPAddress},{item.Port},{item.Protocol}");
+                    data.AppendLine($"{item.IsEnabled},{item.DeviceName},{item.IPAddress},{item.Port},{item.Protocol},{item.Group}");
                 }
 
-                // Guardar archivo
                 var dialog = new Microsoft.Win32.SaveFileDialog
                 {
                     Filter = "CSV files (*.csv)|*.csv|All files (*.*)|*.*",
-                    DefaultExt = "csv"
+                    DefaultExt = "csv",
+                    FileName = $"Dispositivos_{DateTime.Now:yyyyMMdd_HHmmss}.csv"
                 };
 
                 if (dialog.ShowDialog() == true)
@@ -205,7 +202,6 @@ namespace Axon.Comtrade.ViewModel
         {
             if (device != null)
             {
-                // Abrir ventana de configuración
                 System.Windows.MessageBox.Show($"Configurar dispositivo: {device.DeviceName}", "Configuración",
                     System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
             }
@@ -225,9 +221,17 @@ namespace Axon.Comtrade.ViewModel
                 {
                     DataItems.Remove(device);
                     OnPropertyChanged(nameof(ItemCount));
+
+                    // Notificar la eliminación al DevicesExplorerViewModel
+                    OnDeviceDeleted?.Invoke(device);
                 }
             }
         }
+
+        /// <summary>
+        /// Evento que se dispara cuando se elimina un dispositivo
+        /// </summary>
+        public event Action<DeviceItemModel> OnDeviceDeleted;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -247,7 +251,7 @@ namespace Axon.Comtrade.ViewModel
         }
     }
 
-    // Modelo de datos para los elementos del DataGrid
+    // Modelo de datos para los elementos del DataGrid (sin cambios)
     public class DeviceItemModel : INotifyPropertyChanged
     {
         private bool _isEnabled;
@@ -311,7 +315,7 @@ namespace Axon.Comtrade.ViewModel
         }
     }
 
-    // ✅ CAMBIO: Agregar RelayCommand sin parámetros
+    // Comandos auxiliares (sin cambios)
     public class RelayCommand : ICommand
     {
         private readonly Action _execute;
@@ -333,7 +337,6 @@ namespace Axon.Comtrade.ViewModel
         public void Execute(object parameter) => _execute();
     }
 
-    // Comando helper reutilizable
     public class RelayCommand<T> : ICommand
     {
         private readonly Action<T> _execute;

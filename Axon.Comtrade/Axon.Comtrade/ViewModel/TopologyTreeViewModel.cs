@@ -1,4 +1,5 @@
 ﻿using Axon.Comtrade.Model;
+using Axon.UI.Components.Base;
 using Axon.UI.Components.TreeNode;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ using System.Windows.Input;
 
 namespace Axon.Comtrade.ViewModel
 {
-    public class TopologyTreeViewModel : INotifyPropertyChanged
+    public class TopologyTreeViewModel : BaseViewModel
     {
         private GenericTreeNodeModel _selectedNode;
         private List<TopologyNodeModel> _originalData;
@@ -22,7 +23,12 @@ namespace Axon.Comtrade.ViewModel
         public GenericTreeNodeModel SelectedNode
         {
             get => _selectedNode;
-            set => SetProperty(ref _selectedNode, value);
+            set
+            {
+                _selectedNode = value;
+                NotifySelectionChanged();
+                OnPropertyChanged();
+            }
         }
 
         // Comandos
@@ -364,23 +370,54 @@ namespace Axon.Comtrade.ViewModel
         }
 
         // Evento para notificar cambios a tu aplicación
-        public event Action<List<TopologyNodeModel>> OnDataChanged;
+        public event Action<List<TopologyNodeModel>> OnDataChanged;       
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+       
+        /// <summary>
+        /// Notifica cuando cambia la selección del nodo
+        /// </summary>
+        private void NotifySelectionChanged()
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            if (DevicesExplorerViewModel != null)
+            {
+                var topologyPath = GetSelectedTopologyPath();
+                DevicesExplorerViewModel.SelectedTopologyPath = topologyPath;
+            }
         }
 
-        protected bool SetProperty<T>(ref T backingStore, T value, [CallerMemberName] string propertyName = "")
+        /// <summary>
+        /// Obtiene el path completo de la topología seleccionada
+        /// </summary>
+        public string GetSelectedTopologyPath()
         {
-            if (EqualityComparer<T>.Default.Equals(backingStore, value))
-                return false;
+            if (SelectedNode?.Tag == null)
+                return null;
 
-            backingStore = value;
-            OnPropertyChanged(propertyName);
-            return true;
+            var pathParts = new List<string>();
+            var currentNode = SelectedNode;
+
+            while (currentNode != null)
+            {
+                if (currentNode.Tag is TopologyNodeModel topology)
+                {
+                    pathParts.Insert(0, topology.Name);
+                }
+                else if (currentNode.Tag is ProtocolNodeModel protocol)
+                {
+                    pathParts.Insert(0, protocol.Name);
+                }
+                currentNode = currentNode.Parent;
+            }
+
+            return string.Join("/", pathParts);
+        }
+
+        /// <summary>
+        /// Limpia la selección del árbol
+        /// </summary>
+        public void ClearSelection()
+        {
+            SelectedNode = null;
         }
     }
 }
