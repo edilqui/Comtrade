@@ -19,24 +19,24 @@
             <Button Content="Primary 12341234234243543"
                     Style="{DynamicResource PrimaryButtonStyle}"
                 Command="{Binding GroupByGroupCommand}"
-                Padding="8,4" Margin="4,0"/>
+                Padding="16,0" Margin="4,0"/>
             <Button Content="Secundary 123445656723453245"
-                    Style="{DynamicResource SecundaryButtonStyle}"
+                    Style="{DynamicResource SecondaryButtonStyle}"
                 Command="{Binding GroupByGroupCommand}"
                 Padding="8,4" Margin="4,0"/>
             
             <Button Content="Agrupar por Grupo"
-                    Style="{DynamicResource PrimaryButtonStyle}"
+                    Style="{DynamicResource OutlineButtonStyle}"
                 Command="{Binding GroupByGroupCommand}"
                 Padding="8,4" Margin="4,0"/>
             <Button Content="Agrupar por Protocolo" 
-                    Style="{DynamicResource PrimaryButtonStyle}"
+                    Style="{DynamicResource LargeButtonStyle}"
                 Command="{Binding GroupByProtocolCommand}"
                 Padding="8,4" Margin="4,0"/>
             <Button Content="Sin Agrupación" 
-                    Style="{DynamicResource PrimaryButtonStyle}"
+                    Style="{DynamicResource SmallButtonStyle}"
                 Command="{Binding ClearGroupingCommand}"
-                Padding="8,4" Margin="4,0"/>
+                 Margin="4,0"/>
             <ToggleButton Content="Agrupación" 
                       IsChecked="{Binding ShowGrouping}"
                       Padding="8,4" Margin="4,0"/>

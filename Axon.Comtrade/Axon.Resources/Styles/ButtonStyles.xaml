@@ -66,6 +66,7 @@
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
                             CornerRadius="{StaticResource BorderRadiusMedium}"
+                            Padding="{TemplateBinding Padding}"
                             SnapsToDevicePixels="True">
                         <ContentPresenter x:Name="ContentPresenter"
                                         HorizontalAlignment="Center"
@@ -162,6 +163,7 @@
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
                             CornerRadius="{StaticResource BorderRadiusMedium}"
+                            Padding="{TemplateBinding Padding}"
                             SnapsToDevicePixels="True">
                         <ContentPresenter x:Name="ContentPresenter"
                                         HorizontalAlignment="Center"
@@ -193,8 +195,8 @@
     <!-- =================================== -->
     <Style x:Key="OutlineButtonStyle" TargetType="Button" BasedOn="{StaticResource BaseButtonStyle}">
         <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="Foreground" Value="{StaticResource ColorBrandForeground1}"/>
-        <Setter Property="BorderBrush" Value="{StaticResource BrandStroke1Brush}"/>
+        <Setter Property="Foreground" Value="{StaticResource ColorBrandForeground1Brush}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource ColorBrandStroke1Brush}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
@@ -203,6 +205,7 @@
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
                             CornerRadius="{StaticResource BorderRadiusMedium}"
+                            Padding="{TemplateBinding Padding}"
                             SnapsToDevicePixels="True">
                         <ContentPresenter x:Name="ContentPresenter"
                                         HorizontalAlignment="Center"
@@ -244,6 +247,7 @@
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
                             CornerRadius="{StaticResource BorderRadiusMedium}"
+                            Padding="{TemplateBinding Padding}"
                             SnapsToDevicePixels="True">
                         <ContentPresenter x:Name="ContentPresenter"
                                         HorizontalAlignment="Center"
