@@ -64,7 +64,7 @@
     <SolidColorBrush x:Key="ButtonPrimaryBackground" Color="{DynamicResource ColorBrandBackground}"/>
     <SolidColorBrush x:Key="ButtonPrimaryBackgroundHover" Color="{DynamicResource ColorBrandBackgroundHover}"/>
     <SolidColorBrush x:Key="ButtonPrimaryBackgroundPressed" Color="{DynamicResource ColorBrandBackgroundPressed}"/>
-    <SolidColorBrush x:Key="ButtonPrimaryForeground" Color="{DynamicResource ColorNeutralForeground1}"/>
+    <SolidColorBrush x:Key="ButtonPrimaryForeground" Color="{DynamicResource ColorNeutralForegroundOnBrand}"/>
 
     <SolidColorBrush x:Key="ButtonSecondaryBackground" Color="{DynamicResource ColorNeutralBackground2}"/>
     <SolidColorBrush x:Key="ButtonSecondaryBackgroundHover" Color="{DynamicResource ColorNeutralBackground2Hover}"/>

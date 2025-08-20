@@ -16,15 +16,27 @@
 
         <!-- Panel de control -->
         <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="8" HorizontalAlignment="Right">
-            <!--<Button Content="Agrupar por Grupo" 
+            <Button Content="Primary 12341234234243543"
+                    Style="{DynamicResource PrimaryButtonStyle}"
+                Command="{Binding GroupByGroupCommand}"
+                Padding="8,4" Margin="4,0"/>
+            <Button Content="Secundary 123445656723453245"
+                    Style="{DynamicResource SecundaryButtonStyle}"
+                Command="{Binding GroupByGroupCommand}"
+                Padding="8,4" Margin="4,0"/>
+            
+            <Button Content="Agrupar por Grupo"
+                    Style="{DynamicResource PrimaryButtonStyle}"
                 Command="{Binding GroupByGroupCommand}"
                 Padding="8,4" Margin="4,0"/>
             <Button Content="Agrupar por Protocolo" 
+                    Style="{DynamicResource PrimaryButtonStyle}"
                 Command="{Binding GroupByProtocolCommand}"
                 Padding="8,4" Margin="4,0"/>
             <Button Content="Sin Agrupación" 
+                    Style="{DynamicResource PrimaryButtonStyle}"
                 Command="{Binding ClearGroupingCommand}"
-                Padding="8,4" Margin="4,0"/>-->
+                Padding="8,4" Margin="4,0"/>
             <ToggleButton Content="Agrupación" 
                       IsChecked="{Binding ShowGrouping}"
                       Padding="8,4" Margin="4,0"/>

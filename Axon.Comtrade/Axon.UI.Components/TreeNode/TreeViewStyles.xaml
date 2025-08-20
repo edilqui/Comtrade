@@ -107,7 +107,7 @@
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
                             <Setter TargetName="Border" Property="Background" 
-                                Value="{StaticResource ColorNeutralBackground4Brush}"/>
+                                Value="{StaticResource ColorNeutralBackground4HoverBrush}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
