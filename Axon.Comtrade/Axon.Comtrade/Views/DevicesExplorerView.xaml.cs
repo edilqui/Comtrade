@@ -18,9 +18,9 @@ namespace Axon.Comtrade.Views
     /// <summary>
     /// Interaction logic for DevicesExplorer.xaml
     /// </summary>
-    public partial class DevicesExplorer : UserControl
+    public partial class DevicesExplorerView : UserControl
     {
-        public DevicesExplorer()
+        public DevicesExplorerView()
         {
             InitializeComponent();
         }

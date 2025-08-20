@@ -15,41 +15,27 @@ namespace Axon.Comtrade.ViewModel
 {
     public class ComtradeConfiguration : BaseViewModel, ISideBar
     {
-        public ObservableCollection<DeviceViewModel> Devices { get; set; }
+
         public ComtradeConfiguration()
         {
-            Devices = new ObservableCollection<DeviceViewModel>();
-            Devices.Add(new DeviceViewModel() { Name = "Device1" });
-            Devices.Add(new DeviceViewModel() { Name = "Device2" });
-            Devices.Add(new DeviceViewModel() { Name = "Device3" });
-            OnPropertyChanged("Devices");
+
         }
 
-        private TopologyTreeViewModel _tree;
 
-        public TopologyTreeViewModel Tree
+        private DevicesExplorerViewModel _devicesExplorerViewModel;
+
+        public DevicesExplorerViewModel DevicesExplorerVieModel
         {
-            get
-            {
-                if (_tree == null) _tree = new TopologyTreeViewModel();
-                return _tree;
+            get {
+                if (_devicesExplorerViewModel == null) _devicesExplorerViewModel = new DevicesExplorerViewModel();
+
+                return _devicesExplorerViewModel; 
             }
-            set { _tree = value; OnPropertyChanged(); }
+            set { _devicesExplorerViewModel = value; }
         }
 
 
 
-        private DataGridExampleViewModel _gridExample;
-
-        public DataGridExampleViewModel GridExample
-        {
-            get
-            {
-                if (_gridExample == null) _gridExample = new DataGridExampleViewModel();
-                return _gridExample;
-            }
-            set { _gridExample = value; OnPropertyChanged(); }
-        }
 
         private FrameworkElement _rootContent;
 
@@ -71,15 +57,16 @@ namespace Axon.Comtrade.ViewModel
             set { _sideBar = value; }
         }
 
-        private DevicesExplorer _devicesExplorer;
-        public DevicesExplorer DevicesExplorer
+        private DevicesExplorerView _devicesExplorerView;
+        public DevicesExplorerView DevicesExplorerView
         {
             get
             {
-                if (_devicesExplorer == null) _devicesExplorer = new DevicesExplorer() { DataContext = this};
-                return _devicesExplorer;
+                if (_devicesExplorerView == null) 
+                    _devicesExplorerView = new DevicesExplorerView() { DataContext = this};
+                return _devicesExplorerView;
             }
-            set { _devicesExplorer = value; }
+            set { _devicesExplorerView = value; }
         }
 
         public void OnMenuItemSelected(string name)
@@ -87,7 +74,7 @@ namespace Axon.Comtrade.ViewModel
             switch (name)
             {
                 case "devices":
-                    this.RootContent = DevicesExplorer;
+                    this.RootContent = DevicesExplorerView;
                     break;
                 default:
                     var emptyPage = new EmptyPageView();

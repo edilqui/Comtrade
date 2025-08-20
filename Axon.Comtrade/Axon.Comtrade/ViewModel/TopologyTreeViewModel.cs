@@ -32,14 +32,18 @@ namespace Axon.Comtrade.ViewModel
         public ICommand CollapseAllCommand { get; private set; }
         public ICommand SaveChangesCommand { get; private set; }
 
-        public TopologyTreeViewModel()
+        DevicesExplorerViewModel DevicesExplorerViewModel { get; set; }
+
+        public TopologyTreeViewModel(DevicesExplorerViewModel devicesExplorerViewModel)
         {
             TreeNodes = new ObservableCollection<GenericTreeNodeModel>();
             InitializeCommands();
             LoadSampleData(); // Para testing
+            DevicesExplorerViewModel = devicesExplorerViewModel;
         }
 
-        public TopologyTreeViewModel(List<TopologyNodeModel> topologyData) : this()
+        public TopologyTreeViewModel(List<TopologyNodeModel> topologyData, DevicesExplorerViewModel devicesExplorerViewModel) 
+            : this(devicesExplorerViewModel)
         {
             LoadTopologyData(topologyData);
         }
@@ -122,16 +126,16 @@ namespace Axon.Comtrade.ViewModel
             if (parentNode.Tag is TopologyNodeModel topology)
             {
                 // Determinar si agregar topología o protocolo
-                var shouldAddProtocol = ShouldAddProtocol(topology);
+                //var shouldAddProtocol = ShouldAddProtocol(topology);
 
-                if (shouldAddProtocol)
-                {
-                    AddProtocolToTopology(topology, parentNode);
-                }
-                else
-                {
+                //if (shouldAddProtocol)
+                //{
+                //    AddProtocolToTopology(topology, parentNode);
+                //}
+                //else
+                //{
                     AddSubTopology(topology, parentNode);
-                }
+                //}
             }
         }
 
@@ -176,7 +180,7 @@ namespace Axon.Comtrade.ViewModel
             var subTopologyTreeNode = new GenericTreeNodeModel
             {
                 Title = newSubTopology.Name,
-                IconPath = TreeNodeIcons.Computer,
+                IconPath = TreeNodeIcons.None,
                 Level = parentNode.Level + 1,
                 Tag = newSubTopology,
                 Parent = parentNode
@@ -336,30 +340,21 @@ namespace Axon.Comtrade.ViewModel
             new TopologyNodeModel
             {
                 Id = 1,
-                Name = "Dispositivos",
-                Type = "Dispositivos",
+                Name = "Subestación",
+                Type = "Subestacion",
                 Topologies = new List<TopologyNodeModel>
                 {
                     new TopologyNodeModel
                     {
                         Id = 2,
-                        Name = "Subestación",
-                        Type = "Subestacion",
-                        Topologies = new List<TopologyNodeModel>
-                        {
-                            new TopologyNodeModel
-                            {
-                                Id = 3,
-                                Name = "Bahía",
-                                Type = "Bahia",
-                                Protocols = new List<ProtocolNodeModel>
+                        Name = "Bahía",
+                        Type = "Bahia",
+                        Protocols = new List<ProtocolNodeModel>
                                 {
                                     new ProtocolNodeModel { Id = 1, Name = "IEC-61850", Type = "IEC-61850" },
                                     new ProtocolNodeModel { Id = 2, Name = "FTP", Type = "FTP" },
                                     new ProtocolNodeModel { Id = 3, Name = "TFTP", Type = "TFTP" }
                                 }
-                            }
-                        }
                     }
                 }
             }

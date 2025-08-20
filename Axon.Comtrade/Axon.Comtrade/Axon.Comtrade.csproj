@@ -65,11 +65,12 @@
     <Compile Include="ThemeManager.cs" />
     <Compile Include="ViewModel\ComtradeConfiguration.cs" />
     <Compile Include="ViewModel\DataGridExampleViewModel.cs" />
+    <Compile Include="ViewModel\DevicesExplorerViewModel.cs" />
     <Compile Include="ViewModel\DeviceViewModel.cs" />
     <Compile Include="ViewModel\TopologyTreeMapper.cs" />
     <Compile Include="ViewModel\TopologyTreeViewModel.cs" />
-    <Compile Include="Views\DevicesExplorer.xaml.cs">
-      <DependentUpon>DevicesExplorer.xaml</DependentUpon>
+    <Compile Include="Views\DevicesExplorerView.xaml.cs">
+      <DependentUpon>DevicesExplorerView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\DevicesListView.xaml.cs">
       <DependentUpon>DevicesListView.xaml</DependentUpon>
@@ -95,7 +96,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Views\DevicesExplorer.xaml">
+    <Page Include="Views\DevicesExplorerView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

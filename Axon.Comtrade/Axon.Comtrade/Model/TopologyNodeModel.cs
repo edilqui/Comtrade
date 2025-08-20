@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Axon.UI.Components.Base;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Axon.Comtrade.Model
 {
-    public class TopologyNodeModel : INotifyPropertyChanged
+    public class TopologyNodeModel : BaseViewModel
     {
         private string _name;
 
@@ -17,7 +18,11 @@ namespace Axon.Comtrade.Model
         public string Name
         {
             get => _name;
-            set => SetProperty(ref _name, value);
+            set
+            {
+                _name = value;
+                OnPropertyChanged();
+            }
         }
 
         public string Type { get; set; }
@@ -27,20 +32,6 @@ namespace Axon.Comtrade.Model
         // Propiedades adicionales para el TreeView
         public TopologyNodeModel Parent { get; set; }
 
-        public event PropertyChangedEventHandler PropertyChanged;
 
-        protected void SetProperty<T>(ref T backingStore, T value, [CallerMemberName] string propertyName = "")
-        {
-            if (!EqualityComparer<T>.Default.Equals(backingStore, value))
-            {
-                backingStore = value;
-                OnPropertyChanged(propertyName);
-            }
-        }
-
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
     }
 }
