@@ -130,22 +130,29 @@
             <Setter.Value>
                 <ControlTemplate TargetType="DataGridCell">
                     <Border Background="{TemplateBinding Background}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
-                            SnapsToDevicePixels="True">
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        SnapsToDevicePixels="True">
                         <ContentPresenter Margin="{TemplateBinding Padding}"
-                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
                     </Border>
                     <ControlTemplate.Triggers>
+                        <!-- Trigger para modo edición -->
+                        <!--<Trigger Property="IsEditing" Value="True">
+                            <Setter Property="Background" Value="red"/>
+                        </Trigger>-->
+
                         <Trigger Property="IsSelected" Value="True">
-                            <Setter Property="Background" Value="{StaticResource TableSelectionBackground}"/>
+                            <Setter Property="Background" Value="Transparent"/>
                             <Setter Property="Foreground" Value="{StaticResource TableCellForegroundSelected}"/>
                             <Setter Property="BorderBrush" Value="{StaticResource TableCellBorderSelected}"/>
                         </Trigger>
+
                         <Trigger Property="IsKeyboardFocusWithin" Value="True">
                             <Setter Property="BorderBrush" Value="{StaticResource TableCellFocusVisual}"/>
                             <Setter Property="BorderThickness" Value="2"/>
                         </Trigger>
+
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
                                 <Condition Property="IsSelected" Value="True"/>

@@ -419,6 +419,18 @@ namespace Axon.Comtrade.ViewModel
                                     new ProtocolNodeModel { Id = 3, Name = "TFTP", Type = "TFTP", Parent = topologyBahia }
                                 };
 
+            var topologyBahia2 = new TopologyNodeModel
+            {
+                Id = 2,
+                Name = "Bahía2",
+                Type = "Bahia"
+            };
+            topologyBahia2.Protocols = new List<ProtocolNodeModel>
+                                {
+                                    new ProtocolNodeModel { Id = 1, Name = "IEC-61850", Type = "IEC-61850", Parent = topologyBahia },
+                                    
+                                };
+
             var sampleData = new List<TopologyNodeModel>
         {
             new TopologyNodeModel
@@ -428,7 +440,8 @@ namespace Axon.Comtrade.ViewModel
                 Type = "Subestacion",
                 Topologies = new List<TopologyNodeModel>
                 {
-                    topologyBahia
+                    topologyBahia,
+                    topologyBahia2
                 }
             }
         };
