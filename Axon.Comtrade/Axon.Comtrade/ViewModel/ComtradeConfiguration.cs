@@ -45,7 +45,18 @@ namespace Axon.Comtrade.ViewModel
             set { _archivedListViewModel = value; }
         }
 
+        private RenameListViewModel _renameListViewModel;
 
+        public RenameListViewModel RenameListViewModel
+        {
+            get
+            {
+                if (_renameListViewModel == null)
+                    _renameListViewModel = new RenameListViewModel();
+                return _renameListViewModel;
+            }
+            set { _renameListViewModel = value; }
+        }
 
         private FrameworkElement _rootContent;
 
@@ -91,6 +102,18 @@ namespace Axon.Comtrade.ViewModel
             set { _archivedListView = value; }
         }
 
+        private RenameListView _renameListView;
+        public RenameListView RenameListView
+        {
+            get
+            {
+                if (_renameListView == null)
+                    _renameListView = new RenameListView() { DataContext = this };
+                return _renameListView;
+            }
+            set { _renameListView = value; }
+        }
+
         public void OnMenuItemSelected(string name)
         {
             switch (name)
@@ -100,6 +123,9 @@ namespace Axon.Comtrade.ViewModel
                     break;
                 case "archivado":
                     this.RootContent = ArchivedListView;
+                    break;
+                case "renombrado":
+                    this.RootContent = RenameListView;
                     break;
                 default:
                     var emptyPage = new EmptyPageView();

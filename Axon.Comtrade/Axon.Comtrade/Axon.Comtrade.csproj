@@ -60,9 +60,11 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Base\ISideBar.cs" />
+    <Compile Include="Model\RenameItemModel.cs" />
     <Compile Include="Model\ProtocolNodeModel.cs" />
     <Compile Include="Model\TopologyNodeModel.cs" />
     <Compile Include="ThemeManager.cs" />
+    <Compile Include="ViewModel\RenameListViewModel.cs" />
     <Compile Include="ViewModel\ArchivedListViewModel.cs" />
     <Compile Include="Model\ArchivedItemModel.cs" />
     <Compile Include="ViewModel\ComtradeConfiguration.cs" />
@@ -71,6 +73,9 @@
     <Compile Include="ViewModel\DeviceViewModel.cs" />
     <Compile Include="ViewModel\TopologyTreeMapper.cs" />
     <Compile Include="ViewModel\TopologyTreeViewModel.cs" />
+    <Compile Include="Views\RenameListView.xaml.cs">
+      <DependentUpon>RenameListView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ArchivedListView.xaml.cs">
       <DependentUpon>ArchivedListView.xaml</DependentUpon>
     </Compile>
@@ -101,6 +106,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\RenameListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\ArchivedListView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
