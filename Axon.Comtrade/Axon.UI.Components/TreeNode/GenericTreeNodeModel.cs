@@ -89,9 +89,13 @@ namespace Axon.UI.Components.TreeNode
 
         // Comandos
         public ICommand AddChildCommand { get; set; }
+        public ICommand RenameCommand { get; set; }
         public ICommand DeleteCommand { get; set; }
         public ICommand MoveUpCommand { get; set; }
         public ICommand MoveDownCommand { get; set; }
+        public ICommand AddDevice61850Command { get; set; }
+        public ICommand AddDeviceFTPCommand { get; set; }
+        public ICommand AddDeviceTFTPCommand { get; set; }
 
         public GenericTreeNodeModel()
         {

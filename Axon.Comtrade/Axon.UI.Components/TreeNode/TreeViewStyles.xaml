@@ -326,7 +326,7 @@
           Style="{StaticResource TreeViewMenuStyle}"
           VerticalAlignment="Center">
 
-                                             <!--MenuItem raíz con los tres puntos--> 
+                                            <!--MenuItem raíz con los tres puntos-->
                                             <MenuItem Style="{StaticResource TreeViewRootMenuItemStyle}">
                                                 <MenuItem.Header>
                                                     <Viewbox Width="20" Height="20">
@@ -337,28 +337,41 @@
                                                     </Viewbox>
                                                 </MenuItem.Header>
 
-                                                 <!--Sub-MenuItems--> 
+                                                <!--Sub-MenuItems-->
                                                 <MenuItem Style="{StaticResource TreeViewSubMenuItemStyle}" 
-                      Header="Agregar elemento" 
-                      Command="{Binding AddChildCommand}">
+                                                          Header="Agregar Topología" 
+                                                          Command="{Binding AddChildCommand}">
                                                     <MenuItem.Icon>
                                                         <Viewbox Width="16" Height="16">
                                                             <Canvas Width="24" Height="24">
                                                                 <Path Fill="{StaticResource ColorNeutralForeground1Brush}" 
-                                  Data="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z"/>
+                                                                      Data="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z"/>
                                                             </Canvas>
                                                         </Viewbox>
                                                     </MenuItem.Icon>
                                                 </MenuItem>
 
                                                 <MenuItem Style="{StaticResource TreeViewSubMenuItemStyle}" 
-                      Header="Eliminar" 
-                      Command="{Binding DeleteCommand}">
+                                                          Header="Renombrar" 
+                                                          Command="{Binding AddChildCommand}">
+                                                    <MenuItem.Icon>
+                                                        <Viewbox Width="16" Height="16">
+                                                            <Canvas Width="24" Height="24">
+                                                                <Path Fill="{StaticResource ColorNeutralForeground1Brush}" 
+                                                                      Data="M17,7H22V17H17V19A1,1 0 0,0 18,20H20V22H17.5C16.95,22 16,21.55 16,21C16,21.55 15.05,22 14.5,22H12V20H14A1,1 0 0,0 15,19V5A1,1 0 0,0 14,4H12V2H14.5C15.05,2 16,2.45 16,3C16,2.45 16.95,2 17.5,2H20V4H18A1,1 0 0,0 17,5V7M2,7H13V9H4V15H13V17H2V7M20,15V9H17V15H20Z"/>
+                                                            </Canvas>
+                                                        </Viewbox>
+                                                    </MenuItem.Icon>
+                                                </MenuItem>
+
+                                                <MenuItem Style="{StaticResource TreeViewSubMenuItemStyle}" 
+                                                          Header="Eliminar" 
+                                                          Command="{Binding DeleteCommand}">
                                                     <MenuItem.Icon>
                                                         <Viewbox Width="16" Height="16">
                                                             <Canvas Width="24" Height="24">
                                                                 <Path Fill="{StaticResource ColorStatusDangerForeground1Brush}" 
-                                  Data="M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19M8,9H16V19H8V9M15.5,4L14.5,3H9.5L8.5,4H5V6H19V4H15.5Z"/>
+                                                                      Data="M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19M8,9H16V19H8V9M15.5,4L14.5,3H9.5L8.5,4H5V6H19V4H15.5Z"/>
                                                             </Canvas>
                                                         </Viewbox>
                                                     </MenuItem.Icon>
@@ -367,6 +380,45 @@
                                                 <Separator Style="{StaticResource TreeViewMenuSeparatorStyle}"/>
 
                                                 <MenuItem Style="{StaticResource TreeViewSubMenuItemStyle}" 
+                                                          Header="Crear Dispositivo 61850" 
+                                                          Command="{Binding AddDevice61850Command}">
+                                                    <MenuItem.Icon>
+                                                        <Viewbox Width="16" Height="16">
+                                                            <Canvas Width="24" Height="24">
+                                                                <Path Fill="{StaticResource ColorNeutralForeground1Brush}" 
+                                                                      Data="M15,9H5V5H15M12,19A3,3 0 0,1 9,16A3,3 0 0,1 12,13A3,3 0 0,1 15,16A3,3 0 0,1 12,19M17,3H5C3.89,3 3,3.9 3,5V9C3,10.1 3.89,11 5,11H11V13.5C7.96,14.07 6,16.76 6,19.5V21H18V19.5C18,16.76 16.04,14.07 13,13.5V11H17C18.1,11 19,10.1 19,9V5C19,3.9 18.1,3 17,3Z"/>
+                                                            </Canvas>
+                                                        </Viewbox>
+                                                    </MenuItem.Icon>
+                                                </MenuItem>
+
+                                                <MenuItem Style="{StaticResource TreeViewSubMenuItemStyle}" 
+                                                          Header="Crear Dispositivo FTP" 
+                                                          Command="{Binding AddDeviceFTPCommand}">
+                                                    <MenuItem.Icon>
+                                                        <Viewbox Width="16" Height="16">
+                                                            <Canvas Width="24" Height="24">
+                                                                <Path Fill="{StaticResource ColorNeutralForeground1Brush}" 
+                                                                      Data="M15,9H5V5H15M12,19A3,3 0 0,1 9,16A3,3 0 0,1 12,13A3,3 0 0,1 15,16A3,3 0 0,1 12,19M17,3H5C3.89,3 3,3.9 3,5V9C3,10.1 3.89,11 5,11H11V13.5C7.96,14.07 6,16.76 6,19.5V21H18V19.5C18,16.76 16.04,14.07 13,13.5V11H17C18.1,11 19,10.1 19,9V5C19,3.9 18.1,3 17,3Z"/>
+                                                            </Canvas>
+                                                        </Viewbox>
+                                                    </MenuItem.Icon>
+                                                </MenuItem>
+
+                                                <MenuItem Style="{StaticResource TreeViewSubMenuItemStyle}" 
+                                                          Header="Crear Dispositivo TFTP" 
+                                                          Command="{Binding AddDeviceTFTPCommand}">
+                                                    <MenuItem.Icon>
+                                                        <Viewbox Width="16" Height="16">
+                                                            <Canvas Width="24" Height="24">
+                                                                <Path Fill="{StaticResource ColorNeutralForeground1Brush}" 
+                                                                      Data="M15,9H5V5H15M12,19A3,3 0 0,1 9,16A3,3 0 0,1 12,13A3,3 0 0,1 15,16A3,3 0 0,1 12,19M17,3H5C3.89,3 3,3.9 3,5V9C3,10.1 3.89,11 5,11H11V13.5C7.96,14.07 6,16.76 6,19.5V21H18V19.5C18,16.76 16.04,14.07 13,13.5V11H17C18.1,11 19,10.1 19,9V5C19,3.9 18.1,3 17,3Z"/>
+                                                            </Canvas>
+                                                        </Viewbox>
+                                                    </MenuItem.Icon>
+                                                </MenuItem>
+
+                                                <!--<MenuItem Style="{StaticResource TreeViewSubMenuItemStyle}" 
                       Header="Mover arriba" 
                       Command="{Binding MoveUpCommand}">
                                                     <MenuItem.Icon>
@@ -390,7 +442,7 @@
                                                             </Canvas>
                                                         </Viewbox>
                                                     </MenuItem.Icon>
-                                                </MenuItem>
+                                                </MenuItem>-->
                                             </MenuItem>
                                         </Menu>
                                     </StackPanel>

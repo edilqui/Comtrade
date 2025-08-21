@@ -90,7 +90,7 @@ namespace Axon.Comtrade.ViewModel
             {
                 case "IEC-61850":
                 case "FTP":
-                case "SFTP":
+                case "TFTP":
                     return TreeNodeIcons.FileNetwork;
                 default:
                     return TreeNodeIcons.None;

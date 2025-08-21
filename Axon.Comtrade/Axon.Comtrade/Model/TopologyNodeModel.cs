@@ -32,6 +32,14 @@ namespace Axon.Comtrade.Model
         // Propiedades adicionales para el TreeView
         public TopologyNodeModel Parent { get; set; }
 
-
+        internal bool ContainProtocol(string name)
+        {
+            foreach (var node in Protocols)
+            {
+                if (node.Name == name)
+                    return true;
+            }
+            return false;
+        }
     }
 }

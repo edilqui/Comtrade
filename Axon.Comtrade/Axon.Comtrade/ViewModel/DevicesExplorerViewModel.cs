@@ -7,6 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
 using System.ComponentModel;
+using Axon.Comtrade.Model;
+using Axon.UI.Components.TreeNode;
 
 namespace Axon.Comtrade.ViewModel
 {
@@ -233,15 +235,15 @@ namespace Axon.Comtrade.ViewModel
         /// </summary>
         private string GetGroupFromTopology(string topology)
         {
-            if (string.IsNullOrEmpty(topology))
-                return "Sin Grupo";
+            //if (string.IsNullOrEmpty(topology))
+            //    return "Sin Grupo";
 
-            var parts = topology.Split('/');
-            if (parts.Length >= 2)
-            {
-                // Tomar los últimos dos niveles (ej: "Bahía/IEC-61850")
-                return $"{parts[parts.Length - 2]}/{parts[parts.Length - 1]}";
-            }
+            //var parts = topology.Split('/');
+            //if (parts.Length >= 2)
+            //{
+            //    // Tomar los últimos dos niveles (ej: "Bahía/IEC-61850")
+            //    return $"{parts[parts.Length - 2]}/{parts[parts.Length - 1]}";
+            //}
 
             return topology;
         }
@@ -249,15 +251,22 @@ namespace Axon.Comtrade.ViewModel
         /// <summary>
         /// Agrega un nuevo dispositivo a la topología seleccionada
         /// </summary>
-        public void AddDevice(string name, string ip, int port, string protocol)
+        public void AddDevice(string name, string ip, int port, string protocol, GenericTreeNodeModel node = null)
         {
+            string topology = "";
+            if (node != null)
+            {
+                topology = GetTopologyPath(node);
+            }
+            else topology = SelectedTopologyPath ?? "Sin Asignar";
+
             var newDevice = new DeviceViewModel
             {
                 Name = name,
                 Ip = ip,
                 Port = port,
                 Protocol = protocol,
-                Topology = SelectedTopologyPath ?? "Sin Asignar",
+                Topology = topology,
                 IsEnabled = true
             };
 
@@ -364,12 +373,14 @@ namespace Axon.Comtrade.ViewModel
                     _gridExample = new DataGridExampleViewModel();
 
                     // Configurar eventos bidireccionales
-                    _gridExample.OnTopologyFilterCleared += () => {
+                    _gridExample.OnTopologyFilterCleared += () =>
+                    {
                         Tree?.ClearSelection();
                         SelectedTopologyPath = null;
                     };
 
-                    _gridExample.OnDeviceDeleted += (deviceItem) => {
+                    _gridExample.OnDeviceDeleted += (deviceItem) =>
+                    {
                         // Buscar y eliminar el dispositivo correspondiente
                         var deviceToRemove = AllDevices.FirstOrDefault(d =>
                             d.Name == deviceItem.DeviceName &&

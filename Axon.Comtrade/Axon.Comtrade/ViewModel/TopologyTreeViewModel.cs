@@ -1,6 +1,7 @@
 ﻿using Axon.Comtrade.Model;
 using Axon.UI.Components.Base;
 using Axon.UI.Components.TreeNode;
+using Axon.Wpf.Common.Plugins;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -9,7 +10,9 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
+using System.Xml.Linq;
 
 namespace Axon.Comtrade.ViewModel
 {
@@ -17,6 +20,10 @@ namespace Axon.Comtrade.ViewModel
     {
         private GenericTreeNodeModel _selectedNode;
         private List<TopologyNodeModel> _originalData;
+
+        const string _protocol61850 = "IEC-61850";
+        const string _protocolFTP = "FTP";
+        const string _protocolTFTP = "TFTP";
 
         public ObservableCollection<GenericTreeNodeModel> TreeNodes { get; set; }
 
@@ -48,7 +55,7 @@ namespace Axon.Comtrade.ViewModel
             DevicesExplorerViewModel = devicesExplorerViewModel;
         }
 
-        public TopologyTreeViewModel(List<TopologyNodeModel> topologyData, DevicesExplorerViewModel devicesExplorerViewModel) 
+        public TopologyTreeViewModel(List<TopologyNodeModel> topologyData, DevicesExplorerViewModel devicesExplorerViewModel)
             : this(devicesExplorerViewModel)
         {
             LoadTopologyData(topologyData);
@@ -83,6 +90,11 @@ namespace Axon.Comtrade.ViewModel
         {
             node.AddChildCommand = new RelayCommand(() => AddChildToNode(node));
             node.DeleteCommand = new RelayCommand(() => DeleteNode(node));
+            node.RenameCommand = new RelayCommand(() => RenameNode(node));
+            node.AddDevice61850Command = new RelayCommand(() => AddDevice61850(node));
+            node.AddDeviceFTPCommand = new RelayCommand(() => AddDeviceFTP(node));
+            node.AddDeviceTFTPCommand = new RelayCommand(() => AddDeviceTFTP(node));
+
             node.MoveUpCommand = new RelayCommand(() => MoveNode(node, -1));
             node.MoveDownCommand = new RelayCommand(() => MoveNode(node, 1));
 
@@ -140,18 +152,33 @@ namespace Axon.Comtrade.ViewModel
                 //}
                 //else
                 //{
-                    AddSubTopology(topology, parentNode);
+                AddSubTopology(topology, parentNode);
                 //}
             }
         }
 
-        private void AddProtocolToTopology(TopologyNodeModel topology, GenericTreeNodeModel parentNode)
+        private GenericTreeNodeModel AddProtocolToTopology(TopologyNodeModel topology, GenericTreeNodeModel parentNode, string _name = "")
         {
+            if (topology.ContainProtocol(_name))
+            {
+                foreach (var node in parentNode.Children)
+                {
+                    if (node.Title == _name)
+                        return node;
+                }
+                return null;
+
+            }
+
+            if (string.IsNullOrEmpty(_name))
+            {
+                _name = $"Nuevo Protocolo {topology.Protocols.Count + 1}";
+            }
             var newProtocol = new ProtocolNodeModel
             {
                 Id = GetNextProtocolId(),
-                Name = $"Nuevo Protocolo {topology.Protocols.Count + 1}",
-                Type = "IEC-61850",
+                Name = _name,
+                Type = _name,
                 Parent = topology
             };
 
@@ -169,6 +196,8 @@ namespace Axon.Comtrade.ViewModel
             SetupNodeCommands(protocolTreeNode);
             parentNode.Children.Add(protocolTreeNode);
             parentNode.IsExpanded = true;
+
+            return protocolTreeNode;
         }
 
         private void AddSubTopology(TopologyNodeModel parentTopology, GenericTreeNodeModel parentNode)
@@ -204,6 +233,42 @@ namespace Axon.Comtrade.ViewModel
             return topology.Type?.ToLower() == "bahia" ||
                    (topology.Topologies.Count > 0 && topology.Protocols.Count < 5);
         }
+
+        private void RenameNode(GenericTreeNodeModel node)
+        {
+            MessageBox.Show("Renombrar... TODO");
+        }
+
+        private void AddDevice61850(GenericTreeNodeModel node)
+        {
+            if (node?.Tag is TopologyNodeModel selectedTopology)
+            {
+                var newNodeProtocol = AddProtocolToTopology(selectedTopology, node, _protocol61850);
+                string name = "Device" + this.DevicesExplorerViewModel.AllDevices.Count;
+                this.DevicesExplorerViewModel.AddDevice(name, "127.0.0.1", 501, _protocol61850, newNodeProtocol);
+            }
+        }
+
+        private void AddDeviceFTP(GenericTreeNodeModel node)
+        {
+            if (node?.Tag is TopologyNodeModel selectedTopology)
+            {
+                var newNodeProtocol = AddProtocolToTopology(selectedTopology, node, _protocolFTP);
+                string name = "Device" + this.DevicesExplorerViewModel.AllDevices.Count;
+                this.DevicesExplorerViewModel.AddDevice(name, "127.0.0.1", 501, _protocolFTP, newNodeProtocol);
+            }
+        }
+
+        private void AddDeviceTFTP(GenericTreeNodeModel node)
+        {
+            if (node?.Tag is TopologyNodeModel selectedTopology)
+            {
+                var newNodeProtocol = AddProtocolToTopology(selectedTopology, node, _protocolTFTP);
+                string name = "Device" + this.DevicesExplorerViewModel.AllDevices.Count;
+                this.DevicesExplorerViewModel.AddDevice(name, "127.0.0.1", 501, _protocolTFTP, newNodeProtocol);
+            }
+        }
+
 
         private void DeleteNode(GenericTreeNodeModel node)
         {
@@ -341,6 +406,19 @@ namespace Axon.Comtrade.ViewModel
 
         private void LoadSampleData()
         {
+            var topologyBahia = new TopologyNodeModel
+            {
+                Id = 2,
+                Name = "Bahía",
+                Type = "Bahia"
+            };
+            topologyBahia.Protocols = new List<ProtocolNodeModel>
+                                {
+                                    new ProtocolNodeModel { Id = 1, Name = "IEC-61850", Type = "IEC-61850", Parent = topologyBahia },
+                                    new ProtocolNodeModel { Id = 2, Name = "FTP", Type = "FTP", Parent = topologyBahia },
+                                    new ProtocolNodeModel { Id = 3, Name = "TFTP", Type = "TFTP", Parent = topologyBahia }
+                                };
+
             var sampleData = new List<TopologyNodeModel>
         {
             new TopologyNodeModel
@@ -350,18 +428,7 @@ namespace Axon.Comtrade.ViewModel
                 Type = "Subestacion",
                 Topologies = new List<TopologyNodeModel>
                 {
-                    new TopologyNodeModel
-                    {
-                        Id = 2,
-                        Name = "Bahía",
-                        Type = "Bahia",
-                        Protocols = new List<ProtocolNodeModel>
-                                {
-                                    new ProtocolNodeModel { Id = 1, Name = "IEC-61850", Type = "IEC-61850" },
-                                    new ProtocolNodeModel { Id = 2, Name = "FTP", Type = "FTP" },
-                                    new ProtocolNodeModel { Id = 3, Name = "TFTP", Type = "TFTP" }
-                                }
-                    }
+                    topologyBahia
                 }
             }
         };
@@ -370,9 +437,9 @@ namespace Axon.Comtrade.ViewModel
         }
 
         // Evento para notificar cambios a tu aplicación
-        public event Action<List<TopologyNodeModel>> OnDataChanged;       
+        public event Action<List<TopologyNodeModel>> OnDataChanged;
 
-       
+
         /// <summary>
         /// Notifica cuando cambia la selección del nodo
         /// </summary>
