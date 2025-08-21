@@ -34,6 +34,16 @@ namespace Axon.Comtrade.ViewModel
             set { _devicesExplorerViewModel = value; }
         }
 
+        private ArchivedListViewModel _archivedListViewModel;
+
+        public ArchivedListViewModel ArchivedListViewModel
+        {
+            get { 
+                if(_archivedListViewModel == null)
+                    _archivedListViewModel = new ArchivedListViewModel();
+                return _archivedListViewModel; }
+            set { _archivedListViewModel = value; }
+        }
 
 
 
@@ -69,6 +79,18 @@ namespace Axon.Comtrade.ViewModel
             set { _devicesExplorerView = value; }
         }
 
+        private ArchivedListView _archivedListView;
+        public ArchivedListView ArchivedListView
+        {
+            get
+            {
+                if (_archivedListView == null)
+                    _archivedListView = new ArchivedListView() { DataContext = this };
+                return _archivedListView;
+            }
+            set { _archivedListView = value; }
+        }
+
         public void OnMenuItemSelected(string name)
         {
             switch (name)
@@ -76,10 +98,13 @@ namespace Axon.Comtrade.ViewModel
                 case "devices":
                     this.RootContent = DevicesExplorerView;
                     break;
+                case "archivado":
+                    this.RootContent = ArchivedListView;
+                    break;
                 default:
                     var emptyPage = new EmptyPageView();
                     emptyPage.UpdateContent(
-                        "Configuración",
+                        name,
                         "La página de configuración está en desarrollo.",
                         true,
                         "Volver al inicio"

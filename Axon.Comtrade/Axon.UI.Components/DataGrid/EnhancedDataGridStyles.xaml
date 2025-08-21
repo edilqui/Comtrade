@@ -119,6 +119,7 @@
         </Setter>
     </Style>
 
+    
     <!-- Estilo para las celdas -->
     <Style x:Key="EnhancedDataGridCellStyle" TargetType="DataGridCell">
         <Setter Property="Background" Value="Transparent"/>
@@ -166,6 +167,40 @@
             </Setter.Value>
         </Setter>
     </Style>
+    
+    <!-- estilo específico para las celdas de acciones en tu ResourceDictionary -->
+    <Style x:Key="ActionCellStyle" TargetType="DataGridCell" BasedOn="{StaticResource EnhancedDataGridCellStyle}">
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="DataGridCell">
+                    <Border Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        SnapsToDevicePixels="True">
+                        <ContentPresenter Margin="{TemplateBinding Padding}"
+                                      HorizontalAlignment="Center"
+                                      VerticalAlignment="Center"
+                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" Value="Transparent"/>
+                            <Setter Property="Foreground" Value="{StaticResource TableCellForegroundSelected}"/>
+                            <Setter Property="BorderBrush" Value="{StaticResource TableCellBorderSelected}"/>
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                            <Setter Property="BorderBrush" Value="{StaticResource TableCellFocusVisual}"/>
+                            <Setter Property="BorderThickness" Value="2"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
 
     <!-- Estilo para las filas -->
     <Style x:Key="EnhancedDataGridRowStyle" TargetType="DataGridRow">
