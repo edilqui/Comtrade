@@ -64,6 +64,9 @@
     <Compile Include="TextBox\AxonTextBox.xaml.cs">
       <DependentUpon>AxonTextBox.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ToogleButton\AxonToggleButton.xaml.cs">
+      <DependentUpon>AxonToggleButton.xaml</DependentUpon>
+    </Compile>
     <Compile Include="TreeNode\GenericTreeNodeModel.cs" />
     <Compile Include="TreeNode\GenericTreeViewModel.cs" />
     <Compile Include="TreeNode\LevelToIndentConverter.cs" />
@@ -86,6 +89,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="TextBox\AxonTextBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ToogleButton\AxonToggleButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -1,0 +1,92 @@
+﻿<UserControl x:Class="Axon.UI.Components.AxonToggleButton"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             x:Name="ToggleButtonRoot">
+
+    <UserControl.Resources>
+        <!-- Estilo para el botón invisible que captura el click -->
+        <Style x:Key="InvisibleButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                            VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Cursor" Value="Arrow"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+
+    <StackPanel Orientation="Vertical">
+        <!-- Label superior -->
+        <TextBlock Text="{Binding Label, ElementName=ToggleButtonRoot}"
+                   FontSize="14"
+                   FontWeight="Medium"
+                   Foreground="{DynamicResource ColorNeutralForeground1Brush}"
+                   Margin="0,0,0,4"/>
+
+        <!-- Contenedor principal del toggle -->
+        <Grid>
+            <Button Style="{StaticResource InvisibleButtonStyle}"
+                    Command="{Binding ToggleCommand, ElementName=ToggleButtonRoot}"
+                    IsEnabled="{Binding IsEnabled, ElementName=ToggleButtonRoot}"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center">
+
+                <StackPanel Orientation="Horizontal" 
+                           VerticalAlignment="Center">
+
+                    <!-- Switch visual -->
+                    <Border Width="44" 
+                            Height="24" 
+                            CornerRadius="12"
+                            Background="{Binding SwitchBackground, ElementName=ToggleButtonRoot}"
+                            BorderThickness="1"
+                            BorderBrush="{DynamicResource ColorNeutralStroke2Brush}"
+                            Margin="0,0,12,0">
+
+                        <Canvas>
+                            <!-- Círculo del switch -->
+                            <Ellipse x:Name="SwitchCircle"
+                                   Width="20" 
+                                   Height="20"
+                                   Fill="White"
+                                   Canvas.Left="{Binding CirclePosition, ElementName=ToggleButtonRoot}"
+                                   Canvas.Top="2">
+                                <Ellipse.Effect>
+                                    <DropShadowEffect Color="Black" 
+                                                    Direction="270" 
+                                                    ShadowDepth="1" 
+                                                    Opacity="0.3" 
+                                                    BlurRadius="2"/>
+                                </Ellipse.Effect>
+                            </Ellipse>
+                        </Canvas>
+                    </Border>
+
+                    <!-- Texto del estado -->
+                    <TextBlock Text="{Binding CurrentText, ElementName=ToggleButtonRoot}"
+                               Foreground="{Binding CurrentTextColor, ElementName=ToggleButtonRoot}"
+                               FontSize="14"
+                               FontWeight="Medium"
+                               VerticalAlignment="Center"/>
+                </StackPanel>
+            </Button>
+        </Grid>
+    </StackPanel>
+</UserControl>

@@ -373,6 +373,15 @@
     <Thickness x:Key="MarginXXL">24</Thickness>
     <Thickness x:Key="MarginXXXL">32</Thickness>
 
+    <Thickness x:Key="MarginXXSHorizontal">2</Thickness>
+    <Thickness x:Key="MarginXSHorizontal">4</Thickness>
+    <Thickness x:Key="MarginSNudgeHorizontal">6,0</Thickness>
     <Thickness x:Key="MarginSHorizontal">8,0</Thickness>
+    <Thickness x:Key="MarginMNudgeHorizontal">10,0</Thickness>
+    <Thickness x:Key="MarginMHorizontal">12,0</Thickness>
+    <Thickness x:Key="MarginLHorizontal">16,0</Thickness>
+    <Thickness x:Key="MarginXLHorizontal">20,0</Thickness>
+    <Thickness x:Key="MarginXXLHorizontal">24,0</Thickness>
+    <Thickness x:Key="MarginXXXLHorizontal">32,0</Thickness>
 
 </ResourceDictionary>
