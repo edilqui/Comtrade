@@ -1,15 +1,19 @@
-﻿using System;
+﻿using Axon.UI.Components.Base;
+using System;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 
 namespace Axon.UI.Components
 {
+    [ContentProperty("Items")] // Permite contenido directo en XAML
     public partial class AxonTabControl : UserControl, INotifyPropertyChanged
     {
         private Storyboard _indicatorAnimation;
@@ -17,13 +21,41 @@ namespace Axon.UI.Components
         public AxonTabControl()
         {
             InitializeComponent();
-            TabItems = new ObservableCollection<AxonTabItem>();
-            SelectTabCommand = new RelayCommand<AxonTabItem>(SelectTab);
+            Items = new ObservableCollection<AxonTabItem>();
+            SelectTabCommand = new DelegateCommand<AxonTabItem>(SelectTab);
 
+            Items.CollectionChanged += Items_CollectionChanged;
             Loaded += OnLoaded;
         }
 
         #region Dependency Properties
+
+        // Items Property para soporte XAML
+        public static readonly DependencyProperty ItemsProperty =
+            DependencyProperty.Register(nameof(Items), typeof(ObservableCollection<AxonTabItem>),
+                typeof(AxonTabControl), new PropertyMetadata(null, OnItemsChanged));
+
+        public ObservableCollection<AxonTabItem> Items
+        {
+            get => (ObservableCollection<AxonTabItem>)GetValue(ItemsProperty);
+            set => SetValue(ItemsProperty, value);
+        }
+
+        private static void OnItemsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is AxonTabControl control)
+            {
+                if (e.OldValue is ObservableCollection<AxonTabItem> oldItems)
+                {
+                    oldItems.CollectionChanged -= control.Items_CollectionChanged;
+                }
+
+                if (e.NewValue is ObservableCollection<AxonTabItem> newItems)
+                {
+                    newItems.CollectionChanged += control.Items_CollectionChanged;
+                }
+            }
+        }
 
         // SelectedIndex Property
         public static readonly DependencyProperty SelectedIndexProperty =
@@ -51,9 +83,10 @@ namespace Axon.UI.Components
 
         #endregion
 
-        #region Properties
+        #region Properties (Backward compatibility)
 
-        public ObservableCollection<AxonTabItem> TabItems { get; private set; }
+        [Obsolete("Use Items property instead")]
+        public ObservableCollection<AxonTabItem> TabItems => Items;
 
         public ICommand SelectTabCommand { get; private set; }
 
@@ -68,6 +101,23 @@ namespace Axon.UI.Components
 
         #region Event Handlers
 
+        private void Items_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (Items.Count > 0 && SelectedIndex < 0)
+            {
+                SelectedIndex = 0;
+            }
+            else if (SelectedIndex >= Items.Count)
+            {
+                SelectedIndex = Math.Max(0, Items.Count - 1);
+            }
+
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                UpdateIndicatorPosition(false);
+            }), System.Windows.Threading.DispatcherPriority.Loaded);
+        }
+
         private static void OnSelectedIndexChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (d is AxonTabControl control)
@@ -80,12 +130,15 @@ namespace Axon.UI.Components
         {
             _indicatorAnimation = (Storyboard)Resources["IndicatorMoveAnimation"];
 
-            if (TabItems.Count > 0 && SelectedIndex < 0)
+            if (Items.Count > 0 && SelectedIndex < 0)
             {
                 SelectedIndex = 0;
             }
 
-            UpdateIndicatorPosition(false);
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                UpdateIndicatorPosition(false);
+            }), System.Windows.Threading.DispatcherPriority.Loaded);
         }
 
         #endregion
@@ -97,18 +150,17 @@ namespace Axon.UI.Components
             if (tabItem == null || !tabItem.IsEnabled) return;
 
             var oldIndex = SelectedIndex;
-            var newIndex = TabItems.IndexOf(tabItem);
+            var newIndex = Items.IndexOf(tabItem);
 
             if (newIndex >= 0 && newIndex != oldIndex)
             {
                 SelectedIndex = newIndex;
 
-                // Disparar evento de cambio de selección
                 SelectionChanged?.Invoke(this, new TabSelectionChangedEventArgs
                 {
                     OldIndex = oldIndex,
                     NewIndex = newIndex,
-                    OldTabItem = oldIndex >= 0 && oldIndex < TabItems.Count ? TabItems[oldIndex] : null,
+                    OldTabItem = oldIndex >= 0 && oldIndex < Items.Count ? Items[oldIndex] : null,
                     NewTabItem = tabItem
                 });
             }
@@ -116,16 +168,14 @@ namespace Axon.UI.Components
 
         private void UpdateSelectedTab()
         {
-            // Deseleccionar todos los tabs
-            foreach (var tab in TabItems)
+            foreach (var tab in Items)
             {
                 tab.IsSelected = false;
             }
 
-            // Seleccionar el tab actual
-            if (SelectedIndex >= 0 && SelectedIndex < TabItems.Count)
+            if (SelectedIndex >= 0 && SelectedIndex < Items.Count)
             {
-                var selectedTab = TabItems[SelectedIndex];
+                var selectedTab = Items[SelectedIndex];
                 selectedTab.IsSelected = true;
                 SelectedTabItem = selectedTab;
             }
@@ -134,13 +184,17 @@ namespace Axon.UI.Components
                 SelectedTabItem = null;
             }
 
-            UpdateIndicatorPosition(true);
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                UpdateIndicatorPosition(true);
+            }), System.Windows.Threading.DispatcherPriority.Render);
+
             OnPropertyChanged(nameof(SelectedTabItem));
         }
 
         private void UpdateIndicatorPosition(bool animate)
         {
-            if (SelectedIndex < 0 || SelectedIndex >= TabItems.Count)
+            if (SelectedIndex < 0 || SelectedIndex >= Items.Count)
             {
                 SelectedIndicator.Visibility = Visibility.Hidden;
                 return;
@@ -148,9 +202,15 @@ namespace Axon.UI.Components
 
             SelectedIndicator.Visibility = Visibility.Visible;
 
-            // Calcular posición del indicador
             var containerPanel = GetTabHeadersPanel();
-            if (containerPanel == null) return;
+            if (containerPanel == null)
+            {
+                Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    UpdateIndicatorPosition(animate);
+                }), System.Windows.Threading.DispatcherPriority.ApplicationIdle);
+                return;
+            }
 
             var targetButton = GetTabButton(SelectedIndex);
             if (targetButton == null) return;
@@ -159,9 +219,8 @@ namespace Axon.UI.Components
             var targetLeft = buttonPosition.X;
             var targetWidth = targetButton.ActualWidth;
 
-            if (animate && _indicatorAnimation != null)
+            if (animate && _indicatorAnimation != null && targetLeft >= 0)
             {
-                // Animar el movimiento del indicador
                 var moveAnimation = _indicatorAnimation.Children.OfType<DoubleAnimation>()
                     .FirstOrDefault(a => a.Name == "IndicatorMoveX");
                 var resizeAnimation = _indicatorAnimation.Children.OfType<DoubleAnimation>()
@@ -183,7 +242,6 @@ namespace Axon.UI.Components
             }
             else
             {
-                // Posicionar directamente sin animación
                 Canvas.SetLeft(SelectedIndicator, targetLeft);
                 SelectedIndicator.Width = targetWidth;
             }
@@ -191,18 +249,20 @@ namespace Axon.UI.Components
 
         private Panel GetTabHeadersPanel()
         {
-            if (TabHeadersContainer.ItemsSource is System.Collections.IEnumerable)
+            try
             {
                 return VisualTreeHelperExtensions.FindChild<StackPanel>(TabHeadersContainer);
-                //return TabHeadersContainer.FindChild<StackPanel>();
             }
-            return null;
+            catch
+            {
+                return null;
+            }
         }
 
         private Button GetTabButton(int index)
         {
             var containerPanel = GetTabHeadersPanel();
-            if (containerPanel != null && index < containerPanel.Children.Count)
+            if (containerPanel != null && index >= 0 && index < containerPanel.Children.Count)
             {
                 return containerPanel.Children[index] as Button;
             }
@@ -222,34 +282,20 @@ namespace Axon.UI.Components
                 ContentTemplate = contentTemplate
             };
 
-            TabItems.Add(tabItem);
-
-            if (TabItems.Count == 1)
-            {
-                SelectedIndex = 0;
-            }
+            Items.Add(tabItem);
         }
 
         public void RemoveTab(int index)
         {
-            if (index >= 0 && index < TabItems.Count)
+            if (index >= 0 && index < Items.Count)
             {
-                TabItems.RemoveAt(index);
-
-                if (SelectedIndex >= TabItems.Count)
-                {
-                    SelectedIndex = TabItems.Count - 1;
-                }
+                Items.RemoveAt(index);
             }
         }
 
         public void RemoveTab(AxonTabItem tabItem)
         {
-            var index = TabItems.IndexOf(tabItem);
-            if (index >= 0)
-            {
-                RemoveTab(index);
-            }
+            Items.Remove(tabItem);
         }
 
         protected virtual void OnPropertyChanged(string propertyName)
@@ -260,10 +306,8 @@ namespace Axon.UI.Components
         #endregion
     }
 
-    #region Helper Classes
-
     /// <summary>
-    /// Argumentos para el evento SelectionChanged
+    /// Argumentos para el evento SelectionChanged del AxonTabControl
     /// </summary>
     public class TabSelectionChangedEventArgs : EventArgs
     {
@@ -272,37 +316,4 @@ namespace Axon.UI.Components
         public AxonTabItem OldTabItem { get; set; }
         public AxonTabItem NewTabItem { get; set; }
     }
-
-    /// <summary>
-    /// Comando simple para MVVM
-    /// </summary>
-    public class RelayCommand<T> : ICommand
-    {
-        private readonly Action<T> _execute;
-        private readonly Func<T, bool> _canExecute;
-
-        public RelayCommand(Action<T> execute, Func<T, bool> canExecute = null)
-        {
-            _execute = execute ?? throw new ArgumentNullException(nameof(execute));
-            _canExecute = canExecute;
-        }
-
-        public event EventHandler CanExecuteChanged
-        {
-            add { CommandManager.RequerySuggested += value; }
-            remove { CommandManager.RequerySuggested -= value; }
-        }
-
-        public bool CanExecute(object parameter)
-        {
-            return _canExecute?.Invoke((T)parameter) ?? true;
-        }
-
-        public void Execute(object parameter)
-        {
-            _execute((T)parameter);
-        }
-    }
-
-    #endregion
 }

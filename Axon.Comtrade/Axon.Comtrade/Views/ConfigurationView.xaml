@@ -15,10 +15,10 @@
             <RowDefinition />
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <axonUI:AxonTabControl x:Name="MainTabControl" Grid.Row="1"
+        <axonUI:AxonTabControl x:Name="MainTabControl" 
                     SelectedIndex="0"
                     SelectionChanged="OnTabChanged"/>
-        <StackPanel Margin="20" Grid.Row="0">
+        <StackPanel Margin="20" Grid.Row="1">
 
             <!-- Ejemplo 1: Con Label y Unidades -->
             <axonUI:AxonTextBox Label="Timeout (mseg)"

@@ -1,8 +1,4 @@
-﻿<!-- ==================================================================== -->
-<!-- AxonTabControl.xaml - UserControl Principal -->
-<!-- ==================================================================== -->
-
-<UserControl x:Class="Axon.UI.Components.AxonTabControl"
+﻿<UserControl x:Class="Axon.UI.Components.AxonTabControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -93,7 +89,7 @@
             <Grid>
                 <!-- Contenedor de botones de tab -->
                 <ItemsControl x:Name="TabHeadersContainer"
-                            ItemsSource="{Binding TabItems, ElementName=AxonTabControlRoot}">
+                            ItemsSource="{Binding Items, ElementName=AxonTabControlRoot}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <StackPanel Orientation="Horizontal"/>
