@@ -15,9 +15,35 @@
             <RowDefinition />
             <RowDefinition/>
         </Grid.RowDefinitions>
+        
         <axonUI:AxonTabControl x:Name="MainTabControl" 
-                    SelectedIndex="0"
-                    SelectionChanged="OnTabChanged"/>
+            SelectedIndex="1"
+            SelectionChanged="OnTabChanged">
+            <axonUI:AxonTabItem Header="Comunicación">
+                <axonUI:AxonTabItem.Content>
+                    <views:EmptyPageView />
+                </axonUI:AxonTabItem.Content>
+            </axonUI:AxonTabItem>
+
+            <axonUI:AxonTabItem Header="Recolección">
+                <axonUI:AxonTabItem.Content>
+                    <TextBlock Text="Contenido de Recolección" />
+                </axonUI:AxonTabItem.Content>
+            </axonUI:AxonTabItem>
+
+            <axonUI:AxonTabItem Header="Reglas">
+                <axonUI:AxonTabItem.Content>
+                    <TextBlock Text="Contenido de Reglas" />
+                </axonUI:AxonTabItem.Content>
+            </axonUI:AxonTabItem>
+
+            <axonUI:AxonTabItem Header="Análisis">
+                <axonUI:AxonTabItem.Content>
+                    <TextBlock Text="Contenido de Análisis" />
+                </axonUI:AxonTabItem.Content>
+            </axonUI:AxonTabItem>
+
+        </axonUI:AxonTabControl>
         <StackPanel Margin="20" Grid.Row="1">
 
             <!-- Ejemplo 1: Con Label y Unidades -->

@@ -29,10 +29,10 @@ namespace Axon.Comtrade.Views
 
         private void InitTab()
         {
-            MainTabControl.AddTab("Comunicación", new EmptyPageView());
-            MainTabControl.AddTab("Recolección", null);
-            MainTabControl.AddTab("Reglas", null);
-            MainTabControl.AddTab("Análisis", null);
+            //MainTabControl.AddTab("Comunicación", new EmptyPageView());
+            //MainTabControl.AddTab("Recolección", null);
+            //MainTabControl.AddTab("Reglas", null);
+            //MainTabControl.AddTab("Análisis", null);
         }
 
         private void OnTabChanged(object sender, TabSelectionChangedEventArgs e)

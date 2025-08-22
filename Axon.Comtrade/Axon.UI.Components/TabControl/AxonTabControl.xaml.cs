@@ -10,13 +10,15 @@ using System.Windows.Input;
 using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using System.Windows.Threading;
 
 namespace Axon.UI.Components
 {
-    [ContentProperty("Items")] // Permite contenido directo en XAML
+    [ContentProperty("Items")]
     public partial class AxonTabControl : UserControl, INotifyPropertyChanged
     {
         private Storyboard _indicatorAnimation;
+        private bool _isLoaded = false;
 
         public AxonTabControl()
         {
@@ -26,11 +28,11 @@ namespace Axon.UI.Components
 
             Items.CollectionChanged += Items_CollectionChanged;
             Loaded += OnLoaded;
+            SizeChanged += OnSizeChanged;
         }
 
         #region Dependency Properties
 
-        // Items Property para soporte XAML
         public static readonly DependencyProperty ItemsProperty =
             DependencyProperty.Register(nameof(Items), typeof(ObservableCollection<AxonTabItem>),
                 typeof(AxonTabControl), new PropertyMetadata(null, OnItemsChanged));
@@ -57,7 +59,6 @@ namespace Axon.UI.Components
             }
         }
 
-        // SelectedIndex Property
         public static readonly DependencyProperty SelectedIndexProperty =
             DependencyProperty.Register(nameof(SelectedIndex), typeof(int), typeof(AxonTabControl),
                 new PropertyMetadata(-1, OnSelectedIndexChanged));
@@ -68,7 +69,6 @@ namespace Axon.UI.Components
             set => SetValue(SelectedIndexProperty, value);
         }
 
-        // SelectedTabItem Property (readonly)
         private static readonly DependencyPropertyKey SelectedTabItemPropertyKey =
             DependencyProperty.RegisterReadOnly(nameof(SelectedTabItem), typeof(AxonTabItem), typeof(AxonTabControl),
                 new PropertyMetadata(null));
@@ -83,7 +83,7 @@ namespace Axon.UI.Components
 
         #endregion
 
-        #region Properties (Backward compatibility)
+        #region Properties
 
         [Obsolete("Use Items property instead")]
         public ObservableCollection<AxonTabItem> TabItems => Items;
@@ -112,10 +112,12 @@ namespace Axon.UI.Components
                 SelectedIndex = Math.Max(0, Items.Count - 1);
             }
 
+            // Actualizar indicador después de que el layout se complete
+            InvalidateVisual();
             Dispatcher.BeginInvoke(new Action(() =>
             {
                 UpdateIndicatorPosition(false);
-            }), System.Windows.Threading.DispatcherPriority.Loaded);
+            }), DispatcherPriority.Loaded);
         }
 
         private static void OnSelectedIndexChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -128,6 +130,7 @@ namespace Axon.UI.Components
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
+            _isLoaded = true;
             _indicatorAnimation = (Storyboard)Resources["IndicatorMoveAnimation"];
 
             if (Items.Count > 0 && SelectedIndex < 0)
@@ -135,10 +138,27 @@ namespace Axon.UI.Components
                 SelectedIndex = 0;
             }
 
+            // Múltiples intentos para asegurar que el indicador se posicione correctamente
             Dispatcher.BeginInvoke(new Action(() =>
             {
                 UpdateIndicatorPosition(false);
-            }), System.Windows.Threading.DispatcherPriority.Loaded);
+            }), DispatcherPriority.Loaded);
+
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                UpdateIndicatorPosition(false);
+            }), DispatcherPriority.ApplicationIdle);
+        }
+
+        private void OnSizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            if (_isLoaded)
+            {
+                Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    UpdateIndicatorPosition(false);
+                }), DispatcherPriority.ApplicationIdle);
+            }
         }
 
         #endregion
@@ -184,66 +204,102 @@ namespace Axon.UI.Components
                 SelectedTabItem = null;
             }
 
+            // Forzar actualización del layout antes de mover el indicador
+            UpdateLayout();
+
             Dispatcher.BeginInvoke(new Action(() =>
             {
                 UpdateIndicatorPosition(true);
-            }), System.Windows.Threading.DispatcherPriority.Render);
+            }), DispatcherPriority.Render);
 
             OnPropertyChanged(nameof(SelectedTabItem));
         }
 
         private void UpdateIndicatorPosition(bool animate)
         {
-            if (SelectedIndex < 0 || SelectedIndex >= Items.Count)
+            if (!_isLoaded || SelectedIndex < 0 || SelectedIndex >= Items.Count)
             {
-                SelectedIndicator.Visibility = Visibility.Hidden;
+                if (SelectedIndicator != null)
+                {
+                    SelectedIndicator.Visibility = Visibility.Hidden;
+                }
                 return;
             }
 
-            SelectedIndicator.Visibility = Visibility.Visible;
+            if (SelectedIndicator != null)
+            {
+                SelectedIndicator.Visibility = Visibility.Visible;
+            }
 
             var containerPanel = GetTabHeadersPanel();
             if (containerPanel == null)
             {
+                // Reintentar después de un breve delay
                 Dispatcher.BeginInvoke(new Action(() =>
                 {
                     UpdateIndicatorPosition(animate);
-                }), System.Windows.Threading.DispatcherPriority.ApplicationIdle);
+                }), DispatcherPriority.ApplicationIdle);
                 return;
             }
 
             var targetButton = GetTabButton(SelectedIndex);
-            if (targetButton == null) return;
-
-            var buttonPosition = targetButton.TranslatePoint(new Point(0, 0), containerPanel);
-            var targetLeft = buttonPosition.X;
-            var targetWidth = targetButton.ActualWidth;
-
-            if (animate && _indicatorAnimation != null && targetLeft >= 0)
+            if (targetButton == null || targetButton.ActualWidth == 0)
             {
-                var moveAnimation = _indicatorAnimation.Children.OfType<DoubleAnimation>()
-                    .FirstOrDefault(a => a.Name == "IndicatorMoveX");
-                var resizeAnimation = _indicatorAnimation.Children.OfType<DoubleAnimation>()
-                    .FirstOrDefault(a => a.Name == "IndicatorResizeWidth");
-
-                if (moveAnimation != null)
+                // Si el botón no está renderizado aún, reintentar
+                Dispatcher.BeginInvoke(new Action(() =>
                 {
-                    moveAnimation.From = Canvas.GetLeft(SelectedIndicator);
-                    moveAnimation.To = targetLeft;
-                }
-
-                if (resizeAnimation != null)
-                {
-                    resizeAnimation.From = SelectedIndicator.Width;
-                    resizeAnimation.To = targetWidth;
-                }
-
-                _indicatorAnimation.Begin();
+                    UpdateIndicatorPosition(animate);
+                }), DispatcherPriority.ApplicationIdle);
+                return;
             }
-            else
+
+            try
             {
-                Canvas.SetLeft(SelectedIndicator, targetLeft);
-                SelectedIndicator.Width = targetWidth;
+                var buttonPosition = targetButton.TranslatePoint(new Point(0, 0), containerPanel);
+                var targetLeft = buttonPosition.X;
+                var targetWidth = targetButton.ActualWidth;
+
+                System.Diagnostics.Debug.WriteLine($"Moviendo indicador: Left={targetLeft}, Width={targetWidth}, Index={SelectedIndex}");
+
+                if (animate && _indicatorAnimation != null && targetLeft >= 0)
+                {
+                    var moveAnimation = _indicatorAnimation.Children.OfType<DoubleAnimation>()
+                        .FirstOrDefault(a => a.Name == "IndicatorMoveX");
+                    var resizeAnimation = _indicatorAnimation.Children.OfType<DoubleAnimation>()
+                        .FirstOrDefault(a => a.Name == "IndicatorResizeWidth");
+
+                    if (moveAnimation != null)
+                    {
+                        var currentLeft = Canvas.GetLeft(SelectedIndicator);
+                        if (double.IsNaN(currentLeft)) currentLeft = 0;
+
+                        moveAnimation.From = currentLeft;
+                        moveAnimation.To = targetLeft;
+                    }
+
+                    if (resizeAnimation != null)
+                    {
+                        var currentWidth = SelectedIndicator.Width;
+                        if (double.IsNaN(currentWidth) || currentWidth == 0) currentWidth = 80;
+
+                        resizeAnimation.From = currentWidth;
+                        resizeAnimation.To = targetWidth;
+                    }
+
+                    _indicatorAnimation.Begin();
+                }
+                else
+                {
+                    Canvas.SetLeft(SelectedIndicator, targetLeft);
+                    SelectedIndicator.Width = targetWidth;
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error al actualizar indicador: {ex.Message}");
+                // En caso de error, intentar posicionamiento directo
+                Canvas.SetLeft(SelectedIndicator, 0);
+                SelectedIndicator.Width = 80;
             }
         }
 
@@ -251,6 +307,18 @@ namespace Axon.UI.Components
         {
             try
             {
+                if (TabHeadersContainer?.ItemContainerGenerator != null)
+                {
+                    // Método alternativo: buscar en el ItemsControl
+                    var presenter = VisualTreeHelperExtensions.FindChild<ItemsPresenter>(TabHeadersContainer);
+                    if (presenter != null)
+                    {
+                        var panel = VisualTreeHelperExtensions.FindChild<StackPanel>(presenter);
+                        if (panel != null) return panel;
+                    }
+                }
+
+                // Método original como fallback
                 return VisualTreeHelperExtensions.FindChild<StackPanel>(TabHeadersContainer);
             }
             catch
@@ -261,11 +329,30 @@ namespace Axon.UI.Components
 
         private Button GetTabButton(int index)
         {
-            var containerPanel = GetTabHeadersPanel();
-            if (containerPanel != null && index >= 0 && index < containerPanel.Children.Count)
+            try
             {
-                return containerPanel.Children[index] as Button;
+                var containerPanel = GetTabHeadersPanel();
+                if (containerPanel != null && index >= 0 && index < containerPanel.Children.Count)
+                {
+                    var button = containerPanel.Children[index] as Button;
+                    if (button != null && button.IsLoaded)
+                    {
+                        return button;
+                    }
+                }
+
+                // Método alternativo usando ItemContainerGenerator
+                if (TabHeadersContainer?.ItemContainerGenerator != null && index < Items.Count)
+                {
+                    var container = TabHeadersContainer.ItemContainerGenerator.ContainerFromIndex(index);
+                    return VisualTreeHelperExtensions.FindChild<Button>(container as DependencyObject);
+                }
             }
+            catch
+            {
+                // Ignorar errores
+            }
+
             return null;
         }
 
@@ -296,6 +383,21 @@ namespace Axon.UI.Components
         public void RemoveTab(AxonTabItem tabItem)
         {
             Items.Remove(tabItem);
+        }
+
+        /// <summary>
+        /// Fuerza la actualización del indicador
+        /// </summary>
+        public void RefreshIndicator()
+        {
+            if (_isLoaded)
+            {
+                UpdateLayout();
+                Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    UpdateIndicatorPosition(false);
+                }), DispatcherPriority.ApplicationIdle);
+            }
         }
 
         protected virtual void OnPropertyChanged(string propertyName)
