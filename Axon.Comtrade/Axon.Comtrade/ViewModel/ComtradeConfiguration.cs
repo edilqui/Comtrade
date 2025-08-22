@@ -114,6 +114,18 @@ namespace Axon.Comtrade.ViewModel
             set { _renameListView = value; }
         }
 
+        private ConfigurationView _configurationView;
+        public ConfigurationView ConfigurationView
+        {
+            get
+            {
+                if (_configurationView == null)
+                    _configurationView = new ConfigurationView() { DataContext = this };
+                return _configurationView;
+            }
+            set { _configurationView = value; }
+        }
+
         public void OnMenuItemSelected(string name)
         {
             switch (name)
@@ -126,6 +138,9 @@ namespace Axon.Comtrade.ViewModel
                     break;
                 case "renombrado":
                     this.RootContent = RenameListView;
+                    break; 
+                        case "Configuracion":
+                    this.RootContent = ConfigurationView;
                     break;
                 default:
                     var emptyPage = new EmptyPageView();

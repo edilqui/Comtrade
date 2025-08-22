@@ -1,0 +1,19 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:converters="clr-namespace:Axon.UI.Components.Converters.Axon.UI.Components.Converters">
+
+    <!-- Converter básico -->
+    <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+
+    <!-- Converter invertido -->
+    <converters:InvertedBooleanToVisibilityConverter x:Key="InvertedBooleanToVisibilityConverter"/>
+
+    <!-- Converter que usa Hidden -->
+    <converters:BooleanToVisibilityHiddenConverter x:Key="BooleanToVisibilityHiddenConverter"/>
+
+    <!-- Converter personalizado con configuración específica -->
+    <converters:BooleanToVisibilityConverter x:Key="InvertedCollapsedConverter" 
+                                           IsInverted="True" 
+                                           UseCollapsed="True"/>
+
+</ResourceDictionary>

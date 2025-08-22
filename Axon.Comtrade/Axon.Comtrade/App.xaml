@@ -9,6 +9,7 @@
                 <ResourceDictionary Source="pack://application:,,,/Axon.Resources;component/Themes/Generic.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/Axon.UI.Components;component/DataGrid/DataGridGroupingStyles.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/Axon.UI.Components;component/DataGrid/EnhancedDataGridStyles.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Axon.UI.Components;component/Converters/Converters.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

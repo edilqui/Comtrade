@@ -52,19 +52,31 @@
     <Compile Include="Base\DelegateCommand.cs" />
     <Compile Include="Base\IWaiting.cs" />
     <Compile Include="Behaviours\ValidatorMessage.cs" />
+    <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Core\Common\DependencyVariable.cs" />
     <Compile Include="DataGrid\EnhancedCustomDataGrid.cs" />
     <Compile Include="DataGrid\EnhancedFillHandleAdorner.cs" />
+    <Compile Include="TextBox\AxonTextBox.xaml.cs">
+      <DependentUpon>AxonTextBox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="TreeNode\GenericTreeNodeModel.cs" />
     <Compile Include="TreeNode\GenericTreeViewModel.cs" />
     <Compile Include="TreeNode\LevelToIndentConverter.cs" />
     <Compile Include="TreeNode\TreeNodeIcon.cs" />
     <Compile Include="TreeNode\TreeViewDragDropBehavior.cs" />
+    <Page Include="Converters\Converters.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="DataGrid\DataGridGroupingStyles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="DataGrid\EnhancedDataGridStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TextBox\AxonTextBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

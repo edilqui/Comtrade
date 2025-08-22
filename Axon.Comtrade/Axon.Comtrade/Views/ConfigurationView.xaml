@@ -1,0 +1,43 @@
+﻿<UserControl x:Class="Axon.Comtrade.Views.ConfigurationView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:tree="clr-namespace:Axon.UI.Components.TreeNode;assembly=Axon.UI.Components"  
+             xmlns:views="clr-namespace:Axon.Comtrade.Views"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Axon.Comtrade.Views"
+             xmlns:buttons="clr-namespace:Axon.UI.Components.Buttons;assembly=Axon.UI.Components" 
+             xmlns:axonUI="clr-namespace:Axon.UI.Components;assembly=Axon.UI.Components" 
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <StackPanel Margin="20">
+
+        <!-- Ejemplo 1: Con Label y Unidades -->
+        <axonUI:AxonTextBox Label="Timeout (mseg)"
+                          Text="{Binding TimeoutValue, Mode=TwoWay}"
+                          Units="mseg"
+                          Margin="0,0,0,16"/>
+
+        <!-- Ejemplo 2: Solo con Label -->
+        <axonUI:AxonTextBox Label="Nombre del usuario"
+                          Text="{Binding UserName, Mode=TwoWay}"
+                          Margin="0,0,0,16"/>
+
+        <!-- Ejemplo 3: Solo con Unidades -->
+        <axonUI:AxonTextBox Text="{Binding Weight, Mode=TwoWay}"
+                          Units="kg"
+                          Margin="0,0,0,16"/>
+
+        <!-- Ejemplo 4: ReadOnly -->
+        <axonUI:AxonTextBox Label="ID del sistema"
+                          Text="{Binding SystemId}"
+                          IsReadOnly="True"
+                          Margin="0,0,0,16"/>
+
+        <!-- Ejemplo 5: Con recursos para Label y Units -->
+        <!--<axonUI:AxonTextBox Label="{StaticResource TimeoutLabelResource}"
+                          Text="{Binding ConnectionTimeout, Mode=TwoWay}"
+                          Units="{StaticResource MillisecondsUnitResource}"/>-->
+
+    </StackPanel>
+</UserControl>
