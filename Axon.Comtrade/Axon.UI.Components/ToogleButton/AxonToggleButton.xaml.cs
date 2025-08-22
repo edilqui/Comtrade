@@ -1,6 +1,7 @@
 ﻿using Axon.UI.Components.Base;
 using System;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -14,22 +15,29 @@ namespace Axon.UI.Components
     /// </summary>
     public partial class AxonToggleButton : UserControl, INotifyPropertyChanged
     {
-        private Storyboard _toggleOnAnimation;
-        private Storyboard _toggleOffAnimation;
-
         public AxonToggleButton()
         {
             InitializeComponent();
-            DataContext = this;
+            ToggleCommand = new DelegateCommand(ExecuteToggle, CanExecuteToggle);
             Loaded += OnLoaded;
-            ToggleCommand = new DelegateCommand(Toggle);
+        }
+
+        private void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            // Establecer posición inicial del círculo basada en IsChecked
+            var circle = FindName("SwitchCircle") as FrameworkElement;
+            if (circle != null)
+            {
+                var initialPosition = IsChecked ? 22.0 : 2.0;
+                Canvas.SetLeft(circle, initialPosition);
+            }
+
+            // Actualizar estado visual inicial
+            UpdateVisualState();
         }
 
         #region Dependency Properties
 
-        /// <summary>
-        /// Indica si el toggle está activado
-        /// </summary>
         public static readonly DependencyProperty IsCheckedProperty =
             DependencyProperty.Register(nameof(IsChecked), typeof(bool), typeof(AxonToggleButton),
                 new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnIsCheckedChanged));
@@ -40,12 +48,9 @@ namespace Axon.UI.Components
             set => SetValue(IsCheckedProperty, value);
         }
 
-        /// <summary>
-        /// Texto que se muestra cuando el toggle está activado
-        /// </summary>
         public static readonly DependencyProperty CheckedTextProperty =
             DependencyProperty.Register(nameof(CheckedText), typeof(string), typeof(AxonToggleButton),
-                new PropertyMetadata("Habilitado", OnTextChanged));
+                new PropertyMetadata("Habilitado"));
 
         public string CheckedText
         {
@@ -53,12 +58,9 @@ namespace Axon.UI.Components
             set => SetValue(CheckedTextProperty, value);
         }
 
-        /// <summary>
-        /// Texto que se muestra cuando el toggle está desactivado
-        /// </summary>
         public static readonly DependencyProperty UncheckedTextProperty =
             DependencyProperty.Register(nameof(UncheckedText), typeof(string), typeof(AxonToggleButton),
-                new PropertyMetadata("Deshabilitado", OnTextChanged));
+                new PropertyMetadata("Deshabilitado"));
 
         public string UncheckedText
         {
@@ -66,9 +68,6 @@ namespace Axon.UI.Components
             set => SetValue(UncheckedTextProperty, value);
         }
 
-        /// <summary>
-        /// Texto del label (título del control)
-        /// </summary>
         public static readonly DependencyProperty LabelProperty =
             DependencyProperty.Register(nameof(Label), typeof(string), typeof(AxonToggleButton),
                 new PropertyMetadata("Estado"));
@@ -79,9 +78,6 @@ namespace Axon.UI.Components
             set => SetValue(LabelProperty, value);
         }
 
-        /// <summary>
-        /// Controla si el toggle está habilitado para interacción
-        /// </summary>
         public static readonly DependencyProperty IsEnabledProperty =
             DependencyProperty.Register(nameof(IsEnabled), typeof(bool), typeof(AxonToggleButton),
                 new PropertyMetadata(true, OnIsEnabledChanged));
@@ -91,65 +87,6 @@ namespace Axon.UI.Components
             get => (bool)GetValue(IsEnabledProperty);
             set => SetValue(IsEnabledProperty, value);
         }
-
-        /// <summary>
-        /// Duración de la animación en milisegundos
-        /// </summary>
-        public static readonly DependencyProperty AnimationDurationProperty =
-            DependencyProperty.Register(nameof(AnimationDuration), typeof(int), typeof(AxonToggleButton),
-                new PropertyMetadata(200));
-
-        public int AnimationDuration
-        {
-            get => (int)GetValue(AnimationDurationProperty);
-            set => SetValue(AnimationDurationProperty, value);
-        }
-
-        #endregion
-
-        #region Read-Only Properties
-
-        /// <summary>
-        /// Texto actual que se muestra según el estado
-        /// </summary>
-        public string CurrentText => IsChecked ? CheckedText : UncheckedText;
-
-        /// <summary>
-        /// Color del texto según el estado
-        /// </summary>
-        public Brush CurrentTextColor
-        {
-            get
-            {
-                if (!IsEnabled)
-                    return new SolidColorBrush(Color.FromRgb(160, 160, 160)); // Gris para deshabilitado
-
-                return IsChecked
-                    ? new SolidColorBrush(Color.FromRgb(107, 70, 193)) // Morado para activado
-                    : new SolidColorBrush(Color.FromRgb(100, 100, 100)); // Gris oscuro para desactivado
-            }
-        }
-
-        /// <summary>
-        /// Color del switch según el estado
-        /// </summary>
-        public Brush SwitchBackground
-        {
-            get
-            {
-                if (!IsEnabled)
-                    return new SolidColorBrush(Color.FromRgb(220, 220, 220)); // Gris claro para deshabilitado
-
-                return IsChecked
-                    ? new SolidColorBrush(Color.FromRgb(107, 70, 193)) // Morado para activado
-                    : new SolidColorBrush(Color.FromRgb(200, 200, 200)); // Gris para desactivado
-            }
-        }
-
-        /// <summary>
-        /// Posición del círculo del switch
-        /// </summary>
-        public double CirclePosition => IsChecked ? 22 : 2;
 
         #endregion
 
@@ -172,16 +109,15 @@ namespace Axon.UI.Components
         {
             if (d is AxonToggleButton control)
             {
-                control.OnToggled((bool)e.OldValue, (bool)e.NewValue);
-                control.UpdateVisualState(true);
-            }
-        }
+                var oldValue = (bool)e.OldValue;
+                var newValue = (bool)e.NewValue;
 
-        private static void OnTextChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            if (d is AxonToggleButton control)
-            {
-                control.OnPropertyChanged(nameof(CurrentText));
+                control.UpdateVisualState();
+                control.Toggled?.Invoke(control, new ToggleChangedEventArgs
+                {
+                    OldValue = oldValue,
+                    NewValue = newValue
+                });
             }
         }
 
@@ -189,111 +125,134 @@ namespace Axon.UI.Components
         {
             if (d is AxonToggleButton control)
             {
-                control.UpdateVisualState(false);
+                control.UpdateVisualState();
+                control.OnPropertyChanged(nameof(IsEnabled));
             }
         }
 
-        private void OnLoaded(object sender, RoutedEventArgs e)
+        #endregion
+
+        #region Command Methods
+
+        private void ExecuteToggle()
         {
-            InitializeAnimations();
-            UpdateVisualState(false);
+            IsChecked = !IsChecked;
+        }
+
+        private bool CanExecuteToggle()
+        {
+            return IsEnabled;
         }
 
         #endregion
 
         #region Private Methods
 
-        private void InitializeAnimations()
-        {
-            var duration = TimeSpan.FromMilliseconds(AnimationDuration);
-
-            // Animación para activar (mover círculo a la derecha)
-            _toggleOnAnimation = new Storyboard();
-            var moveRightAnimation = new DoubleAnimation
-            {
-                To = 22,
-                Duration = duration,
-                EasingFunction = new CubicEase { EasingMode = EasingMode.EaseOut }
-            };
-            Storyboard.SetTargetName(moveRightAnimation, "SwitchCircle");
-            Storyboard.SetTargetProperty(moveRightAnimation, new PropertyPath("(Canvas.Left)"));
-            _toggleOnAnimation.Children.Add(moveRightAnimation);
-
-            // Animación para desactivar (mover círculo a la izquierda)
-            _toggleOffAnimation = new Storyboard();
-            var moveLeftAnimation = new DoubleAnimation
-            {
-                To = 2,
-                Duration = duration,
-                EasingFunction = new CubicEase { EasingMode = EasingMode.EaseOut }
-            };
-            Storyboard.SetTargetName(moveLeftAnimation, "SwitchCircle");
-            Storyboard.SetTargetProperty(moveLeftAnimation, new PropertyPath("(Canvas.Left)"));
-            _toggleOffAnimation.Children.Add(moveLeftAnimation);
-
-            // Registrar las animaciones como recursos
-            Resources["ToggleOnAnimation"] = _toggleOnAnimation;
-            Resources["ToggleOffAnimation"] = _toggleOffAnimation;
-        }
-
-        private void UpdateVisualState(bool animate)
+        private void UpdateVisualState()
         {
             OnPropertyChanged(nameof(CurrentText));
             OnPropertyChanged(nameof(CurrentTextColor));
             OnPropertyChanged(nameof(SwitchBackground));
-            OnPropertyChanged(nameof(CirclePosition));
 
-            if (animate && IsLoaded)
+            // Animar el círculo con un pequeño delay para asegurar que el control esté completamente cargado
+            Dispatcher.BeginInvoke(new Action(() =>
             {
-                if (IsChecked)
+                AnimateCircle();
+            }), System.Windows.Threading.DispatcherPriority.Render);
+        }
+
+        private void AnimateCircle()
+        {
+            var circle = FindName("SwitchCircle") as FrameworkElement;
+            if (circle == null) return;
+
+            try
+            {
+                var currentPosition = Canvas.GetLeft(circle);
+                var targetPosition = IsChecked ? 14.0 : 2.0;
+
+                // Si la posición actual es NaN, establecer posición inicial
+                if (double.IsNaN(currentPosition))
                 {
-                    _toggleOnAnimation?.Begin(this);
+                    currentPosition = IsChecked ? 2.0 : 14.0; // Posición opuesta para animar
+                    Canvas.SetLeft(circle, currentPosition);
+                }
+
+                // Solo animar si hay diferencia en la posición
+                if (Math.Abs(currentPosition - targetPosition) > 0.1)
+                {
+                    var animation = new DoubleAnimation
+                    {
+                        From = currentPosition,
+                        To = targetPosition,
+                        Duration = TimeSpan.FromMilliseconds(200),
+                        EasingFunction = new CubicEase { EasingMode = EasingMode.EaseOut }
+                    };
+
+                    circle.BeginAnimation(Canvas.LeftProperty, animation);
                 }
                 else
                 {
-                    _toggleOffAnimation?.Begin(this);
+                    // Si ya está en la posición correcta, solo asegurar
+                    Canvas.SetLeft(circle, targetPosition);
                 }
             }
-            else
+            catch (Exception ex)
             {
-                // Posicionamiento directo sin animación
-                if (FindName("SwitchCircle") is FrameworkElement circle)
-                {
-                    Canvas.SetLeft(circle, CirclePosition);
-                }
+                // En caso de error, posicionar directamente
+                System.Diagnostics.Debug.WriteLine($"Error en animación: {ex.Message}");
+                Canvas.SetLeft(circle, IsChecked ? 14.0 : 2.0);
             }
         }
 
-        private void Toggle()
-        {
-            if (IsEnabled)
-            {
-                IsChecked = !IsChecked;
-            }
-        }
-
-        private void OnToggled(bool oldValue, bool newValue)
-        {
-            Toggled?.Invoke(this, new ToggleChangedEventArgs
-            {
-                OldValue = oldValue,
-                NewValue = newValue
-            });
-        }
-
-        protected virtual void OnPropertyChanged(string propertyName)
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         #endregion
+
+        #region Public Properties for Binding
+
+        public string CurrentText => IsChecked ? CheckedText : UncheckedText;
+
+        public Brush CurrentTextColor
+        {
+            get
+            {
+                if (!IsEnabled)
+                    return (System.Windows.Media.Brush)FindResource("TextDisabledBrush");
+
+                return IsChecked
+                    ? (System.Windows.Media.Brush)FindResource("PrimaryBrush") // Morado
+                    : (System.Windows.Media.Brush)FindResource("TextSecondaryBrush");  // Gris
+            }
+        }
+
+        public Brush SwitchBackground
+        {
+            get
+            {
+                if (!IsEnabled)
+                    return new SolidColorBrush(Color.FromRgb(220, 220, 220));
+
+                return IsChecked
+                    ? new SolidColorBrush(Color.FromRgb(107, 70, 193)) // Morado
+                    : new SolidColorBrush(Color.FromRgb(200, 200, 200)); // Gris
+            }
+        }
+
+        #endregion
+
+        private void OnClick(object sender, RoutedEventArgs e)
+        {
+            if (CanExecuteToggle())
+                ExecuteToggle();
+        }
     }
 
     #region Helper Classes
 
-    /// <summary>
-    /// Argumentos para el evento Toggled
-    /// </summary>
     public class ToggleChangedEventArgs : EventArgs
     {
         public bool OldValue { get; set; }

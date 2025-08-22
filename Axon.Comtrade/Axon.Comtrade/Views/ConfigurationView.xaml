@@ -15,7 +15,7 @@
             <RowDefinition Height="auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        
+
         <!--header-->
         <Border Height="{DynamicResource SpacingVerticalXXXXXL}"
                 BorderThickness="0,0,0,1"
@@ -29,10 +29,10 @@
                 VerticalAlignment="Center"
                 />
         </Border>
-        
-        <StackPanel Margin="20" Grid.Row="1">            
+
+        <StackPanel Margin="20" Grid.Row="1">
             <TextBlock
-                Margin="0,16,0,10"
+                Margin="0,16,0,16"
                 FontSize="{StaticResource FontSizeBase300}"
                 Foreground="{DynamicResource TextPrimaryBrush}"
                 Text="Directorio de Salida"
@@ -42,10 +42,11 @@
 
             <axonUI:AxonToggleButton 
             Label="Estado del Sistema"
+                IsChecked="True"
             CheckedText="Habilitado"
             UncheckedText="Deshabilitado"
             Margin="0,0,0,16"/>
-            
+
             <!-- Ejemplo 1: Con Label y Unidades -->
             <axonUI:AxonTextBox Label="Timeout (mseg)"
                           Text="Aqui va el texto"

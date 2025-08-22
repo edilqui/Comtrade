@@ -64,6 +64,7 @@
     <Compile Include="Model\ProtocolNodeModel.cs" />
     <Compile Include="Model\TopologyNodeModel.cs" />
     <Compile Include="ThemeManager.cs" />
+    <Compile Include="ViewModel\ConfigurationViewModel.cs" />
     <Compile Include="ViewModel\RenameListViewModel.cs" />
     <Compile Include="ViewModel\ArchivedListViewModel.cs" />
     <Compile Include="Model\ArchivedItemModel.cs" />

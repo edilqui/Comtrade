@@ -21,6 +21,17 @@ namespace Axon.Comtrade.ViewModel
 
         }
 
+        private ConfigurationViewModel _configurationViewModel;
+
+        public ConfigurationViewModel ConfigurationViewModel
+        {
+            get {
+                if (_configurationViewModel == null) _configurationViewModel = new ConfigurationViewModel();
+                return _configurationViewModel; }
+            set { _configurationViewModel = value; OnPropertyChanged(); }
+        }
+
+
 
         private DevicesExplorerViewModel _devicesExplorerViewModel;
 
@@ -120,7 +131,7 @@ namespace Axon.Comtrade.ViewModel
             get
             {
                 if (_configurationView == null)
-                    _configurationView = new ConfigurationView() { DataContext = this };
+                    _configurationView = new ConfigurationView() { DataContext = this.ConfigurationViewModel };
                 return _configurationView;
             }
             set { _configurationView = value; }
