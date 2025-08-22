@@ -10,34 +10,43 @@
              xmlns:axonUI="clr-namespace:Axon.UI.Components;assembly=Axon.UI.Components" 
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <StackPanel Margin="20">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <axonUI:AxonTabControl x:Name="MainTabControl" Grid.Row="1"
+                    SelectedIndex="0"
+                    SelectionChanged="OnTabChanged"/>
+        <StackPanel Margin="20" Grid.Row="0">
 
-        <!-- Ejemplo 1: Con Label y Unidades -->
-        <axonUI:AxonTextBox Label="Timeout (mseg)"
-                          Text="{Binding TimeoutValue, Mode=TwoWay}"
+            <!-- Ejemplo 1: Con Label y Unidades -->
+            <axonUI:AxonTextBox Label="Timeout (mseg)"
+                          Text="Aqui va el texto"
                           Units="mseg"
                           Margin="0,0,0,16"/>
 
-        <!-- Ejemplo 2: Solo con Label -->
-        <axonUI:AxonTextBox Label="Nombre del usuario"
+            <!-- Ejemplo 2: Solo con Label -->
+            <axonUI:AxonTextBox Label="Nombre del usuario"
                           Text="{Binding UserName, Mode=TwoWay}"
                           Margin="0,0,0,16"/>
 
-        <!-- Ejemplo 3: Solo con Unidades -->
-        <axonUI:AxonTextBox Text="{Binding Weight, Mode=TwoWay}"
+            <!-- Ejemplo 3: Solo con Unidades -->
+            <axonUI:AxonTextBox Text="{Binding Weight, Mode=TwoWay}"
                           Units="kg"
                           Margin="0,0,0,16"/>
 
-        <!-- Ejemplo 4: ReadOnly -->
-        <axonUI:AxonTextBox Label="ID del sistema"
+            <!-- Ejemplo 4: ReadOnly -->
+            <axonUI:AxonTextBox Label="ID del sistema"
                           Text="{Binding SystemId}"
                           IsReadOnly="True"
                           Margin="0,0,0,16"/>
 
-        <!-- Ejemplo 5: Con recursos para Label y Units -->
-        <!--<axonUI:AxonTextBox Label="{StaticResource TimeoutLabelResource}"
+            <!-- Ejemplo 5: Con recursos para Label y Units -->
+            <!--<axonUI:AxonTextBox Label="{StaticResource TimeoutLabelResource}"
                           Text="{Binding ConnectionTimeout, Mode=TwoWay}"
                           Units="{StaticResource MillisecondsUnitResource}"/>-->
 
-    </StackPanel>
+        </StackPanel>
+    </Grid>
 </UserControl>

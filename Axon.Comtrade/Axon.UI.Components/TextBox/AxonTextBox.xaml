@@ -80,7 +80,7 @@
                 Grid.Row="1"
                 Background="{DynamicResource ColorNeutralBackground1Brush}"
                 BorderBrush="{DynamicResource ColorNeutralStroke2Brush}"
-                BorderThickness="0,0,0,1"
+                BorderThickness="1"
                 Padding="0,8,0,8"
                 MinHeight="32">
 
@@ -116,7 +116,7 @@
         <!-- Línea de foco (estilo Windows) -->
         <Rectangle x:Name="FocusLine"
                    Grid.Row="2"
-                   Height="2"
+                   Height="1.5"
                    Fill="{DynamicResource ColorBrandBackgroundBrush}"
                    HorizontalAlignment="Stretch"
                    Opacity="0"

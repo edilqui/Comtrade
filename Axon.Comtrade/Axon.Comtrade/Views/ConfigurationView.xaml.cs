@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Axon.UI.Components;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,31 @@ namespace Axon.Comtrade.Views
         public ConfigurationView()
         {
             InitializeComponent();
+            InitTab();
+        }
+
+        private void InitTab()
+        {
+            MainTabControl.AddTab("Comunicación", new EmptyPageView());
+            MainTabControl.AddTab("Recolección", null);
+            MainTabControl.AddTab("Reglas", null);
+            MainTabControl.AddTab("Análisis", null);
+        }
+
+        private void OnTabChanged(object sender, TabSelectionChangedEventArgs e)
+        {
+            Console.WriteLine($"Cambió de '{e.OldTabItem?.Header}' a '{e.NewTabItem?.Header}'");
+
+            // Aquí puedes implementar lógica específica
+            switch (e.NewTabItem?.Header)
+            {
+                case "Comunicación":
+                    // Lógica para comunicación
+                    break;
+                case "Recolección":
+                    // Lógica para recolección
+                    break;
+            }
         }
     }
 }
