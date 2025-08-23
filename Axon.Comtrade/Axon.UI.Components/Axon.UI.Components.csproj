@@ -57,6 +57,9 @@
     <Compile Include="DataGrid\EnhancedCustomDataGrid.cs" />
     <Compile Include="DataGrid\EnhancedFillHandleAdorner.cs" />
     <Compile Include="Helpers\VisualTreeHelperExtensions.cs" />
+    <Compile Include="RadioButtons\AxonRadioButton.xaml.cs">
+      <DependentUpon>AxonRadioButton.xaml</DependentUpon>
+    </Compile>
     <Compile Include="TabControl\AxonTabControl.xaml.cs">
       <DependentUpon>AxonTabControl.xaml</DependentUpon>
     </Compile>
@@ -81,6 +84,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="DataGrid\EnhancedDataGridStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="RadioButtons\AxonRadioButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
