@@ -334,6 +334,14 @@
         <Setter Property="MinWidth" Value="60"/>
     </Style>
 
+    <Style x:Key="ColumnGridButtonStyle" TargetType="Button" BasedOn="{StaticResource IconButtonStyle}">
+        <Setter Property="Height" Value="28"/>
+        <Setter Property="Width" Value="28"/>
+        <Setter Property="MinWidth" Value="28"/>
+        <Setter Property="MinHeight" Value="28"/>
+        <Setter Property="Padding" Value="0"/>
+    </Style>
+
     <!-- Large Button -->
     <Style x:Key="LargeButtonStyle" TargetType="Button" BasedOn="{StaticResource PrimaryButtonStyle}">
         <Setter Property="FontSize" Value="{StaticResource FontSizeBase400}"/>

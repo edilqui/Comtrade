@@ -62,8 +62,11 @@ namespace Axon.Comtrade.ViewModel
         public ICommand DeleteCommand { get; private set; }
         public ICommand ClearFilterCommand { get; private set; }
 
-        public DataGridExampleViewModel()
+        public DevicesExplorerViewModel DeviceExplorer { get; private set; }
+
+        public DataGridExampleViewModel(DevicesExplorerViewModel deviceExplorer)
         {
+            DeviceExplorer = deviceExplorer;
             InitializeCommands();
             DataItems = new ObservableCollection<DeviceItemModel>();
             SetupCollectionView();
@@ -202,6 +205,7 @@ namespace Axon.Comtrade.ViewModel
         {
             if (device != null)
             {
+                
                 System.Windows.MessageBox.Show($"Configurar dispositivo: {device.DeviceName}", "Configuración",
                     System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
             }
