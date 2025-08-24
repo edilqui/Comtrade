@@ -206,9 +206,8 @@ namespace Axon.Comtrade.ViewModel
         {
             if (device != null)
             {
-                
-                System.Windows.MessageBox.Show($"Configurar dispositivo: {device.Name}", "Configuración",
-                    System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
+
+                this.DeviceExplorer.ConfigureDevice(device);
             }
         }
 

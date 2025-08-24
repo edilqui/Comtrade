@@ -56,10 +56,12 @@ namespace Axon.Comtrade.ViewModel
             }
         }
 
-        public DevicesExplorerViewModel()
+        public ComtradeConfiguration ComtradeController { get; set; }
+        public DevicesExplorerViewModel(ComtradeConfiguration comtradeController)
         {
             InitializeDevices();
             SetupFilteredView();
+            ComtradeController= comtradeController;
         }
 
         private void InitializeDevices()
@@ -361,6 +363,21 @@ namespace Axon.Comtrade.ViewModel
             }
 
             return string.Join("/", pathParts);
+        }
+
+        private DeviceViewModel _deviceConfigSelected;
+
+        public DeviceViewModel DeviceConfigSelected
+        {
+            get { return _deviceConfigSelected; }
+            set { _deviceConfigSelected = value; OnPropertyChanged(); }
+        }
+
+
+        internal void ConfigureDevice(DeviceViewModel device)
+        {
+            DeviceConfigSelected= device;
+            this.ComtradeController.OnMenuItemSelected("deviceContent");
         }
 
         private DeviceListViewModel _gridExample;

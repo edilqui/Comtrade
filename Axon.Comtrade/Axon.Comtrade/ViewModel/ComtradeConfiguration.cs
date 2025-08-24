@@ -25,9 +25,11 @@ namespace Axon.Comtrade.ViewModel
 
         public ConfigurationViewModel ConfigurationViewModel
         {
-            get {
+            get
+            {
                 if (_configurationViewModel == null) _configurationViewModel = new ConfigurationViewModel();
-                return _configurationViewModel; }
+                return _configurationViewModel;
+            }
             set { _configurationViewModel = value; OnPropertyChanged(); }
         }
 
@@ -37,10 +39,11 @@ namespace Axon.Comtrade.ViewModel
 
         public DevicesExplorerViewModel DevicesExplorerVieModel
         {
-            get {
-                if (_devicesExplorerViewModel == null) _devicesExplorerViewModel = new DevicesExplorerViewModel();
+            get
+            {
+                if (_devicesExplorerViewModel == null) _devicesExplorerViewModel = new DevicesExplorerViewModel(this);
 
-                return _devicesExplorerViewModel; 
+                return _devicesExplorerViewModel;
             }
             set { _devicesExplorerViewModel = value; }
         }
@@ -49,10 +52,12 @@ namespace Axon.Comtrade.ViewModel
 
         public ArchivedListViewModel ArchivedListViewModel
         {
-            get { 
-                if(_archivedListViewModel == null)
+            get
+            {
+                if (_archivedListViewModel == null)
                     _archivedListViewModel = new ArchivedListViewModel();
-                return _archivedListViewModel; }
+                return _archivedListViewModel;
+            }
             set { _archivedListViewModel = value; }
         }
 
@@ -82,8 +87,9 @@ namespace Axon.Comtrade.ViewModel
 
         public SideBarView SideBar
         {
-            get { 
-                if(_sideBar == null) _sideBar = new SideBarView(this);
+            get
+            {
+                if (_sideBar == null) _sideBar = new SideBarView(this);
                 return _sideBar;
             }
             set { _sideBar = value; }
@@ -94,11 +100,23 @@ namespace Axon.Comtrade.ViewModel
         {
             get
             {
-                if (_devicesExplorerView == null) 
-                    _devicesExplorerView = new DevicesExplorerView() { DataContext = this};
+                if (_devicesExplorerView == null)
+                    _devicesExplorerView = new DevicesExplorerView() { DataContext = this };
                 return _devicesExplorerView;
             }
             set { _devicesExplorerView = value; }
+        }
+
+        private DeviceContentView _deviceContentView;
+        public DeviceContentView DeviceContentView
+        {
+            get
+            {
+                if (_deviceContentView == null)
+                    _deviceContentView = new DeviceContentView() { DataContext = this };
+                return _deviceContentView;
+            }
+            set { _deviceContentView = value; }
         }
 
         private ArchivedListView _archivedListView;
@@ -144,13 +162,16 @@ namespace Axon.Comtrade.ViewModel
                 case "devices":
                     this.RootContent = DevicesExplorerView;
                     break;
+                case "deviceContent":
+                    this.RootContent = DeviceContentView;
+                    break;
                 case "archivado":
                     this.RootContent = ArchivedListView;
                     break;
                 case "renombrado":
                     this.RootContent = RenameListView;
-                    break; 
-                        case "Configuracion":
+                    break;
+                case "Configuracion":
                     this.RootContent = ConfigurationView;
                     break;
                 default:
@@ -168,7 +189,8 @@ namespace Axon.Comtrade.ViewModel
 
         public ICommand SideBarSelectedCommand
         {
-            get {
+            get
+            {
                 return new DelegateCommand<string>(OnSideBarSelected);
             }
         }
