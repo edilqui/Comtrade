@@ -12,16 +12,36 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition />
+            <RowDefinition Height="auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        
-        <axonUI:AxonTabControl x:Name="MainTabControl" 
+        <Border Grid.Row="0"
+                BorderThickness="0,0,0,1"
+                BorderBrush="{DynamicResource BorderBrush}"
+                Height="{StaticResource SpacingVerticalXXXXXL}">
+            <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="8" HorizontalAlignment="Left">                
+                <Button Style="{StaticResource GhostButtonStyle}" Padding="4,0">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Viewbox Height="24" Width="24" Margin="0,0,4,0">
+                            <Path Data="M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z" 
+                          Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"
+                          Width="24" Height="24"/>
+                        </Viewbox>
+                        <TextBlock Grid.Column="1" Text="Dispositivos" VerticalAlignment="Center"/>
+                    </Grid>
+                </Button>
+            </StackPanel>
+        </Border>
+        <axonUI:AxonTabControl x:Name="MainTabControl" Grid.Row="1"
             SelectedIndex="1"
             SelectionChanged="OnTabChanged">
             <axonUI:AxonTabItem Header="Comunicación">
                 <axonUI:AxonTabItem.Content>
-                    <views:EmptyPageView />
+                    <views:DeviceComunicationView />
                 </axonUI:AxonTabItem.Content>
             </axonUI:AxonTabItem>
 
@@ -43,36 +63,6 @@
                 </axonUI:AxonTabItem.Content>
             </axonUI:AxonTabItem>
 
-        </axonUI:AxonTabControl>
-        <StackPanel Margin="20" Grid.Row="1">
-
-            <!-- Ejemplo 1: Con Label y Unidades -->
-            <axonUI:AxonTextBox Label="Timeout (mseg)"
-                          Text="Aqui va el texto"
-                          Units="mseg"
-                          Margin="0,0,0,16"/>
-
-            <!-- Ejemplo 2: Solo con Label -->
-            <axonUI:AxonTextBox Label="Nombre del usuario"
-                          Text="{Binding UserName, Mode=TwoWay}"
-                          Margin="0,0,0,16"/>
-
-            <!-- Ejemplo 3: Solo con Unidades -->
-            <axonUI:AxonTextBox Text="{Binding Weight, Mode=TwoWay}"
-                          Units="kg"
-                          Margin="0,0,0,16"/>
-
-            <!-- Ejemplo 4: ReadOnly -->
-            <axonUI:AxonTextBox Label="ID del sistema"
-                          Text="{Binding SystemId}"
-                          IsReadOnly="True"
-                          Margin="0,0,0,16"/>
-
-            <!-- Ejemplo 5: Con recursos para Label y Units -->
-            <!--<axonUI:AxonTextBox Label="{StaticResource TimeoutLabelResource}"
-                          Text="{Binding ConnectionTimeout, Mode=TwoWay}"
-                          Units="{StaticResource MillisecondsUnitResource}"/>-->
-
-        </StackPanel>
+        </axonUI:AxonTabControl>        
     </Grid>
 </UserControl>

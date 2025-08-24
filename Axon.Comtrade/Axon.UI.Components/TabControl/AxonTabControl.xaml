@@ -81,12 +81,12 @@
         </Grid.RowDefinitions>
 
         <!-- Header con los tabs -->
-        <Border Grid.Row="0" 
+        <Border Grid.Row="0"
                 Background="{DynamicResource ColorNeutralBackground1Brush}"
                 BorderBrush="{DynamicResource ColorNeutralStroke3Brush}"
                 BorderThickness="0,0,0,1">
 
-            <Grid>
+            <Grid HorizontalAlignment="Left">
                 <!-- Contenedor de botones de tab -->
                 <ItemsControl x:Name="TabHeadersContainer"
                             ItemsSource="{Binding Items, ElementName=AxonTabControlRoot}">
