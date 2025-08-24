@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Axon.UI.Components.Base;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -11,7 +12,7 @@ using System.Windows.Input;
 
 namespace Axon.Comtrade.ViewModel
 {
-    public class DataGridExampleViewModel : INotifyPropertyChanged
+    public class DeviceListViewModel : INotifyPropertyChanged
     {
         private bool _showFilters = true;
         private bool _showGrouping = true;
@@ -19,7 +20,7 @@ namespace Axon.Comtrade.ViewModel
         private ICollectionView _dataView;
         private string _currentTopologyFilter;
 
-        public ObservableCollection<DeviceItemModel> DataItems { get; set; }
+        public ObservableCollection<DeviceViewModel> DataItems { get; set; }
 
         public bool ShowFilters
         {
@@ -64,28 +65,28 @@ namespace Axon.Comtrade.ViewModel
 
         public DevicesExplorerViewModel DeviceExplorer { get; private set; }
 
-        public DataGridExampleViewModel(DevicesExplorerViewModel deviceExplorer)
+        public DeviceListViewModel(DevicesExplorerViewModel deviceExplorer)
         {
             DeviceExplorer = deviceExplorer;
             InitializeCommands();
-            DataItems = new ObservableCollection<DeviceItemModel>();
+            DataItems = new ObservableCollection<DeviceViewModel>();
             SetupCollectionView();
         }
 
         private void InitializeCommands()
         {
-            ToggleFiltersCommand = new RelayCommand(() => ShowFilters = !ShowFilters);
-            ToggleGroupingCommand = new RelayCommand(() => ShowGrouping = !ShowGrouping);
-            ExportCommand = new RelayCommand(ExportData);
-            ConfigureCommand = new RelayCommand<DeviceItemModel>(ConfigureDevice);
-            DeleteCommand = new RelayCommand<DeviceItemModel>(DeleteDevice);
-            ClearFilterCommand = new RelayCommand(ClearTopologyFilter);
+            ToggleFiltersCommand = new DelegateCommand(() => ShowFilters = !ShowFilters);
+            ToggleGroupingCommand = new DelegateCommand(() => ShowGrouping = !ShowGrouping);
+            ExportCommand = new DelegateCommand(ExportData);
+            ConfigureCommand = new DelegateCommand<DeviceViewModel>(ConfigureDevice);
+            DeleteCommand = new DelegateCommand<DeviceViewModel>(DeleteDevice);
+            ClearFilterCommand = new DelegateCommand(ClearTopologyFilter);
         }
 
         /// <summary>
         /// Actualiza la lista de dispositivos desde el filtro de topología
         /// </summary>
-        public void UpdateDevicesFromTopology(List<DeviceItemModel> filteredDevices)
+        public void UpdateDevicesFromTopology(List<DeviceViewModel> filteredDevices)
         {
             DataItems.Clear();
 
@@ -177,7 +178,7 @@ namespace Axon.Comtrade.ViewModel
 
                 foreach (var item in DataItems)
                 {
-                    data.AppendLine($"{item.IsEnabled},{item.DeviceName},{item.IPAddress},{item.Port},{item.Protocol},{item.Group}");
+                    data.AppendLine($"{item.IsEnabled},{item.Name},{item.Ip},{item.Port},{item.Protocol},{item.Group}");
                 }
 
                 var dialog = new Microsoft.Win32.SaveFileDialog
@@ -201,22 +202,22 @@ namespace Axon.Comtrade.ViewModel
             }
         }
 
-        private void ConfigureDevice(DeviceItemModel device)
+        private void ConfigureDevice(DeviceViewModel device)
         {
             if (device != null)
             {
                 
-                System.Windows.MessageBox.Show($"Configurar dispositivo: {device.DeviceName}", "Configuración",
+                System.Windows.MessageBox.Show($"Configurar dispositivo: {device.Name}", "Configuración",
                     System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
             }
         }
 
-        private void DeleteDevice(DeviceItemModel device)
+        private void DeleteDevice(DeviceViewModel device)
         {
             if (device != null)
             {
                 var result = System.Windows.MessageBox.Show(
-                    $"¿Está seguro de eliminar el dispositivo '{device.DeviceName}'?",
+                    $"¿Está seguro de eliminar el dispositivo '{device.Name}'?",
                     "Confirmar eliminación",
                     System.Windows.MessageBoxButton.YesNo,
                     System.Windows.MessageBoxImage.Question);
@@ -235,7 +236,7 @@ namespace Axon.Comtrade.ViewModel
         /// <summary>
         /// Evento que se dispara cuando se elimina un dispositivo
         /// </summary>
-        public event Action<DeviceItemModel> OnDeviceDeleted;
+        public event Action<DeviceViewModel> OnDeviceDeleted;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -254,111 +255,7 @@ namespace Axon.Comtrade.ViewModel
             return true;
         }
     }
+        
 
-    // Modelo de datos para los elementos del DataGrid (sin cambios)
-    public class DeviceItemModel : INotifyPropertyChanged
-    {
-        private bool _isEnabled;
-        private string _deviceName;
-        private string _ipAddress;
-        private int _port;
-        private string _protocol;
-        private string _group;
-
-        public bool IsEnabled
-        {
-            get => _isEnabled;
-            set => SetProperty(ref _isEnabled, value);
-        }
-
-        public string DeviceName
-        {
-            get => _deviceName;
-            set => SetProperty(ref _deviceName, value);
-        }
-
-        public string IPAddress
-        {
-            get => _ipAddress;
-            set => SetProperty(ref _ipAddress, value);
-        }
-
-        public int Port
-        {
-            get => _port;
-            set => SetProperty(ref _port, value);
-        }
-
-        public string Protocol
-        {
-            get => _protocol;
-            set => SetProperty(ref _protocol, value);
-        }
-
-        public string Group
-        {
-            get => _group;
-            set => SetProperty(ref _group, value);
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        protected bool SetProperty<T>(ref T backingStore, T value, [CallerMemberName] string propertyName = "")
-        {
-            if (System.Collections.Generic.EqualityComparer<T>.Default.Equals(backingStore, value))
-                return false;
-
-            backingStore = value;
-            OnPropertyChanged(propertyName);
-            return true;
-        }
-    }
-
-    // Comandos auxiliares (sin cambios)
-    public class RelayCommand : ICommand
-    {
-        private readonly Action _execute;
-        private readonly Func<bool> _canExecute;
-
-        public RelayCommand(Action execute, Func<bool> canExecute = null)
-        {
-            _execute = execute ?? throw new ArgumentNullException(nameof(execute));
-            _canExecute = canExecute;
-        }
-
-        public event EventHandler CanExecuteChanged
-        {
-            add { CommandManager.RequerySuggested += value; }
-            remove { CommandManager.RequerySuggested -= value; }
-        }
-
-        public bool CanExecute(object parameter) => _canExecute?.Invoke() ?? true;
-        public void Execute(object parameter) => _execute();
-    }
-
-    public class RelayCommand<T> : ICommand
-    {
-        private readonly Action<T> _execute;
-        private readonly Func<T, bool> _canExecute;
-
-        public RelayCommand(Action<T> execute, Func<T, bool> canExecute = null)
-        {
-            _execute = execute ?? throw new ArgumentNullException(nameof(execute));
-            _canExecute = canExecute;
-        }
-
-        public event EventHandler CanExecuteChanged
-        {
-            add { CommandManager.RequerySuggested += value; }
-            remove { CommandManager.RequerySuggested -= value; }
-        }
-
-        public bool CanExecute(object parameter) => _canExecute?.Invoke((T)parameter) ?? true;
-        public void Execute(object parameter) => _execute((T)parameter);
-    }
+    
 }

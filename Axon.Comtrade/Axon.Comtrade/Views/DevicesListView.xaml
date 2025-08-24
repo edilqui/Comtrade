@@ -245,10 +245,10 @@
                 <!-- Columnas -->
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Dispositivo" 
-                                    Binding="{Binding DeviceName}"
+                                    Binding="{Binding Name}"
                                     Width="250"/>
                     <DataGridTextColumn Header="IP" 
-                                    Binding="{Binding IPAddress}"
+                                    Binding="{Binding Ip}"
                                     Width="150"/>
                     <DataGridTextColumn Header="Port" 
                                     Binding="{Binding Port}"

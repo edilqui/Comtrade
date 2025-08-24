@@ -169,7 +169,7 @@ namespace Axon.Comtrade.ViewModel
         public ICommand SideBarSelectedCommand
         {
             get {
-                return new RelayCommand<string>(OnSideBarSelected);
+                return new DelegateCommand<string>(OnSideBarSelected);
             }
         }
 

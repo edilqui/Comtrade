@@ -63,11 +63,11 @@ namespace Axon.Comtrade.ViewModel
 
         private void InitializeCommands()
         {
-            AddTopologyCommand = new RelayCommand(AddTopology);
-            AddProtocolCommand = new RelayCommand(AddProtocol, CanAddProtocol);
-            ExpandAllCommand = new RelayCommand(ExpandAll);
-            CollapseAllCommand = new RelayCommand(CollapseAll);
-            SaveChangesCommand = new RelayCommand(SaveChanges);
+            AddTopologyCommand = new DelegateCommand(AddTopology);
+            AddProtocolCommand = new DelegateCommand(AddProtocol, CanAddProtocol);
+            ExpandAllCommand = new DelegateCommand(ExpandAll);
+            CollapseAllCommand = new DelegateCommand(CollapseAll);
+            SaveChangesCommand = new DelegateCommand(SaveChanges);
         }
 
         /// <summary>
@@ -88,15 +88,15 @@ namespace Axon.Comtrade.ViewModel
 
         private void SetupNodeCommands(GenericTreeNodeModel node)
         {
-            node.AddChildCommand = new RelayCommand(() => AddChildToNode(node));
-            node.DeleteCommand = new RelayCommand(() => DeleteNode(node));
-            node.RenameCommand = new RelayCommand(() => RenameNode(node));
-            node.AddDevice61850Command = new RelayCommand(() => AddDevice61850(node));
-            node.AddDeviceFTPCommand = new RelayCommand(() => AddDeviceFTP(node));
-            node.AddDeviceTFTPCommand = new RelayCommand(() => AddDeviceTFTP(node));
+            node.AddChildCommand = new DelegateCommand(() => AddChildToNode(node));
+            node.DeleteCommand = new DelegateCommand(() => DeleteNode(node));
+            node.RenameCommand = new DelegateCommand(() => RenameNode(node));
+            node.AddDevice61850Command = new DelegateCommand(() => AddDevice61850(node));
+            node.AddDeviceFTPCommand = new DelegateCommand(() => AddDeviceFTP(node));
+            node.AddDeviceTFTPCommand = new DelegateCommand(() => AddDeviceTFTP(node));
 
-            node.MoveUpCommand = new RelayCommand(() => MoveNode(node, -1));
-            node.MoveDownCommand = new RelayCommand(() => MoveNode(node, 1));
+            node.MoveUpCommand = new DelegateCommand(() => MoveNode(node, -1));
+            node.MoveDownCommand = new DelegateCommand(() => MoveNode(node, 1));
 
             // Configurar comandos para los hijos recursivamente
             foreach (var child in node.Children)

@@ -54,6 +54,15 @@ namespace Axon.Comtrade.ViewModel
             set { _isEnabled = value; OnPropertyChanged(); }
         }
 
+        private string _group;
+
+        public string Group
+        {
+            get { return _group; }
+            set { _group = value; }
+        }
+
+
         /// <summary>
         /// Verifica si este dispositivo pertenece a la topología especificada
         /// </summary>

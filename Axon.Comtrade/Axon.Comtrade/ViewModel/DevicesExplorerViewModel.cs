@@ -207,19 +207,19 @@ namespace Axon.Comtrade.ViewModel
         /// <summary>
         /// Convierte los dispositivos filtrados al formato requerido por el DataGrid
         /// </summary>
-        private List<DeviceItemModel> GetFilteredDeviceItems()
+        private List<DeviceViewModel> GetFilteredDeviceItems()
         {
-            var filteredItems = new List<DeviceItemModel>();
+            var filteredItems = new List<DeviceViewModel>();
 
             if (FilteredDevices != null)
             {
                 foreach (DeviceViewModel device in FilteredDevices)
                 {
-                    filteredItems.Add(new DeviceItemModel
+                    filteredItems.Add(new DeviceViewModel
                     {
                         IsEnabled = device.IsEnabled,
-                        DeviceName = device.Name,
-                        IPAddress = device.Ip,
+                        Name = device.Name,
+                        Ip = device.Ip,
                         Port = device.Port,
                         Protocol = device.Protocol,
                         Group = GetGroupFromTopology(device.Topology)
@@ -363,14 +363,14 @@ namespace Axon.Comtrade.ViewModel
             return string.Join("/", pathParts);
         }
 
-        private DataGridExampleViewModel _gridExample;
-        public DataGridExampleViewModel GridExample
+        private DeviceListViewModel _gridExample;
+        public DeviceListViewModel GridExample
         {
             get
             {
                 if (_gridExample == null)
                 {
-                    _gridExample = new DataGridExampleViewModel();
+                    _gridExample = new DeviceListViewModel(this);
 
                     // Configurar eventos bidireccionales
                     _gridExample.OnTopologyFilterCleared += () =>
@@ -383,8 +383,8 @@ namespace Axon.Comtrade.ViewModel
                     {
                         // Buscar y eliminar el dispositivo correspondiente
                         var deviceToRemove = AllDevices.FirstOrDefault(d =>
-                            d.Name == deviceItem.DeviceName &&
-                            d.Ip == deviceItem.IPAddress &&
+                            d.Name == deviceItem.Name &&
+                            d.Ip == deviceItem.Ip &&
                             d.Port == deviceItem.Port);
 
                         if (deviceToRemove != null)

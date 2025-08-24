@@ -38,8 +38,8 @@ namespace Axon.Comtrade.ViewModel
 
         private void InitializeCommands()
         {
-            AddCommand = new RelayCommand(Add);
-            DeleteCommand = new RelayCommand<ArchivedItemModel>(Delete);
+            AddCommand = new DelegateCommand(Add);
+            DeleteCommand = new DelegateCommand<ArchivedItemModel>(Delete);
         }
 
         private void Delete(ArchivedItemModel obj)
