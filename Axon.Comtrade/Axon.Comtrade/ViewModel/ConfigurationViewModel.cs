@@ -17,6 +17,22 @@ namespace Axon.Comtrade.ViewModel
             set { _unZipFile = value; OnPropertyChanged(); }
         }
 
+        private bool _converterCEVtoComtrade;
+
+        public bool ConverterCEVtoComtrade
+        {
+            get { return _converterCEVtoComtrade; }
+            set { _converterCEVtoComtrade = value; OnPropertyChanged(); }
+        }
+
+        private bool _webServer;
+
+        public bool WebServer
+        {
+            get { return _webServer; }
+            set { _webServer = value; OnPropertyChanged(); }
+        }
+
         private string _patOut;
 
         public string PatOut

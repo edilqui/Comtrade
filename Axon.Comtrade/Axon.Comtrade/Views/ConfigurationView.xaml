@@ -30,63 +30,144 @@
                 VerticalAlignment="Center"
                 />
         </Border>
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
 
-        <StackPanel Margin="20" Grid.Row="1">
-            <TextBlock
+            <WrapPanel   ItemWidth="420">
+                <StackPanel Grid.Row="1" Margin="{StaticResource MarginL}">
+
+                    <!--seccion Directorio de salida-->
+                    <TextBlock
                 Margin="0,16,0,16"
-                FontSize="{StaticResource FontSizeBase300}"
+                FontSize="{StaticResource FontSizeBase400}"
                 Foreground="{DynamicResource TextPrimaryBrush}"
                 Text="Directorio de Salida"
                 FontWeight="{DynamicResource FontWeightSemibold}"
                 VerticalAlignment="Center"
                 />
 
-            <axonUI:AxonTextBox Label="Directorio"
-                          Text="Aqui va el texto"
+                    <axonUI:AxonTextBox Label="Directorio"
+                          Text="Crear control para importar path"
                           Units="mseg"
                           Margin="0,0,0,16"/>
 
-            <!-- Radio Button para Estructura de Carpetas -->
-            <axonUI:AxonRadioButton 
+                    <!-- Radio Button para Estructura de Carpetas -->
+                    <axonUI:AxonRadioButton 
                 Label="Estructura de carpetas"
                 SelectedValue="{Binding FolderStructure, Mode=TwoWay}"
                 SelectionChanged="OnFolderStructureChanged"
                 Margin="0,0,0,20">
 
-                <axonUI:AxonRadioItem Text="Arquitectura" Value="{x:Static vm:FolderStructure.ARCHITECTURE}"/>
-                <axonUI:AxonRadioItem Text="Fecha" Value="{x:Static vm:FolderStructure.DATE}"/>
+                        <axonUI:AxonRadioItem Text="Arquitectura" Value="{x:Static vm:FolderStructure.ARCHITECTURE}"/>
+                        <axonUI:AxonRadioItem Text="Fecha" Value="{x:Static vm:FolderStructure.DATE}"/>
 
-            </axonUI:AxonRadioButton>
+                    </axonUI:AxonRadioButton>
 
-            <axonUI:AxonToggleButton 
-            Label="Estado del Sistema"
-                IsChecked="True"
+                    <!--seccion Directorio de salida-->
+                    <TextBlock
+                Margin="0,16,0,16"
+                FontSize="{StaticResource FontSizeBase300}"
+                Foreground="{DynamicResource TextPrimaryBrush}"
+                Text="Variables de Configuración"
+                FontWeight="{DynamicResource FontWeightSemibold}"
+                VerticalAlignment="Center"
+                />
+
+                    <!--descomprimir archivos-->
+                    <axonUI:AxonToggleButton 
+            Label="Descomprimir Archivos"
+                IsChecked="{DynamicResource UnZipFile}"
             CheckedText="Habilitado"
             UncheckedText="Deshabilitado"
             Margin="0,0,0,16"/>
 
+                    <!--Convertir CEV a Comtrade-->
+                    <axonUI:AxonToggleButton 
+            Label="Convertir CEV a Comtrade"
+                IsChecked="{DynamicResource ConverterCEVtoComtrade}"
+            CheckedText="Habilitado"
+            UncheckedText="Deshabilitado"
+            Margin="0,0,0,16"/>
 
-            <!-- Ejemplo 2: Solo con Label -->
-            <axonUI:AxonTextBox Label="Nombre del usuario"
-                          Text="{Binding UserName, Mode=TwoWay}"
+                    <!--WebServer-->
+                    <axonUI:AxonToggleButton 
+            Label="Web Server"
+                IsChecked="{DynamicResource WebServer}"
+            CheckedText="Habilitado"
+            UncheckedText="Deshabilitado"
+            Margin="0,0,0,16"/>                   
+                   
+
+                </StackPanel>
+                <StackPanel Grid.Row="1" Margin="{StaticResource MarginL}">
+
+                    <!--seccion Directorio de salida-->
+                    <TextBlock
+                            Margin="0,16,0,16"
+                            FontSize="{StaticResource FontSizeBase400}"
+                            Foreground="{DynamicResource TextPrimaryBrush}"
+                            Text="Configuración de FTP Server"
+                            FontWeight="{DynamicResource FontWeightSemibold}"
+                            VerticalAlignment="Center"
+                            />
+
+                    <!--FTP Server-->
+                    <axonUI:AxonToggleButton 
+                            Label="FTP Server"
+                                IsChecked="{DynamicResource UnZipFile}"
+                            CheckedText="Habilitado"
+                            UncheckedText="Deshabilitado"
+                            Margin="0,0,0,16"/>
+
+                    <axonUI:AxonTextBox Label="Puerto de Salida FTP"
+                          Text="21"
+                          Units=""
+                          Margin="0,0,0,16"/>
+                    <axonUI:AxonTextBox Label="Puerto Minimo"
+                          Text="5000"
+                          Units=""
+                          Margin="0,0,0,16"/>
+                    <axonUI:AxonTextBox Label="Puerto Máximo"
+                          Text="6000"
+                          Units=""
                           Margin="0,0,0,16"/>
 
-            <!-- Ejemplo 3: Solo con Unidades -->
-            <axonUI:AxonTextBox Text="{Binding Weight, Mode=TwoWay}"
-                          Units="kg"
+                    <axonUI:AxonToggleButton 
+                            Label="TLS"
+                                IsChecked="{DynamicResource UnZipFile}"
+                            CheckedText="Habilitado"
+                            UncheckedText="Deshabilitado"
+                            Margin="0,0,0,16"/>
+
+                    <TextBlock
+                            Margin="0,16"
+                            FontSize="{StaticResource FontSizeBase400}"
+                            Foreground="{DynamicResource TextPrimaryBrush}"
+                            Text="Configuración SFTP Server"
+                            FontWeight="{DynamicResource FontWeightSemibold}"
+                            VerticalAlignment="Center"
+                            />
+
+                    <axonUI:AxonToggleButton 
+                            Label="FTP Server"
+                                IsChecked="{DynamicResource UnZipFile}"
+                            CheckedText="Habilitado"
+                            UncheckedText="Deshabilitado"
+                            Margin="0,0,0,16"/>
+                    <axonUI:AxonTextBox Label="Puerto de Salida FTP"
+                          Text="..."
+                          Units=""
+                          Margin="0,0,0,16"/>
+                    <axonUI:AxonTextBox Label="Certificado"
+                          Text="5000"
+                          Units=""
+                          Margin="0,0,0,16"/>
+                    <axonUI:AxonTextBox Label="Contraseña"
+                          Text="***"
+                          Units=""
                           Margin="0,0,0,16"/>
 
-            <!-- Ejemplo 4: ReadOnly -->
-            <axonUI:AxonTextBox Label="ID del sistema"
-                          Text="{Binding SystemId}"
-                          IsReadOnly="True"
-                          Margin="0,0,0,16"/>
-
-            <!-- Ejemplo 5: Con recursos para Label y Units -->
-            <!--<axonUI:AxonTextBox Label="{StaticResource TimeoutLabelResource}"
-                          Text="{Binding ConnectionTimeout, Mode=TwoWay}"
-                          Units="{StaticResource MillisecondsUnitResource}"/>-->
-
-        </StackPanel>
+                </StackPanel>
+            </WrapPanel>
+        </ScrollViewer>
     </Grid>
 </UserControl>

@@ -18,6 +18,7 @@
             <Setter Property="Foreground" Value="{DynamicResource ColorNeutralForeground1Brush}"/>
             <Setter Property="CaretBrush" Value="{DynamicResource ColorBrandForeground1Brush}"/>
             <Setter Property="SelectionBrush" Value="{DynamicResource ColorBrandBackground2Brush}"/>
+            <Setter Property="FontWeight" Value="{StaticResource FontWeightSemibold}"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="TextBox">
@@ -68,11 +69,12 @@
 
         <!-- Label superior -->
         <TextBlock x:Name="LabelTextBlock"
+                   Height="{StaticResource FontSizeBase600}"
                    Grid.Row="0"
                    Text="{Binding Label, ElementName=AxonTextBoxControl}"
-                   FontSize="12"
+                   FontSize="{StaticResource FontSizeBase300}"
                    Foreground="{DynamicResource ColorNeutralForeground2Brush}"
-                   Margin="0,0,0,4"
+                   Margin="0,0,0,0"
                    Visibility="{Binding HasLabel, ElementName=AxonTextBoxControl, Converter={StaticResource BooleanToVisibilityConverter}}"/>
 
         <!-- Contenedor principal del TextBox y unidades -->
@@ -80,8 +82,8 @@
                 Grid.Row="1"
                 Background="{DynamicResource ColorNeutralBackground1Brush}"
                 BorderBrush="{DynamicResource ColorNeutralStroke2Brush}"
-                BorderThickness="1"
-                Padding="0,8,0,8"
+                BorderThickness="1,1,1,1.5"
+                Padding="0"
                 MinHeight="32">
 
             <Grid>
@@ -99,16 +101,17 @@
                          IsEnabled="{Binding IsEnabled, ElementName=AxonTextBoxControl}"
                          GotFocus="MainTextBox_GotFocus"
                          LostFocus="MainTextBox_LostFocus"
-                         TextChanged="MainTextBox_TextChanged"/>
+                         TextChanged="MainTextBox_TextChanged"
+                         Margin="4,0"/>
 
                 <!-- Unidades -->
                 <TextBlock x:Name="UnitsTextBlock"
                            Grid.Column="1"
                            Text="{Binding Units, ElementName=AxonTextBoxControl}"
-                           FontSize="12"
+                           FontSize="{StaticResource FontSizeBase200}"
                            Foreground="{DynamicResource ColorNeutralForeground3Brush}"
                            VerticalAlignment="Center"
-                           Margin="8,0,0,0"
+                           Margin="8,0,4,0"
                            Visibility="{Binding HasUnits, ElementName=AxonTextBoxControl, Converter={StaticResource BooleanToVisibilityConverter}}"/>
             </Grid>
         </Border>
