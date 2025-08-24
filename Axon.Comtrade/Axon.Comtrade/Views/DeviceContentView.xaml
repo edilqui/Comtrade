@@ -36,12 +36,12 @@
                 </Button>
             </StackPanel>
         </Border>
-        <axonUI:AxonTabControl x:Name="MainTabControl" Grid.Row="1"
+        <axonUI:AxonTabControl x:Name="MainTabControl" Grid.Row="1" Margin="8,0"
             SelectedIndex="1"
             SelectionChanged="OnTabChanged">
             <axonUI:AxonTabItem Header="Comunicación">
                 <axonUI:AxonTabItem.Content>
-                    <views:DeviceComunicationView />
+                    <views:DeviceComunicationView DataContext="{Binding DevicesExplorerVieModel.DeviceConfigSelected}"/>
                 </axonUI:AxonTabItem.Content>
             </axonUI:AxonTabItem>
 
