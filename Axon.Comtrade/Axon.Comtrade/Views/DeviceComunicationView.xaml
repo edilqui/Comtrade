@@ -56,17 +56,17 @@
                             />
 
                     <axonUI:AxonTextBox Label="Tiempo de Espera"
-                          Text="{Binding Retry}"
+                          Text="{Binding RequiestTimeout}"
                           Units="seg"
                           Margin="0,0,0,16"/>
 
                     <axonUI:AxonTextBox Label="Tiempo Limite de Solicitud"
-                          Text="{Binding Retry}"
+                          Text="{Binding WaitingTimeAfterInt}"
                           Units="seg"
                           Margin="0,0,0,16"/>
 
                     <axonUI:AxonTextBox Label="Tiempo de espera entre Solicitudes"
-                          Text="{Binding Retry}"
+                          Text="{Binding WaitingTimeAmongRequest}"
                           Units="seg"
                           Margin="0,0,0,16"/>
                                   
@@ -86,27 +86,27 @@
                             />                   
 
                     <axonUI:AxonTextBox Label="Ip"
-                          Text="127.0.0.1"
+                          Text="{Binding Ip}"
                           Units=""
                           Margin="0,0,0,16"/>
                     <axonUI:AxonTextBox Label="Port"
-                          Text="102"
+                          Text="{Binding Port}"
                           Units=""
                           Margin="0,0,0,16"/>
                     <axonUI:AxonTextBox Label="Server App Tittle"
-                          Text="1000"
+                          Text="{Binding ServerAppTitle}"
                           Units=""
                           Margin="0,0,0,16"/>
                     <axonUI:AxonTextBox Label="Server AE Qualifier"
-                          Text="3"
+                          Text="{Binding ServerAEQualifier}"
                           Units=""
                           Margin="0,0,0,16"/>
                     <axonUI:AxonTextBox Label="Waiting Time After Int"
-                          Text="100"
+                          Text="{Binding WaitingTimeAfterInt}"
                           Units="seg"
                           Margin="0,0,0,16"/>
                     <axonUI:AxonTextBox Label="Request Timeout"
-                          Text="120"
+                          Text="{Binding RequiestTimeout}"
                           Units="seg"
                           Margin="0,0,0,16"/>
 

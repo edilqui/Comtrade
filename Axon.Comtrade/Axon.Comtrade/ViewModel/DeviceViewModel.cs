@@ -40,14 +40,14 @@ namespace Axon.Comtrade.ViewModel
             set { _topology = value; OnPropertyChanged(); }
         }
 
-        
+
         public string Protocol
         {
             get => _protocol;
             set { _protocol = value; OnPropertyChanged(); }
         }
 
-        
+
         public bool IsEnabled
         {
             get => _isEnabled;
@@ -61,6 +61,80 @@ namespace Axon.Comtrade.ViewModel
             get { return _group; }
             set { _group = value; }
         }
+
+        private int _idDevice;
+
+        public int IdDevice
+        {
+            get { return _idDevice; }
+            set { _idDevice = value; OnPropertyChanged(); }
+        }
+
+        private string _folderName;
+
+        public string FolderName
+        {
+            get { return _folderName; }
+            set { _folderName = value; OnPropertyChanged(); }
+        }
+
+        private int _timeout = 1000;
+
+        public int Timeout
+        {
+            get { return _timeout; }
+            set { _timeout = value; OnPropertyChanged(); }
+        }
+
+        private int _retry = 3;
+
+        public int Retry
+        {
+            get { return _retry; }
+            set { _retry = value; OnPropertyChanged(); }
+        }
+
+        private int _waitingTimeAfterInt;
+
+        public int WaitingTimeAfterInt
+        {
+            get { return _waitingTimeAfterInt; }
+            set { _waitingTimeAfterInt = value; OnPropertyChanged(); }
+        }
+
+        private int _requestTimeout = 120;
+
+        public int RequiestTimeout
+        {
+            get { return _requestTimeout; }
+            set { _requestTimeout = value; OnPropertyChanged(); }
+        }
+
+        private int _waitingTimeAmongRequest;
+
+        public int WaitingTimeAmongRequest
+        {
+            get { return _waitingTimeAmongRequest; }
+            set { _waitingTimeAmongRequest = value; OnPropertyChanged(); }
+        }
+
+        private string _serverAppTitle = "1.1.999.1";
+        public string ServerAppTitle
+        {
+            get { return _serverAppTitle; }
+            set { _serverAppTitle = value; OnPropertyChanged(); }
+        }
+
+        private string _serverAEQualifier = "12";
+
+        public string ServerAEQualifier
+        {
+            get { return _serverAEQualifier; }
+            set { _serverAEQualifier = value; OnPropertyChanged(); }
+        }
+
+
+
 
 
         /// <summary>
