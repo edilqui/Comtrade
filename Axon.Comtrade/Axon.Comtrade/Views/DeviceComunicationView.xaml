@@ -111,6 +111,23 @@
                           Margin="0,0,0,16"/>
                     <StackPanel Margin="20">
 
+                        <axonUI:AxonComboBox ShowGroups="True">
+                            <axonUI:AxonComboBox.Groups>
+                                <axonUI:AxonComboBoxGroup Header="Theme Fonts">
+                                    <axonUI:AxonComboBoxGroup.Items>
+                                        <axonUI:AxonComboBoxItem Text="Arial" Value="Arial"/>
+                                        <axonUI:AxonComboBoxItem Text="Segoe UI" Value="Segoe UI"/>
+                                    </axonUI:AxonComboBoxGroup.Items>
+                                </axonUI:AxonComboBoxGroup>
+                                <axonUI:AxonComboBoxGroup Header="Theme Fonts">
+                                    <axonUI:AxonComboBoxGroup.Items>
+                                        <axonUI:AxonComboBoxItem Text="Arial" Value="Arial"/>
+                                        <axonUI:AxonComboBoxItem Text="Segoe UI" Value="Segoe UI"/>
+                                    </axonUI:AxonComboBoxGroup.Items>
+                                </axonUI:AxonComboBoxGroup>
+                            </axonUI:AxonComboBox.Groups>
+                        </axonUI:AxonComboBox>
+
                         <!-- Debug info -->
                         <TextBlock Text="{Binding IsDropDownOpen, ElementName=TestCombo, StringFormat='IsDropDownOpen: {0}'}" 
                Margin="0,0,0,10"/>

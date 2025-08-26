@@ -351,6 +351,9 @@ namespace Axon.UI.Components
             var oldItem = SelectedItem;
             var oldIndex = SelectedIndex;
 
+            // Actualizar la propiedad IsSelected para todos los items
+            UpdateAllItemsSelection(item);
+
             SelectedItem = item;
             SelectedValue = item.Value ?? item.Text;
 
@@ -373,6 +376,24 @@ namespace Axon.UI.Components
             });
         }
 
+        private void UpdateAllItemsSelection(AxonComboBoxItem selectedItem)
+        {
+            // Actualizar items sin agrupar
+            foreach (var item in Items)
+            {
+                item.IsSelected = item == selectedItem;
+            }
+
+            // Actualizar items en grupos
+            foreach (var group in Groups)
+            {
+                foreach (var item in group.Items)
+                {
+                    item.IsSelected = item == selectedItem;
+                }
+            }
+        }
+
         private void UpdateSelectionFromValue(object value)
         {
             var allItems = GetAllItems();
@@ -380,6 +401,7 @@ namespace Axon.UI.Components
 
             if (item != null)
             {
+                UpdateAllItemsSelection(item);
                 SelectedItem = item;
                 SelectedIndex = allItems.IndexOf(item);
                 OnPropertyChanged(nameof(DisplayText));
@@ -392,6 +414,7 @@ namespace Axon.UI.Components
             if (index >= 0 && index < allItems.Count)
             {
                 var item = allItems[index];
+                UpdateAllItemsSelection(item);
                 SelectedItem = item;
                 SelectedValue = item.Value ?? item.Text;
                 OnPropertyChanged(nameof(DisplayText));
@@ -501,6 +524,7 @@ namespace Axon.UI.Components
         private string _text;
         private object _value;
         private bool _isEnabled = true;
+        private bool _isSelected = false;
 
         public string Text
         {
@@ -518,6 +542,12 @@ namespace Axon.UI.Components
         {
             get => _isEnabled;
             set { _isEnabled = value; OnPropertyChanged(); }
+        }
+
+        public bool IsSelected
+        {
+            get => _isSelected;
+            set { _isSelected = value; OnPropertyChanged(); }
         }
 
         public ICommand SelectCommand { get; set; }

@@ -11,7 +11,7 @@
         <!-- Plantilla para items sin agrupar -->
         <DataTemplate x:Key="ItemTemplate">
             <Border Background="Transparent" 
-                    Padding="12,8"
+                    Padding="8,8"
                     Cursor="Hand">
                 <Border.InputBindings>
                     <MouseBinding MouseAction="LeftClick" 
@@ -19,19 +19,55 @@
                                 CommandParameter="{Binding}"/>
                 </Border.InputBindings>
 
-                <TextBlock Text="{Binding Text}"
-                          FontSize="14"
-                          Foreground="#333333">
-                    <TextBlock.Style>
-                        <Style TargetType="TextBlock">
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding IsEnabled}" Value="False">
-                                    <Setter Property="Foreground" Value="#A0A0A0"/>
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </TextBlock.Style>
-                </TextBlock>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="24"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Check mark -->
+                    <Viewbox Grid.Column="0" Height="12" Width="12">
+                        <Path 
+                          Data="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"
+                          Stroke="#6B46C1"
+                          StrokeThickness="2"
+                          Width="24"
+                          Height="24"
+                          VerticalAlignment="Center">
+                            <Path.Style>
+                                <Style TargetType="Path">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsSelected}" Value="True">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Path.Style>
+                        </Path>
+                    </Viewbox>
+
+                    <!-- Texto del item -->
+                    <TextBlock Grid.Column="1"
+                              Text="{Binding Text}"
+                              FontSize="14"
+                              Foreground="{DynamicResource TextPrimaryBrush}"
+                              VerticalAlignment="Center">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsEnabled}" Value="False">
+                                        <Setter Property="Foreground" Value="{DynamicResource TextDisabledBrush}"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding IsSelected}" Value="True">
+                                        <Setter Property="Foreground" Value="{DynamicResource PrimaryBrush}"/>
+                                        <Setter Property="FontWeight" Value="SemiBold"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                </Grid>
 
                 <Border.Style>
                     <Style TargetType="Border">
@@ -49,14 +85,14 @@
         <DataTemplate x:Key="GroupTemplate">
             <StackPanel>
                 <!-- Header del grupo -->
-                <Border Background="#F8F9FA" 
-                        BorderBrush="#E1E5E9" 
+                <Border Background="Transparent" 
+                        BorderBrush="Transparent" 
                         BorderThickness="0,0,0,1"
-                        Padding="12,6">
+                        Padding="8,6">
                     <TextBlock Text="{Binding Header}"
                               FontSize="12"
                               FontWeight="SemiBold"
-                              Foreground="#6C757D"/>
+                              Foreground="{DynamicResource TextSecondaryBrush}"/>
                 </Border>
 
                 <!-- Items del grupo -->
@@ -179,8 +215,8 @@
 
             <!-- Dropdown -->
             <Border x:Name="DropDownBorder"
-                    Background="White"
-                    BorderBrush="#E1E5E9"
+                    Background="Transparent"
+                    BorderBrush="{DynamicResource BorderBrush}"
                     BorderThickness="1"
                     CornerRadius="4"
                     Margin="0,2,0,0"
