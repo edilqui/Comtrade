@@ -72,5 +72,10 @@ namespace Axon.Comtrade.Views
             //        break;
             //}
         }
+
+        private void TestToggle(object sender, RoutedEventArgs e)
+        {
+            TestCombo.IsDropDownOpen = !TestCombo.IsDropDownOpen;
+        }
     }
 }

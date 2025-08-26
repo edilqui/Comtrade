@@ -109,6 +109,31 @@
                           Text="{Binding RequiestTimeout}"
                           Units="seg"
                           Margin="0,0,0,16"/>
+                    <StackPanel Margin="20">
+
+                        <!-- Debug info -->
+                        <TextBlock Text="{Binding IsDropDownOpen, ElementName=TestCombo, StringFormat='IsDropDownOpen: {0}'}" 
+               Margin="0,0,0,10"/>
+                        <TextBlock Text="{Binding DropDownVisibility, ElementName=TestCombo, StringFormat='Visibility: {0}'}" 
+               Margin="0,0,0,10"/>
+
+                        <!-- ComboBox de prueba -->
+                        <axonUI:AxonComboBox x:Name="TestCombo" 
+                        Label="Prueba" 
+                        ShowGroups="False" 
+                        Margin="0,0,0,20">
+                            <axonUI:AxonComboBoxItem Text="Opción 1" Value="1"/>
+                            <axonUI:AxonComboBoxItem Text="Opción 2" Value="2"/>
+                            <axonUI:AxonComboBoxItem Text="Opción 3" Value="3"/>
+                        </axonUI:AxonComboBox>
+
+                        <!-- Botón de prueba manual -->
+                        <Button Content="Toggle Manual" 
+            Click="TestToggle" 
+            Width="120" 
+            HorizontalAlignment="Left"/>
+
+                    </StackPanel>
 
                 </StackPanel>
             </WrapPanel>

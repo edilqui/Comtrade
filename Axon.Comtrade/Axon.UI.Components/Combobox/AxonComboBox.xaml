@@ -1,0 +1,237 @@
+﻿<UserControl x:Class="Axon.UI.Components.AxonComboBox"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             x:Name="ComboBoxRoot">
+
+    <UserControl.Resources>
+
+        <!-- Plantilla para items sin agrupar -->
+        <DataTemplate x:Key="ItemTemplate">
+            <Border Background="Transparent" 
+                    Padding="12,8"
+                    Cursor="Hand">
+                <Border.InputBindings>
+                    <MouseBinding MouseAction="LeftClick" 
+                                Command="{Binding SelectCommand}" 
+                                CommandParameter="{Binding}"/>
+                </Border.InputBindings>
+
+                <TextBlock Text="{Binding Text}"
+                          FontSize="14"
+                          Foreground="#333333">
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsEnabled}" Value="False">
+                                    <Setter Property="Foreground" Value="#A0A0A0"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+
+                <Border.Style>
+                    <Style TargetType="Border">
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#F5F5F5"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Border.Style>
+            </Border>
+        </DataTemplate>
+
+        <!-- Plantilla para grupos -->
+        <DataTemplate x:Key="GroupTemplate">
+            <StackPanel>
+                <!-- Header del grupo -->
+                <Border Background="#F8F9FA" 
+                        BorderBrush="#E1E5E9" 
+                        BorderThickness="0,0,0,1"
+                        Padding="12,6">
+                    <TextBlock Text="{Binding Header}"
+                              FontSize="12"
+                              FontWeight="SemiBold"
+                              Foreground="#6C757D"/>
+                </Border>
+
+                <!-- Items del grupo -->
+                <ItemsControl ItemsSource="{Binding Items}"
+                            ItemTemplate="{StaticResource ItemTemplate}"/>
+            </StackPanel>
+        </DataTemplate>
+
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Label opcional -->
+        <TextBlock Grid.Row="0"
+                   Text="{Binding Label, ElementName=ComboBoxRoot}"
+                   FontSize="14"
+                   FontWeight="Medium"
+                   Foreground="#333333"
+                   Margin="0,0,0,6">
+            <TextBlock.Style>
+                <Style TargetType="TextBlock">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Label, ElementName=ComboBoxRoot}" Value="">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Label, ElementName=ComboBoxRoot}" Value="{x:Null}">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBlock.Style>
+        </TextBlock>
+
+        <!-- ComboBox principal -->
+        <Grid Grid.Row="1">
+            <!-- Botón principal del ComboBox -->
+            <Button Background="White"
+                    BorderBrush="#E1E5E9"
+                    BorderThickness="1"
+                    Padding="12,10"
+                    MinHeight="36"
+                    HorizontalContentAlignment="Stretch"
+                    Click="ToggleDropDown_click"
+                    Cursor="Hand">
+
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="BorderBrush" Value="#6B46C1"/>
+                            </Trigger>
+                            <DataTrigger Binding="{Binding IsDropDownOpen, ElementName=ComboBoxRoot}" Value="True">
+                                <Setter Property="BorderBrush" Value="#6B46C1"/>
+                                <Setter Property="BorderThickness" Value="2"/>
+                            </DataTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Texto seleccionado -->
+                    <TextBlock Grid.Column="0"
+                              Text="{Binding DisplayText, ElementName=ComboBoxRoot}"
+                              FontSize="14"
+                              VerticalAlignment="Center"
+                              TextTrimming="CharacterEllipsis">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Foreground" Value="#333333"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding SelectedItem, ElementName=ComboBoxRoot}" Value="{x:Null}">
+                                        <Setter Property="Foreground" Value="#999999"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+
+                    <!-- Flecha dropdown -->
+                    <Path Grid.Column="1"
+                          Data="M 0 0 L 4 4 L 8 0 Z"
+                          Fill="#666666"
+                          VerticalAlignment="Center"
+                          Margin="8,0,0,0">
+                        <Path.RenderTransform>
+                            <RotateTransform Angle="0" CenterX="4" CenterY="2"/>
+                        </Path.RenderTransform>
+                        <Path.Style>
+                            <Style TargetType="Path">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsDropDownOpen, ElementName=ComboBoxRoot}" Value="True">
+                                        <Setter Property="RenderTransform">
+                                            <Setter.Value>
+                                                <RotateTransform Angle="180" CenterX="4" CenterY="2"/>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Path.Style>
+                    </Path>
+                </Grid>
+            </Button>
+
+            <!-- Dropdown -->
+            <Border x:Name="DropDownBorder"
+                    Background="White"
+                    BorderBrush="#E1E5E9"
+                    BorderThickness="1"
+                    CornerRadius="4"
+                    Margin="0,2,0,0"
+                    MaxHeight="300"
+                    MinWidth="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=Grid}}"
+                    Panel.ZIndex="1000"
+                    Visibility="{Binding DropDownVisibility, ElementName=ComboBoxRoot}">
+
+                <Border.Effect>
+                    <DropShadowEffect Color="Black" 
+                                    Direction="270" 
+                                    ShadowDepth="4" 
+                                    Opacity="0.15" 
+                                    BlurRadius="8"/>
+                </Border.Effect>
+
+                <Border.RenderTransform>
+                    <TranslateTransform x:Name="DropDownTransform" Y="-10"/>
+                </Border.RenderTransform>
+
+                <ScrollViewer VerticalScrollBarVisibility="Auto"
+                            HorizontalScrollBarVisibility="Disabled">
+
+                    <!-- Content switcher basado en ShowGroups -->
+                    <ContentControl>
+                        <ContentControl.Style>
+                            <Style TargetType="ContentControl">
+                                <Setter Property="Content">
+                                    <Setter.Value>
+                                        <!-- Vista sin grupos -->
+                                        <ItemsControl ItemsSource="{Binding Items, ElementName=ComboBoxRoot}"
+                                                    ItemTemplate="{StaticResource ItemTemplate}"/>
+                                    </Setter.Value>
+                                </Setter>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ShowGroups, ElementName=ComboBoxRoot}" Value="True">
+                                        <Setter Property="Content">
+                                            <Setter.Value>
+                                                <!-- Vista con grupos -->
+                                                <ItemsControl ItemsSource="{Binding Groups, ElementName=ComboBoxRoot}"
+                                                            ItemTemplate="{StaticResource GroupTemplate}"/>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ContentControl.Style>
+                    </ContentControl>
+
+                </ScrollViewer>
+            </Border>
+        </Grid>
+    </Grid>
+</UserControl>

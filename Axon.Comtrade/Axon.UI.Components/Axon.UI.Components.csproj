@@ -52,6 +52,9 @@
     <Compile Include="Base\DelegateCommand.cs" />
     <Compile Include="Base\IWaiting.cs" />
     <Compile Include="Behaviours\ValidatorMessage.cs" />
+    <Compile Include="Combobox\AxonComboBox.xaml.cs">
+      <DependentUpon>AxonComboBox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Core\Common\DependencyVariable.cs" />
     <Compile Include="DataGrid\EnhancedCustomDataGrid.cs" />
@@ -75,6 +78,10 @@
     <Compile Include="TreeNode\LevelToIndentConverter.cs" />
     <Compile Include="TreeNode\TreeNodeIcon.cs" />
     <Compile Include="TreeNode\TreeViewDragDropBehavior.cs" />
+    <Page Include="Combobox\AxonComboBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Converters\Converters.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
