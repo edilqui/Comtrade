@@ -67,6 +67,9 @@
       <DependentUpon>AxonTabControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="TabControl\AxonTabItem.cs" />
+    <Compile Include="TexBoxButton\AxonTextBlockButton.xaml.cs">
+      <DependentUpon>AxonTextBlockButton.xaml</DependentUpon>
+    </Compile>
     <Compile Include="TextBox\AxonTextBox.xaml.cs">
       <DependentUpon>AxonTextBox.xaml</DependentUpon>
     </Compile>
@@ -99,6 +102,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="TabControl\AxonTabControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TexBoxButton\AxonTextBlockButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

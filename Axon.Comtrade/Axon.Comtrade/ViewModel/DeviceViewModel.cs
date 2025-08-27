@@ -6,6 +6,8 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Input;
 
 namespace Axon.Comtrade.ViewModel
 {
@@ -157,6 +159,25 @@ namespace Axon.Comtrade.ViewModel
             set { _serverAEQualifier = value; OnPropertyChanged(); }
         }
 
+        private string _selectedSignal;
+
+        public string SelectedSignal
+        {
+            get { return _selectedSignal; }
+            set { _selectedSignal = value; OnPropertyChanged(); }
+        }
+
+
+        public ICommand SearchSignalCommand
+        {
+            get { return new DelegateCommand(OnSearchSignal); }
+        }
+
+        private void OnSearchSignal()
+        {
+            MessageBox.Show("OnSearchSignal");
+            SelectedSignal = "NameSignal";
+        }
 
         public ObservableCollection<CustomItemCombobox> CollectionMode { get; set; }
 
