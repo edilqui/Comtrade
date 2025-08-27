@@ -74,6 +74,9 @@
     <Compile Include="ViewModel\DeviceViewModel.cs" />
     <Compile Include="ViewModel\TopologyTreeMapper.cs" />
     <Compile Include="ViewModel\TopologyTreeViewModel.cs" />
+    <Compile Include="Views\DeviceCollectionView.xaml.cs">
+      <DependentUpon>DeviceCollectionView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\DeviceComunicationView.xaml.cs">
       <DependentUpon>DeviceComunicationView.xaml</DependentUpon>
     </Compile>
@@ -116,6 +119,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\DeviceCollectionView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\DeviceComunicationView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

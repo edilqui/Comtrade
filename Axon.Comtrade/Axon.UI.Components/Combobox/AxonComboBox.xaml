@@ -10,7 +10,8 @@
 
         <!-- Plantilla para items sin agrupar -->
         <DataTemplate x:Key="ItemTemplate">
-            <Border Background="Transparent" 
+            <Border x:Name="borderTemplate"
+                    Background="Transparent" 
                     Padding="8,8"
                     Cursor="Hand">
                 <Border.InputBindings>
@@ -68,17 +69,12 @@
                         </TextBlock.Style>
                     </TextBlock>
                 </Grid>
-
-                <Border.Style>
-                    <Style TargetType="Border">
-                        <Style.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="#F5F5F5"/>
-                            </Trigger>
-                        </Style.Triggers>
-                    </Style>
-                </Border.Style>
             </Border>
+            <DataTemplate.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter TargetName="borderTemplate" Property="Background" Value="{DynamicResource OverlayBrush}"/>
+                </Trigger>
+            </DataTemplate.Triggers>
         </DataTemplate>
 
         <!-- Plantilla para grupos -->
@@ -134,10 +130,10 @@
         <Grid Grid.Row="1">
             <!-- Botón principal del ComboBox -->
             <Button Background="White"
-                    BorderBrush="#E1E5E9"
+                    BorderBrush="{DynamicResource BorderBrush}"
                     BorderThickness="1"
-                    Padding="12,10"
-                    MinHeight="36"
+                    Padding="8,0"
+                    MinHeight="32"
                     HorizontalContentAlignment="Stretch"
                     Click="ToggleDropDown_click"
                     Cursor="Hand">
@@ -156,7 +152,7 @@
                                 <Setter Property="BorderBrush" Value="#6B46C1"/>
                             </Trigger>
                             <DataTrigger Binding="{Binding IsDropDownOpen, ElementName=ComboBoxRoot}" Value="True">
-                                <Setter Property="BorderBrush" Value="#6B46C1"/>
+                                <Setter Property="BorderBrush" Value="red"/>
                                 <Setter Property="BorderThickness" Value="2"/>
                             </DataTrigger>
                         </ControlTemplate.Triggers>
@@ -215,11 +211,11 @@
 
             <!-- Dropdown -->
             <Border x:Name="DropDownBorder"
-                    Background="Transparent"
+                    Background="{DynamicResource BackgroundBrush}"
                     BorderBrush="{DynamicResource BorderBrush}"
                     BorderThickness="1"
                     CornerRadius="4"
-                    Margin="0,2,0,0"
+                    Margin="0,0,0,0"
                     MaxHeight="300"
                     MinWidth="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=Grid}}"
                     Panel.ZIndex="1000"
@@ -233,9 +229,9 @@
                                     BlurRadius="8"/>
                 </Border.Effect>
 
-                <Border.RenderTransform>
+                <!--<Border.RenderTransform>
                     <TranslateTransform x:Name="DropDownTransform" Y="-10"/>
-                </Border.RenderTransform>
+                </Border.RenderTransform>-->
 
                 <ScrollViewer VerticalScrollBarVisibility="Auto"
                             HorizontalScrollBarVisibility="Disabled">

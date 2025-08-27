@@ -10,7 +10,6 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Markup;
 using System.Windows.Media;
-using System.Windows.Media.Animation;
 
 namespace Axon.UI.Components
 {
@@ -21,8 +20,6 @@ namespace Axon.UI.Components
     public partial class AxonComboBox : UserControl, INotifyPropertyChanged
     {
         private bool _isDropDownOpen = false;
-        private Storyboard _openAnimation;
-        private Storyboard _closeAnimation;
 
         public AxonComboBox()
         {
@@ -42,29 +39,55 @@ namespace Axon.UI.Components
         #region Dependency Properties
 
         /// <summary>
-        /// Colección de items del combobox
+        /// ItemsSource para binding con colecciones del ViewModel (como ComboBox nativo)
         /// </summary>
-        public static readonly DependencyProperty ItemsProperty =
-            DependencyProperty.Register(nameof(Items), typeof(ObservableCollection<AxonComboBoxItem>),
-                typeof(AxonComboBox), new PropertyMetadata(null));
+        public static readonly DependencyProperty ItemsSourceProperty =
+            DependencyProperty.Register(nameof(ItemsSource), typeof(System.Collections.IEnumerable),
+                typeof(AxonComboBox), new PropertyMetadata(null, OnItemsSourceChanged));
 
-        public ObservableCollection<AxonComboBoxItem> Items
+        public System.Collections.IEnumerable ItemsSource
         {
-            get => (ObservableCollection<AxonComboBoxItem>)GetValue(ItemsProperty);
-            set => SetValue(ItemsProperty, value);
+            get => (System.Collections.IEnumerable)GetValue(ItemsSourceProperty);
+            set => SetValue(ItemsSourceProperty, value);
         }
 
         /// <summary>
-        /// Colección de grupos del combobox
+        /// Propiedad que se usa para mostrar el texto de cada item
         /// </summary>
-        public static readonly DependencyProperty GroupsProperty =
-            DependencyProperty.Register(nameof(Groups), typeof(ObservableCollection<AxonComboBoxGroup>),
-                typeof(AxonComboBox), new PropertyMetadata(null));
+        public static readonly DependencyProperty DisplayMemberPathProperty =
+            DependencyProperty.Register(nameof(DisplayMemberPath), typeof(string),
+                typeof(AxonComboBox), new PropertyMetadata("", OnDisplayMemberPathChanged));
 
-        public ObservableCollection<AxonComboBoxGroup> Groups
+        public string DisplayMemberPath
         {
-            get => (ObservableCollection<AxonComboBoxGroup>)GetValue(GroupsProperty);
-            set => SetValue(GroupsProperty, value);
+            get => (string)GetValue(DisplayMemberPathProperty);
+            set => SetValue(DisplayMemberPathProperty, value);
+        }
+
+        /// <summary>
+        /// Propiedad que se usa para obtener el valor de cada item
+        /// </summary>
+        public static readonly DependencyProperty SelectedValuePathProperty =
+            DependencyProperty.Register(nameof(SelectedValuePath), typeof(string),
+                typeof(AxonComboBox), new PropertyMetadata(""));
+
+        public string SelectedValuePath
+        {
+            get => (string)GetValue(SelectedValuePathProperty);
+            set => SetValue(SelectedValuePathProperty, value);
+        }
+
+        /// <summary>
+        /// Item seleccionado del ItemsSource (como ComboBox nativo)
+        /// </summary>
+        public static readonly DependencyProperty SelectedItemProperty =
+            DependencyProperty.Register(nameof(SelectedItem), typeof(object),
+                typeof(AxonComboBox), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnSelectedItemChanged));
+
+        public object SelectedItem
+        {
+            get => GetValue(SelectedItemProperty);
+            set => SetValue(SelectedItemProperty, value);
         }
 
         /// <summary>
@@ -107,21 +130,6 @@ namespace Axon.UI.Components
         }
 
         /// <summary>
-        /// Item seleccionado (readonly)
-        /// </summary>
-        private static readonly DependencyPropertyKey SelectedItemPropertyKey =
-            DependencyProperty.RegisterReadOnly(nameof(SelectedItem), typeof(AxonComboBoxItem), typeof(AxonComboBox),
-                new PropertyMetadata(null));
-
-        public static readonly DependencyProperty SelectedItemProperty = SelectedItemPropertyKey.DependencyProperty;
-
-        public AxonComboBoxItem SelectedItem
-        {
-            get => (AxonComboBoxItem)GetValue(SelectedItemProperty);
-            private set => SetValue(SelectedItemPropertyKey, value);
-        }
-
-        /// <summary>
         /// Índice del item seleccionado
         /// </summary>
         public static readonly DependencyProperty SelectedIndexProperty =
@@ -139,13 +147,27 @@ namespace Axon.UI.Components
         /// </summary>
         public static readonly DependencyProperty ShowGroupsProperty =
             DependencyProperty.Register(nameof(ShowGroups), typeof(bool), typeof(AxonComboBox),
-                new PropertyMetadata(false, OnShowGroupsChanged));
+                new PropertyMetadata(false));
 
         public bool ShowGroups
         {
             get => (bool)GetValue(ShowGroupsProperty);
             set => SetValue(ShowGroupsProperty, value);
         }
+
+        #endregion
+
+        #region Public Properties
+
+        /// <summary>
+        /// Colección de items del combobox (para declaración manual)
+        /// </summary>
+        public ObservableCollection<AxonComboBoxItem> Items { get; private set; }
+
+        /// <summary>
+        /// Colección de grupos del combobox (para declaración manual)
+        /// </summary>
+        public ObservableCollection<AxonComboBoxGroup> Groups { get; private set; }
 
         /// <summary>
         /// Controla si el dropdown está abierto
@@ -160,11 +182,6 @@ namespace Axon.UI.Components
                     _isDropDownOpen = value;
                     OnPropertyChanged();
                     OnPropertyChanged(nameof(DropDownVisibility));
-
-                    if (value)
-                        ShowDropDown();
-                    else
-                        HideDropDown();
                 }
             }
         }
@@ -177,7 +194,22 @@ namespace Axon.UI.Components
         /// <summary>
         /// Texto que se muestra en el combobox
         /// </summary>
-        public string DisplayText => SelectedItem?.Text ?? Placeholder;
+        public string DisplayText
+        {
+            get
+            {
+                if (SelectedItem != null)
+                {
+                    return GetDisplayText(SelectedItem);
+                }
+                return Placeholder;
+            }
+        }
+
+        /// <summary>
+        /// Items para mostrar en el dropdown
+        /// </summary>
+        public object DisplayItems => ShowGroups ? (object)Groups : (object)Items;
 
         /// <summary>
         /// Comando para toggle del dropdown
@@ -197,9 +229,6 @@ namespace Axon.UI.Components
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
-            InitializeAnimations();
-            ToggleDropDownCommand = new DelegateCommand(ToggleDropDown);
-
             // Click fuera para cerrar dropdown
             if (Application.Current?.MainWindow != null)
             {
@@ -219,17 +248,55 @@ namespace Axon.UI.Components
             }
         }
 
+        private static void OnItemsSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is AxonComboBox control)
+            {
+                control.RefreshItemsFromSource();
+            }
+        }
+
+        private static void OnDisplayMemberPathChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is AxonComboBox control)
+            {
+                control.RefreshItemsFromSource();
+            }
+        }
+
+        private static void OnSelectedItemChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is AxonComboBox control)
+            {
+                control.UpdateFromSelectedItem(e.NewValue);
+            }
+        }
+
+        private static void OnSelectedValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is AxonComboBox control)
+            {
+                control.UpdateFromSelectedValue(e.NewValue);
+            }
+        }
+
+        private static void OnSelectedIndexChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is AxonComboBox control)
+            {
+                control.UpdateFromSelectedIndex((int)e.NewValue);
+            }
+        }
+
         private void Items_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             if (e.NewItems != null)
             {
                 foreach (AxonComboBoxItem item in e.NewItems)
                 {
-                    item.SelectCommand = new DelegateCommand<AxonComboBoxItem>(SelectItem);
+                    item.SelectCommand = new DelegateCommand<AxonComboBoxItem>(SelectWrapperItem);
                 }
             }
-
-            UpdateDisplayItems();
         }
 
         private void Groups_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -238,51 +305,11 @@ namespace Axon.UI.Components
             {
                 foreach (AxonComboBoxGroup group in e.NewItems)
                 {
-                    group.Items.CollectionChanged += GroupItems_CollectionChanged;
                     foreach (var item in group.Items)
                     {
-                        item.SelectCommand = new DelegateCommand<AxonComboBoxItem>(SelectItem);
+                        item.SelectCommand = new DelegateCommand<AxonComboBoxItem>(SelectWrapperItem);
                     }
                 }
-            }
-
-            UpdateDisplayItems();
-        }
-
-        private void GroupItems_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            if (e.NewItems != null)
-            {
-                foreach (AxonComboBoxItem item in e.NewItems)
-                {
-                    item.SelectCommand = new DelegateCommand<AxonComboBoxItem>(SelectItem);
-                }
-            }
-
-            UpdateDisplayItems();
-        }
-
-        private static void OnSelectedValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            if (d is AxonComboBox control)
-            {
-                control.UpdateSelectionFromValue(e.NewValue);
-            }
-        }
-
-        private static void OnSelectedIndexChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            if (d is AxonComboBox control)
-            {
-                control.UpdateSelectionFromIndex((int)e.NewValue);
-            }
-        }
-
-        private static void OnShowGroupsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            if (d is AxonComboBox control)
-            {
-                control.UpdateDisplayItems();
             }
         }
 
@@ -290,76 +317,147 @@ namespace Axon.UI.Components
 
         #region Private Methods
 
-        private void InitializeAnimations()
-        {
-            // Animación de apertura
-            _openAnimation = new Storyboard();
-            var openOpacity = new DoubleAnimation(0, 1, TimeSpan.FromMilliseconds(150));
-            var openTransform = new DoubleAnimation(-10, 0, TimeSpan.FromMilliseconds(200))
-            {
-                EasingFunction = new CubicEase { EasingMode = EasingMode.EaseOut }
-            };
-
-            Storyboard.SetTarget(openOpacity, FindName("DropDownBorder") as DependencyObject);
-            Storyboard.SetTargetProperty(openOpacity, new PropertyPath("Opacity"));
-            Storyboard.SetTarget(openTransform, FindName("DropDownTransform") as DependencyObject);
-            Storyboard.SetTargetProperty(openTransform, new PropertyPath("Y"));
-
-            _openAnimation.Children.Add(openOpacity);
-            _openAnimation.Children.Add(openTransform);
-
-            // Animación de cierre
-            _closeAnimation = new Storyboard();
-            var closeOpacity = new DoubleAnimation(1, 0, TimeSpan.FromMilliseconds(100));
-            var closeTransform = new DoubleAnimation(0, -5, TimeSpan.FromMilliseconds(100));
-
-            Storyboard.SetTarget(closeOpacity, FindName("DropDownBorder") as DependencyObject);
-            Storyboard.SetTargetProperty(closeOpacity, new PropertyPath("Opacity"));
-            Storyboard.SetTarget(closeTransform, FindName("DropDownTransform") as DependencyObject);
-            Storyboard.SetTargetProperty(closeTransform, new PropertyPath("Y"));
-
-            _closeAnimation.Children.Add(closeOpacity);
-            _closeAnimation.Children.Add(closeTransform);
-
-            _closeAnimation.Completed += (s, e) =>
-            {
-                OnPropertyChanged(nameof(DropDownVisibility));
-            };
-        }
-
         private void ToggleDropDown()
         {
             IsDropDownOpen = !IsDropDownOpen;
         }
 
-        private void ShowDropDown()
+        private void RefreshItemsFromSource()
         {
-            OnPropertyChanged(nameof(DropDownVisibility));
-            _openAnimation?.Begin(this);
+            Items.Clear();
+
+            if (ItemsSource != null)
+            {
+                foreach (var sourceItem in ItemsSource)
+                {
+                    var comboItem = new AxonComboBoxItem
+                    {
+                        Text = GetDisplayText(sourceItem),
+                        Value = GetItemValue(sourceItem),
+                        SourceItem = sourceItem,
+                        SelectCommand = new DelegateCommand<AxonComboBoxItem>(SelectWrapperItem)
+                    };
+
+                    Items.Add(comboItem);
+                }
+
+                // Restaurar selección si había una
+                if (SelectedItem != null)
+                {
+                    UpdateFromSelectedItem(SelectedItem);
+                }
+            }
+
+            OnPropertyChanged(nameof(DisplayText));
         }
 
-        private void HideDropDown()
+        private string GetDisplayText(object item)
         {
-            _closeAnimation?.Begin(this);
+            if (item == null) return "";
+
+            if (string.IsNullOrEmpty(DisplayMemberPath))
+                return item.ToString();
+
+            try
+            {
+                var property = item.GetType().GetProperty(DisplayMemberPath);
+                return property?.GetValue(item)?.ToString() ?? item.ToString();
+            }
+            catch
+            {
+                return item.ToString();
+            }
         }
 
-        private void SelectItem(AxonComboBoxItem item)
+        private object GetItemValue(object item)
         {
-            if (item == null) return;
+            if (item == null) return null;
+
+            if (string.IsNullOrEmpty(SelectedValuePath))
+                return item;
+
+            try
+            {
+                var property = item.GetType().GetProperty(SelectedValuePath);
+                return property?.GetValue(item) ?? item;
+            }
+            catch
+            {
+                return item;
+            }
+        }
+
+        private void UpdateFromSelectedItem(object selectedItem)
+        {
+            if (selectedItem == null)
+            {
+                UpdateAllItemsSelection(null);
+                SelectedValue = null;
+                OnPropertyChanged(nameof(DisplayText));
+                return;
+            }
+
+            // Buscar el wrapper item que corresponde al item seleccionado
+            var wrapperItem = Items.FirstOrDefault(i => Equals(i.SourceItem ?? i, selectedItem));
+            if (wrapperItem != null)
+            {
+                UpdateAllItemsSelection(wrapperItem);
+                SelectedValue = wrapperItem.Value;
+            }
+
+            OnPropertyChanged(nameof(DisplayText));
+        }
+
+        private void UpdateFromSelectedValue(object value)
+        {
+            if (ItemsSource != null && value != null)
+            {
+                // Buscar en ItemsSource
+                foreach (var sourceItem in ItemsSource)
+                {
+                    var itemValue = GetItemValue(sourceItem);
+                    if (Equals(itemValue, value))
+                    {
+                        SelectedItem = sourceItem;
+                        return;
+                    }
+                }
+            }
+            else
+            {
+                // Buscar en Items manuales
+                var item = Items.FirstOrDefault(i => Equals(i.Value, value));
+                if (item != null)
+                {
+                    UpdateAllItemsSelection(item);
+                    SelectedItem = item.SourceItem ?? item;
+                    OnPropertyChanged(nameof(DisplayText));
+                }
+            }
+        }
+
+        private void UpdateFromSelectedIndex(int index)
+        {
+            if (index >= 0 && index < Items.Count)
+            {
+                var item = Items[index];
+                SelectedItem = item.SourceItem ?? item;
+                SelectedValue = item.Value;
+            }
+        }
+
+        private void SelectWrapperItem(AxonComboBoxItem wrapperItem)
+        {
+            if (wrapperItem == null) return;
 
             var oldValue = SelectedValue;
             var oldItem = SelectedItem;
-            var oldIndex = SelectedIndex;
 
-            // Actualizar la propiedad IsSelected para todos los items
-            UpdateAllItemsSelection(item);
+            UpdateAllItemsSelection(wrapperItem);
 
-            SelectedItem = item;
-            SelectedValue = item.Value ?? item.Text;
-
-            // Encontrar el índice en la lista plana
-            var allItems = GetAllItems();
-            SelectedIndex = allItems.IndexOf(item);
+            SelectedItem = wrapperItem.SourceItem ?? wrapperItem;
+            SelectedValue = wrapperItem.Value;
+            SelectedIndex = Items.IndexOf(wrapperItem);
 
             OnPropertyChanged(nameof(DisplayText));
 
@@ -370,9 +468,7 @@ namespace Axon.UI.Components
                 OldValue = oldValue,
                 NewValue = SelectedValue,
                 OldItem = oldItem,
-                NewItem = item,
-                OldIndex = oldIndex,
-                NewIndex = SelectedIndex
+                NewItem = SelectedItem
             });
         }
 
@@ -394,63 +490,6 @@ namespace Axon.UI.Components
             }
         }
 
-        private void UpdateSelectionFromValue(object value)
-        {
-            var allItems = GetAllItems();
-            var item = allItems.FirstOrDefault(i => Equals(i.Value ?? i.Text, value));
-
-            if (item != null)
-            {
-                UpdateAllItemsSelection(item);
-                SelectedItem = item;
-                SelectedIndex = allItems.IndexOf(item);
-                OnPropertyChanged(nameof(DisplayText));
-            }
-        }
-
-        private void UpdateSelectionFromIndex(int index)
-        {
-            var allItems = GetAllItems();
-            if (index >= 0 && index < allItems.Count)
-            {
-                var item = allItems[index];
-                UpdateAllItemsSelection(item);
-                SelectedItem = item;
-                SelectedValue = item.Value ?? item.Text;
-                OnPropertyChanged(nameof(DisplayText));
-            }
-        }
-
-        private void UpdateDisplayItems()
-        {
-            OnPropertyChanged(nameof(DisplayItems));
-        }
-
-        private ObservableCollection<AxonComboBoxItem> GetAllItems()
-        {
-            var result = new ObservableCollection<AxonComboBoxItem>();
-
-            if (ShowGroups)
-            {
-                foreach (var group in Groups)
-                {
-                    foreach (var item in group.Items)
-                    {
-                        result.Add(item);
-                    }
-                }
-            }
-            else
-            {
-                foreach (var item in Items)
-                {
-                    result.Add(item);
-                }
-            }
-
-            return result;
-        }
-
         private bool IsDescendantOf(DependencyObject child, DependencyObject parent)
         {
             if (child == null || parent == null) return false;
@@ -459,7 +498,7 @@ namespace Axon.UI.Components
             while (current != null)
             {
                 if (current == parent) return true;
-                current = VisualTreeHelper.GetParent(current) ?? LogicalTreeHelper.GetParent(current);
+                current = VisualTreeHelper.GetParent(current) ?? System.Windows.LogicalTreeHelper.GetParent(current);
             }
             return false;
         }
@@ -471,23 +510,17 @@ namespace Axon.UI.Components
 
         #endregion
 
-        #region Public Properties for Binding
-
-        public object DisplayItems
-        {
-            get
-            {
-                return ShowGroups ? (object)Groups : (object)Items;
-            }
-        }
-
-        #endregion
-
         #region Public Methods
 
         public void AddItem(string text, object value = null)
         {
-            Items.Add(new AxonComboBoxItem { Text = text, Value = value });
+            var item = new AxonComboBoxItem
+            {
+                Text = text,
+                Value = value,
+                SelectCommand = new DelegateCommand<AxonComboBoxItem>(SelectWrapperItem)
+            };
+            Items.Add(item);
         }
 
         public void AddGroup(string header, params AxonComboBoxItem[] items)
@@ -495,6 +528,7 @@ namespace Axon.UI.Components
             var group = new AxonComboBoxGroup { Header = header };
             foreach (var item in items)
             {
+                item.SelectCommand = new DelegateCommand<AxonComboBoxItem>(SelectWrapperItem);
                 group.Items.Add(item);
             }
             Groups.Add(group);
@@ -525,6 +559,7 @@ namespace Axon.UI.Components
         private object _value;
         private bool _isEnabled = true;
         private bool _isSelected = false;
+        private object _sourceItem;
 
         public string Text
         {
@@ -550,6 +585,15 @@ namespace Axon.UI.Components
             set { _isSelected = value; OnPropertyChanged(); }
         }
 
+        /// <summary>
+        /// Referencia al item original del ItemsSource
+        /// </summary>
+        public object SourceItem
+        {
+            get => _sourceItem;
+            set { _sourceItem = value; OnPropertyChanged(); }
+        }
+
         public ICommand SelectCommand { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -557,6 +601,11 @@ namespace Axon.UI.Components
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public override string ToString()
+        {
+            return Text;
         }
     }
 
@@ -590,10 +639,8 @@ namespace Axon.UI.Components
     {
         public object OldValue { get; set; }
         public object NewValue { get; set; }
-        public AxonComboBoxItem OldItem { get; set; }
-        public AxonComboBoxItem NewItem { get; set; }
-        public int OldIndex { get; set; }
-        public int NewIndex { get; set; }
+        public object OldItem { get; set; }
+        public object NewItem { get; set; }
     }
 
     #endregion

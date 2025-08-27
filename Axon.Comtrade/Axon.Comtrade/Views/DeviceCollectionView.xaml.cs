@@ -75,7 +75,6 @@ namespace Axon.Comtrade.Views
 
         private void TestToggle(object sender, RoutedEventArgs e)
         {
-            TestCombo.IsDropDownOpen = !TestCombo.IsDropDownOpen;
         }
     }
 }
