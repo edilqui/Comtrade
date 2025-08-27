@@ -25,8 +25,8 @@ namespace Axon.Comtrade.ViewModel
             this.CollectionMode = new ObservableCollection<CustomItemCombobox>()
             {
                 new CustomItemCombobox(){ Display = "Trigger", Value = 1},
-                new CustomItemCombobox(){ Display = "Cyclic", Value = 1},
-                new CustomItemCombobox(){ Display = "Manual", Value = 1},
+                new CustomItemCombobox(){ Display = "Cyclic", Value = 2},
+                new CustomItemCombobox(){ Display = "Manual", Value = 3},
             };
 
             this.CollectionModeSelected = CollectionMode[0];
@@ -186,8 +186,19 @@ namespace Axon.Comtrade.ViewModel
         public CustomItemCombobox CollectionModeSelected
         {
             get { return _collectionModeSelected; }
-            set { _collectionModeSelected = value; }
+            set { 
+                _collectionModeSelected = value;
+                SignalTriggerVisible = (int)value.Value == 1 || (int)value.Value == 3;
+            }
         }
+
+        private bool _signalTriggerVisible;
+        public bool SignalTriggerVisible
+        {
+            get { return _signalTriggerVisible; }
+            set { _signalTriggerVisible = value; OnPropertyChanged(); }
+        }
+
 
         public ObservableCollection<CustomItemCombobox> Filtro { get; set; }
 

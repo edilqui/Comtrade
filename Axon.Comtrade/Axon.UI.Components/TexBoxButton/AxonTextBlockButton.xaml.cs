@@ -193,7 +193,7 @@ namespace Axon.UI.Components
 
                 return !string.IsNullOrEmpty(Text)
                     ? new SolidColorBrush(Color.FromRgb(33, 37, 41))    // Negro para texto real
-                    : new SolidColorBrush(Color.FromRgb(153, 153, 153)); // Gris para placeholder
+                    : (System.Windows.Media.Brush)FindResource("TextPrimaryBrush"); // Gris para placeholder
             }
         }
 
