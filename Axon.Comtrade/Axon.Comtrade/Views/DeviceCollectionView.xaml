@@ -28,13 +28,23 @@
                             />
 
                     <axonUI:AxonComboBox 
-                        Label="Modo Recolección" 
                         ShowGroups="False" 
-                        Margin="0,0,0,20">
-                        <axonUI:AxonComboBoxItem Text="Opción 1" Value="1"/>
-                        <axonUI:AxonComboBoxItem Text="Opción 2" Value="2"/>
-                        <axonUI:AxonComboBoxItem Text="Opción 3" Value="3"/>
+                        Label="Modo Recolección" 
+                        ItemsSource="{Binding DevicesExplorerVieModel.DeviceConfigSelected.CollectionMode}"
+                        SelectedItem="{Binding DevicesExplorerVieModel.DeviceConfigSelected.CollectionModeSelected}"
+                        DisplayMemberPath="Display"
+                        Margin="0,0,0,16">
                     </axonUI:AxonComboBox>
+
+                    <axonUI:AxonComboBox 
+                        ShowGroups="False" 
+                        Label="Filtro" 
+                        ItemsSource="{Binding DevicesExplorerVieModel.DeviceConfigSelected.Filtro}"
+                        SelectedItem="{Binding DevicesExplorerVieModel.DeviceConfigSelected.FiltroSelected}"
+                        DisplayMemberPath="Display"
+                        Margin="0,0,0,16">
+                    </axonUI:AxonComboBox>
+
 
 
 

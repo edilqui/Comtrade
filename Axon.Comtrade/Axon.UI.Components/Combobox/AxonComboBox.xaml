@@ -108,8 +108,7 @@
         <!-- Label opcional -->
         <TextBlock Grid.Row="0"
                    Text="{Binding Label, ElementName=ComboBoxRoot}"
-                   FontSize="14"
-                   FontWeight="Medium"
+                   FontSize="{DynamicResource FontSizeBase300}"
                    Foreground="#333333"
                    Margin="0,0,0,6">
             <TextBlock.Style>
@@ -132,6 +131,7 @@
             <Button Background="White"
                     BorderBrush="{DynamicResource BorderBrush}"
                     BorderThickness="1"
+                    FontWeight="{DynamicResource FontWeightSemibold}"
                     Padding="8,0"
                     MinHeight="32"
                     HorizontalContentAlignment="Stretch"

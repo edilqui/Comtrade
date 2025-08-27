@@ -47,7 +47,7 @@
 
             <axonUI:AxonTabItem Header="Recolección">
                 <axonUI:AxonTabItem.Content>
-                    <views:DeviceCollectionView DataContext="{Binding DevicesExplorerVieModel.DeviceConfigSelected}"/>
+                    <views:DeviceCollectionView/>
                 </axonUI:AxonTabItem.Content>
             </axonUI:AxonTabItem>
 

@@ -25,56 +25,8 @@ namespace Axon.Comtrade.Views
         public DeviceCollectionView()
         {
             InitializeComponent();
-            InitTab();
         }
 
-        private void InitTab()
-        {
-            //MainTabControl.AddTab("Comunicación", new EmptyPageView());
-            //MainTabControl.AddTab("Recolección", null);
-            //MainTabControl.AddTab("Reglas", null);
-            //MainTabControl.AddTab("Análisis", null);
-        }
-
-        private void OnTabChanged(object sender, TabSelectionChangedEventArgs e)
-        {
-            Console.WriteLine($"Cambió de '{e.OldTabItem?.Header}' a '{e.NewTabItem?.Header}'");
-
-            // Aquí puedes implementar lógica específica
-            switch (e.NewTabItem?.Header)
-            {
-                case "Comunicación":
-                    // Lógica para comunicación
-                    break;
-                case "Recolección":
-                    // Lógica para recolección
-                    break;
-            }
-        }
-
-        private void OnFolderStructureChanged(object sender, RadioSelectionChangedEventArgs e)
-        {
-            //var oldValue = (FolderStructure?)e.OldValue;
-            //var newValue = (FolderStructure?)e.NewValue;
-
-            //Console.WriteLine($"Estructura de carpetas cambió de '{oldValue}' a '{newValue}'");
-
-            //// Lógica específica según la estructura seleccionada
-            //switch (newValue)
-            //{
-            //    case FolderStructure.ARCHITECTURE:
-            //        // Configurar para estructura por arquitectura
-            //        Console.WriteLine("Configurando estructura por arquitectura...");
-            //        break;
-            //    case FolderStructure.DATE:
-            //        // Configurar para estructura por fecha
-            //        Console.WriteLine("Configurando estructura por fecha...");
-            //        break;
-            //}
-        }
-
-        private void TestToggle(object sender, RoutedEventArgs e)
-        {
-        }
+        
     }
 }

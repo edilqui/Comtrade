@@ -1,6 +1,8 @@
-﻿using Axon.UI.Components.Base;
+﻿using Axon.Comtrade.Base;
+using Axon.UI.Components.Base;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,6 +17,28 @@ namespace Axon.Comtrade.ViewModel
         private string _topology;
         private string _protocol;
         private bool _isEnabled = true;
+
+        public DeviceViewModel()
+        {
+            this.CollectionMode = new ObservableCollection<CustomItemCombobox>()
+            {
+                new CustomItemCombobox(){ Display = "Trigger", Value = 1},
+                new CustomItemCombobox(){ Display = "Cyclic", Value = 1},
+                new CustomItemCombobox(){ Display = "Manual", Value = 1},
+            };
+
+            this.CollectionModeSelected = CollectionMode[0];
+
+            OnPropertyChanged("CollectionMode");
+
+            this.Filtro = new ObservableCollection<CustomItemCombobox>()
+            {
+                new CustomItemCombobox(){Display = "Lista Negra", Value = 1},
+                new CustomItemCombobox(){Display = "Lista Blanca", Value = 2}
+            };
+            this.FiltroSelected = Filtro[0];
+            OnPropertyChanged("Filtro");
+        }
 
         public string Name
         {
@@ -134,7 +158,25 @@ namespace Axon.Comtrade.ViewModel
         }
 
 
+        public ObservableCollection<CustomItemCombobox> CollectionMode { get; set; }
 
+        private CustomItemCombobox _collectionModeSelected;
+
+        public CustomItemCombobox CollectionModeSelected
+        {
+            get { return _collectionModeSelected; }
+            set { _collectionModeSelected = value; }
+        }
+
+        public ObservableCollection<CustomItemCombobox> Filtro { get; set; }
+
+        private CustomItemCombobox _filtroSelected;
+
+        public CustomItemCombobox FiltroSelected
+        {
+            get { return _filtroSelected; }
+            set { _filtroSelected = value; }
+        }
 
 
         /// <summary>

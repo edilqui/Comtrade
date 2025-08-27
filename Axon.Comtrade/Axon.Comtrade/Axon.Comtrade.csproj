@@ -59,6 +59,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Base\CustomItemCombobox.cs" />
     <Compile Include="Base\ISideBar.cs" />
     <Compile Include="Model\RenameItemModel.cs" />
     <Compile Include="Model\ProtocolNodeModel.cs" />
