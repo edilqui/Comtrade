@@ -181,15 +181,9 @@ namespace Axon.UI.Components
                 {
                     _isDropDownOpen = value;
                     OnPropertyChanged();
-                    OnPropertyChanged(nameof(DropDownVisibility));
                 }
             }
         }
-
-        /// <summary>
-        /// Visibilidad del dropdown para binding
-        /// </summary>
-        public Visibility DropDownVisibility => IsDropDownOpen ? Visibility.Visible : Visibility.Collapsed;
 
         /// <summary>
         /// Texto que se muestra en el combobox
@@ -229,23 +223,8 @@ namespace Axon.UI.Components
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
-            // Click fuera para cerrar dropdown
-            if (Application.Current?.MainWindow != null)
-            {
-                Application.Current.MainWindow.PreviewMouseDown += OnWindowPreviewMouseDown;
-            }
-        }
-
-        private void OnWindowPreviewMouseDown(object sender, MouseButtonEventArgs e)
-        {
-            if (IsDropDownOpen)
-            {
-                var hitTest = e.OriginalSource as DependencyObject;
-                if (!IsDescendantOf(hitTest, this))
-                {
-                    IsDropDownOpen = false;
-                }
-            }
+            // El Popup maneja automáticamente el click fuera con StaysOpen="False"
+            // Ya no necesitamos el manejo manual de click fuera
         }
 
         private static void OnItemsSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -545,9 +524,9 @@ namespace Axon.UI.Components
 
         #endregion
 
-        private void ToggleDropDown_click(object sender, RoutedEventArgs e)
+        private void ToggleDropDownCommand_Click(object sender, RoutedEventArgs e)
         {
-            ToggleDropDown();
+            this.ToggleDropDown();
         }
     }
 
@@ -601,11 +580,6 @@ namespace Axon.UI.Components
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        public override string ToString()
-        {
-            return Text;
         }
     }
 
