@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="Axon.Comtrade.Views.RenameConfigView"
+﻿<UserControl x:Class="Axon.Comtrade.Views.ArchivedConfigView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -33,7 +33,7 @@
                           Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"
                           Width="24" Height="24"/>
                         </Viewbox>
-                        <TextBlock Grid.Column="1" Text="Renombrados" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="1" Text="Archivado" VerticalAlignment="Center"/>
                     </Grid>
                 </Button>
             </StackPanel>
@@ -41,7 +41,7 @@
         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
 
             <WrapPanel   >
-                <StackPanel Grid.Row="1" Margin="{StaticResource MarginLHorizontal}" Width="300" DataContext="{Binding RenameItemSelected}">
+                <StackPanel Grid.Row="1" Margin="{StaticResource MarginLHorizontal}" Width="300" DataContext="{Binding ArchivedItemSelected}">
 
                     <!--seccion Directorio de salida-->
                     <TextBlock

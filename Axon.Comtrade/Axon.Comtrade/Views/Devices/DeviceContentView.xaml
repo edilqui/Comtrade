@@ -20,7 +20,8 @@
                 BorderBrush="{DynamicResource BorderBrush}"
                 Height="{StaticResource SpacingVerticalXXXXXL}">
             <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="8" HorizontalAlignment="Left">                
-                <Button Style="{StaticResource GhostButtonStyle}" Padding="4,0">
+                <Button Style="{StaticResource GhostButtonStyle}" Padding="4,0"
+                        Command="{Binding DevicesExplorerVieModel.GoBackCommand}">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="auto"/>

@@ -15,13 +15,16 @@ namespace Axon.Comtrade.ViewModel
 
         public ICommand AddCommand { get; private set; }
         public ICommand DeleteCommand { get; private set; }
+        public ICommand GoBackCommand { get; private set; }
+        public ComtradeConfiguration ComtradeController { get; set; }
 
-        public ArchivedListViewModel()
+        public ArchivedListViewModel(ComtradeConfiguration _contradeController)
         {
             InitializeCommands();
             DataItems = new ObservableCollection<ArchivedItemModel>();
 
             LoadExample();
+            ComtradeController = _contradeController;
 
         }
 
@@ -40,6 +43,12 @@ namespace Axon.Comtrade.ViewModel
         {
             AddCommand = new DelegateCommand(Add);
             DeleteCommand = new DelegateCommand<ArchivedItemModel>(Delete);
+            GoBackCommand = new DelegateCommand(OnGoBack);
+        }
+
+        private void OnGoBack()
+        {
+            ComtradeController.OnMenuItemSelected("archivado");
         }
 
         private void Delete(ArchivedItemModel obj)
@@ -51,6 +60,27 @@ namespace Axon.Comtrade.ViewModel
         {
             var Item = new ArchivedItemModel() { Name = "Archivated" + DataItems.Count };
             DataItems.Add(Item);
+        }
+        public ICommand ConfigureCommand
+        {
+            get { return new DelegateCommand<ArchivedItemModel>(OnConfigure); }
+        }
+
+        private ArchivedItemModel _archivedItemSelected;
+
+        public ArchivedItemModel ArchivedItemSelected
+        {
+            get { return _archivedItemSelected; }
+            set { _archivedItemSelected = value; OnPropertyChanged(); }
+        }
+
+        private void OnConfigure(ArchivedItemModel _archiveItem)
+        {
+            if (_archiveItem != null)
+            {
+                ArchivedItemSelected = _archiveItem;
+                this.ComtradeController.OnMenuItemSelected("archivedItemConfig");
+            }
         }
     }
 }

@@ -9,6 +9,7 @@ using System.Windows.Data;
 using System.ComponentModel;
 using Axon.Comtrade.Model;
 using Axon.UI.Components.TreeNode;
+using System.Windows.Input;
 
 namespace Axon.Comtrade.ViewModel
 {
@@ -17,6 +18,7 @@ namespace Axon.Comtrade.ViewModel
         private ObservableCollection<DeviceViewModel> _allDevices;
         private ICollectionView _filteredDevices;
         private string _selectedTopologyPath;
+        public ICommand GoBackCommand { get; private set; }
 
         public ObservableCollection<DeviceViewModel> AllDevices
         {
@@ -60,8 +62,14 @@ namespace Axon.Comtrade.ViewModel
         public DevicesExplorerViewModel(ComtradeConfiguration comtradeController)
         {
             InitializeDevices();
+            InitializeCommands();
             SetupFilteredView();
             ComtradeController= comtradeController;
+        }
+
+        private void InitializeCommands()
+        {
+            GoBackCommand = new DelegateCommand(OnGoBack);
         }
 
         private void InitializeDevices()
@@ -420,5 +428,10 @@ namespace Axon.Comtrade.ViewModel
         }
 
         #endregion
+
+        private void OnGoBack()
+        {
+            ComtradeController.OnMenuItemSelected("devices");
+        }
     }
 }

@@ -15,6 +15,7 @@ namespace Axon.Comtrade.ViewModel
 
         public ICommand AddCommand { get; private set; }
         public ICommand DeleteCommand { get; private set; }
+        public ICommand GoBackCommand { get; private set; }
 
         ComtradeConfiguration ComtradeController { get; set; }
 
@@ -42,6 +43,12 @@ namespace Axon.Comtrade.ViewModel
         {
             AddCommand = new DelegateCommand(Add);
             DeleteCommand = new DelegateCommand<RenameItemModel>(Delete);
+            GoBackCommand = new DelegateCommand(OnGoBack);
+        }
+
+        private void OnGoBack()
+        {
+            ComtradeController.OnMenuItemSelected("renombrado");
         }
 
         private void Delete(RenameItemModel obj)
