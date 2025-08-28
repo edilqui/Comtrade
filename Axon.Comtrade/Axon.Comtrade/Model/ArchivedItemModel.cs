@@ -51,16 +51,23 @@ namespace Axon.Comtrade.ViewModel
                                     new GenericTreeNodeModel { Title = "Oscilografías",Parent = topologyBahia, IconPath = TreeNodeIcons.FolderOutline }
                                 };
 
-            LoadTopologyData(TreeNodes);
             TreeNodes.Add(topologyBahia);
+            LoadTopologyData(TreeNodes);
         }
 
         public void LoadTopologyData(ObservableCollection<GenericTreeNodeModel> topologyData)
         {
+            //List<GenericTreeNodeModel> temp = new List<GenericTreeNodeModel>();
+
+            //foreach (var node in topologyData)
+            //{
+            //    SetupNodeCommands(node);
+            //    temp.Add(node);
+            //}
+
             foreach (var node in topologyData)
             {
                 SetupNodeCommands(node);
-                TreeNodes.Add(node);
             }
         }
 
@@ -93,7 +100,9 @@ namespace Axon.Comtrade.ViewModel
             var newNode = new GenericTreeNodeModel()
             {
                 Title = node.Title + "-" + (node.Children.Count + 1),
-                Parent = node
+                Parent = node,
+                Level = node.Level + 1,
+                IconPath = node.IconPath,
             };
             SetupNodeCommands(newNode);
             node.Children.Add(newNode);
