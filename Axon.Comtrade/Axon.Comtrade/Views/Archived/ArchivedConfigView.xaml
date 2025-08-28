@@ -11,6 +11,14 @@
              xmlns:vm="clr-namespace:Axon.Comtrade.ViewModel"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <!-- Importar los estilos del TreeView -->
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/Axon.UI.Components;component/TreeNode/TreeViewStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -39,54 +47,39 @@
             </StackPanel>
         </Border>
         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <!--directorio archivado-->
+                <Border BorderThickness="0,0,1,0" BorderBrush="{DynamicResource BorderBrush}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Border Margin="16">
+                            <TextBlock Text="Directorio de Salida"
+                                   FontSize="{StaticResource FontSizeBase300}"
+                                   Foreground="{DynamicResource TextPrimaryBrush}"
+                                   FontWeight="{StaticResource FontWeightSemibold}"
+                                   VerticalAlignment="Center"/>
+                        </Border>
 
-            <WrapPanel   >
-                <StackPanel Grid.Row="1" Margin="{StaticResource MarginLHorizontal}" Width="300" DataContext="{Binding ArchivedItemSelected}">
+                        <Border Grid.Row="1"
+                Background="Transparent"
+                BorderThickness="0" Width="250">
 
-                    <!--seccion Directorio de salida-->
-                    <TextBlock
-                            Margin="0,16,0,16"
-                            FontSize="{StaticResource FontSizeBase400}"
-                            Foreground="{DynamicResource TextPrimaryBrush}"
-                            Text="Parámetros Generales"
-                            FontWeight="{DynamicResource FontWeightSemibold}"
-                            VerticalAlignment="Center"
-                            />  
-
-                    <axonUI:AxonTextBox Label="Nombre"
-                          Text="{Binding Name}"
-                          Margin="0,0,0,16"/>
-
-                    <axonUI:AxonTextBox Label="Comtrade Renombrado como"
-                          Text="{Binding ComtradeRenameAs}"
-                          Margin="0,0,0,16"/>
-
-                    <axonUI:AxonTextBox Label="Formato de Fecha"
-                          Text="{Binding DateFormat}"
-                          Margin="0,0,0,16"/>
-
-                    <axonUI:AxonTextBox Label="Código de barras mnemotécnico"
-                          Text="{Binding BarCodeCodeNnemonics}"
-                          Margin="0,0,0,16"/>
-
-                    <axonUI:AxonTextBox Label="Protección mnemotécnica"
-                          Text="{Binding ProtectionCodeNnemonics}"
-                          Margin="0,0,0,16"/>
-
-                    <axonUI:AxonTextBox Label="Subestación mnemotécnica"
-                          Text="{Binding SubestationNnemonics}"
-                          Margin="0,0,0,16"/>
-
-                    <axonUI:AxonTextBox Label="Otros archivos"
-                          Text="{Binding OtherFiles}"
-                          Margin="0,0,0,16"/>
-
-                    <axonUI:AxonTextBox Label="Formato de hora"
-                          Text="{Binding HourFormat}"
-                          Margin="0,0,0,16"/>
-
-                </StackPanel>
-            </WrapPanel>
+                            <TreeView x:Name="TopologyTreeView" Background="Transparent" BorderThickness="0"
+                          Style="{StaticResource GenericTreeViewStyle}"
+                          ItemsSource="{Binding ArchivedItemSelected.TreeNodes}"
+                          SelectedItemChanged="TreeDir_SelectedItemChanged"
+                          Margin="5"/>
+                        </Border>
+                    </Grid>
+                </Border>
+            </Grid>
         </ScrollViewer>
     </Grid>
 </UserControl>

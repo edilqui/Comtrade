@@ -1,5 +1,6 @@
 ﻿using Axon.Comtrade.ViewModel;
 using Axon.UI.Components;
+using Axon.UI.Components.TreeNode;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +26,14 @@ namespace Axon.Comtrade.Views
         public ArchivedConfigView()
         {
             InitializeComponent();
-        }       
+        }
+
+        private void TreeDir_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        {
+            if (DataContext is TopologyTreeViewModel viewModel)
+            {
+                viewModel.SelectedNode = (GenericTreeNodeModel)e.NewValue;
+            }
+        }
     }
 }

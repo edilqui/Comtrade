@@ -12,7 +12,6 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/Axon.UI.Components;component/TreeNode/TreeViewStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid Margin="0" Background="{DynamicResource ColorNeutralBackground3Brush}">

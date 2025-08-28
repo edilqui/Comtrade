@@ -81,44 +81,6 @@
                    
 
                 </StackPanel>
-                <StackPanel Grid.Row="1" Margin="32,0" Width="300">
-
-                    <!--seccion Directorio de salida-->
-                    <TextBlock
-                            Margin="0,16,0,16"
-                            FontSize="{StaticResource FontSizeBase400}"
-                            Foreground="{DynamicResource TextPrimaryBrush}"
-                            Text="Parámetros de Protocolo"
-                            FontWeight="{DynamicResource FontWeightSemibold}"
-                            VerticalAlignment="Center"
-                            />                   
-
-                    <axonUI:AxonTextBox Label="Ip"
-                          Text="{Binding Ip}"
-                          Units=""
-                          Margin="0,0,0,16"/>
-                    <axonUI:AxonTextBox Label="Port"
-                          Text="{Binding Port}"
-                          Units=""
-                          Margin="0,0,0,16"/>
-                    <axonUI:AxonTextBox Label="Server App Tittle"
-                          Text="{Binding ServerAppTitle}"
-                          Units=""
-                          Margin="0,0,0,16"/>
-                    <axonUI:AxonTextBox Label="Server AE Qualifier"
-                          Text="{Binding ServerAEQualifier}"
-                          Units=""
-                          Margin="0,0,0,16"/>
-                    <axonUI:AxonTextBox Label="Waiting Time After Int"
-                          Text="{Binding WaitingTimeAfterInt}"
-                          Units="seg"
-                          Margin="0,0,0,16"/>
-                    <axonUI:AxonTextBox Label="Request Timeout"
-                          Text="{Binding RequiestTimeout}"
-                          Units="seg"
-                          Margin="0,0,0,16"/>                  
-
-                </StackPanel>
             </WrapPanel>
         </ScrollViewer>
     </Grid>
