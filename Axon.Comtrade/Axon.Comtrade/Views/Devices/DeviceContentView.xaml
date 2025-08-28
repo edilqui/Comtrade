@@ -53,7 +53,7 @@
 
             <axonUI:AxonTabItem Header="Reglas">
                 <axonUI:AxonTabItem.Content>
-                    <TextBlock Text="Contenido de Reglas" />
+                    <views:DeviceRulesView/>
                 </axonUI:AxonTabItem.Content>
             </axonUI:AxonTabItem>
 

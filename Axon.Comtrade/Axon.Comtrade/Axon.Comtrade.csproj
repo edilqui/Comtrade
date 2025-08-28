@@ -75,37 +75,40 @@
     <Compile Include="ViewModel\DeviceViewModel.cs" />
     <Compile Include="ViewModel\TopologyTreeMapper.cs" />
     <Compile Include="ViewModel\TopologyTreeViewModel.cs" />
-    <Compile Include="Views\DeviceCollectionView.xaml.cs">
+    <Compile Include="Views\Devices\DeviceCollectionView.xaml.cs">
       <DependentUpon>DeviceCollectionView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\DeviceComunicationView.xaml.cs">
+    <Compile Include="Views\Devices\DeviceRulesView.xaml.cs">
+      <DependentUpon>DeviceRulesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Devices\DeviceComunicationView.xaml.cs">
       <DependentUpon>DeviceComunicationView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\DeviceContentView.xaml.cs">
+    <Compile Include="Views\Devices\DeviceContentView.xaml.cs">
       <DependentUpon>DeviceContentView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ConfigurationView.xaml.cs">
+    <Compile Include="Views\Configuration\ConfigurationView.xaml.cs">
       <DependentUpon>ConfigurationView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\RenameListView.xaml.cs">
+    <Compile Include="Views\Renamed\RenameListView.xaml.cs">
       <DependentUpon>RenameListView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ArchivedListView.xaml.cs">
+    <Compile Include="Views\Archived\ArchivedListView.xaml.cs">
       <DependentUpon>ArchivedListView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\DevicesExplorerView.xaml.cs">
+    <Compile Include="Views\Devices\DevicesExplorerView.xaml.cs">
       <DependentUpon>DevicesExplorerView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\DevicesListView.xaml.cs">
+    <Compile Include="Views\Devices\DevicesListView.xaml.cs">
       <DependentUpon>DevicesListView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\EmptyPageView.xaml.cs">
+    <Compile Include="Views\Base\EmptyPageView.xaml.cs">
       <DependentUpon>EmptyPageView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SideBarView.xaml.cs">
+    <Compile Include="Views\Base\SideBarView.xaml.cs">
       <DependentUpon>SideBarView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\TopologyPanel.xaml.cs">
+    <Compile Include="Views\Devices\TopologyPanel.xaml.cs">
       <DependentUpon>TopologyPanel.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
@@ -120,47 +123,51 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Views\DeviceCollectionView.xaml">
+    <Page Include="Views\Devices\DeviceCollectionView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\DeviceComunicationView.xaml">
+    <Page Include="Views\Devices\DeviceRulesView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\DeviceContentView.xaml">
+    <Page Include="Views\Devices\DeviceComunicationView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\ConfigurationView.xaml">
+    <Page Include="Views\Devices\DeviceContentView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\RenameListView.xaml">
+    <Page Include="Views\Configuration\ConfigurationView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\ArchivedListView.xaml">
+    <Page Include="Views\Renamed\RenameListView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\DevicesExplorerView.xaml">
+    <Page Include="Views\Archived\ArchivedListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Devices\DevicesExplorerView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\DevicesListView.xaml">
+    <Page Include="Views\Devices\DevicesListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\EmptyPageView.xaml">
+    <Page Include="Views\Base\EmptyPageView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\SideBarView.xaml">
+    <Page Include="Views\Base\SideBarView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\TopologyPanel.xaml">
+    <Page Include="Views\Devices\TopologyPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

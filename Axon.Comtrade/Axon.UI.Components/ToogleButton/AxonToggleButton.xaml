@@ -12,6 +12,7 @@
                    FontSize="{DynamicResource FontSizeBase300}"
                    FontWeight="{DynamicResource FontWeightRegular}"
                    Foreground="{DynamicResource TextSecondaryBrush}"
+                   TextWrapping="Wrap"  
                    Margin="0,0,0,4"/>
 
         <!-- Contenedor principal del toggle -->

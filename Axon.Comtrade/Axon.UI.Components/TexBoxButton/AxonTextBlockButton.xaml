@@ -131,7 +131,7 @@
                        Visibility="{Binding EffectiveButtonVisibility, ElementName=TextBlockButtonRoot}"
                        IsEnabled="{Binding EffectiveButtonIsEnabled, ElementName=TextBlockButtonRoot}"
                        Click="OnButtonClick"
-                       Margin="4"/>
+                       Margin="0"/>
 
             </Grid>
         </Border>

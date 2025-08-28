@@ -1,0 +1,125 @@
+﻿<UserControl x:Class="Axon.Comtrade.Views.DeviceRulesView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:tree="clr-namespace:Axon.UI.Components.TreeNode;assembly=Axon.UI.Components"  
+             xmlns:views="clr-namespace:Axon.Comtrade.Views"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Axon.Comtrade.Views"
+             xmlns:buttons="clr-namespace:Axon.UI.Components.Buttons;assembly=Axon.UI.Components" 
+             xmlns:axonUI="clr-namespace:Axon.UI.Components;assembly=Axon.UI.Components" 
+             xmlns:vm="clr-namespace:Axon.Comtrade.ViewModel"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>        
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+
+            <WrapPanel   >
+                <StackPanel Grid.Row="1" Margin="{StaticResource MarginLHorizontal}" Width="300">
+
+                    <!--seccion Directorio de salida-->
+                    <TextBlock
+                            Margin="0,16,0,16"
+                            FontSize="{StaticResource FontSizeBase400}"
+                            Foreground="{DynamicResource TextPrimaryBrush}"
+                            Text="Archivado"
+                            FontWeight="{DynamicResource FontWeightSemibold}"
+                            VerticalAlignment="Center"
+                            />
+
+                    <axonUI:AxonComboBox 
+                        ShowGroups="False" 
+                        Label="Archivado    " 
+                        ItemsSource="{Binding DevicesExplorerVieModel.DeviceConfigSelected.CollectionMode}"
+                        SelectedItem="{Binding DevicesExplorerVieModel.DeviceConfigSelected.CollectionModeSelected}"
+                        DisplayMemberPath="Display"
+                        Margin="0,0,0,16">
+                    </axonUI:AxonComboBox>
+
+                    <axonUI:AxonToggleButton 
+            Label="¿Desea crear una copia de la plantilla de archivados?"
+                IsChecked="{DynamicResource UnZipFile}"
+            CheckedText="Habilitado"
+            UncheckedText="Deshabilitado"
+            Margin="0,0,0,16"/>                    
+
+                    <TextBlock
+                            Margin="0,16,0,16"
+                            FontSize="{StaticResource FontSizeBase400}"
+                            Foreground="{DynamicResource TextPrimaryBrush}"
+                            Text="Reglas"
+                            FontWeight="{DynamicResource FontWeightSemibold}"
+                            VerticalAlignment="Center"
+                            />
+
+                    <axonUI:AxonComboBox 
+                        ShowGroups="False" 
+                        Label="Plantilla Renombrado" 
+                        ItemsSource="{Binding DevicesExplorerVieModel.DeviceConfigSelected.CollectionMode}"
+                        SelectedItem="{Binding DevicesExplorerVieModel.DeviceConfigSelected.CollectionModeSelected}"
+                        DisplayMemberPath="Display"
+                        Margin="0,0,0,16">
+                    </axonUI:AxonComboBox>
+
+                    <axonUI:AxonRadioButton 
+                Label="Forzar Fecha de Modificación"
+                SelectedValue="{Binding FolderStructure, Mode=TwoWay}"
+                SelectionChanged="OnFolderStructureChanged"
+                Margin="0,0,0,20">
+
+                        <axonUI:AxonRadioItem Text="Ninguno" Value="{x:Static vm:FolderStructure.ARCHITECTURE}"/>
+                        <axonUI:AxonRadioItem Text="Local" Value="{x:Static vm:FolderStructure.DATE}"/>
+                        <axonUI:AxonRadioItem Text="UTC" Value="{x:Static vm:FolderStructure.DATE}"/>
+
+                    </axonUI:AxonRadioButton>
+
+                    <axonUI:AxonTextBox Label="Paño"
+                          Text="{Binding WaitingTimeAmongRequest}"
+                          Units=""
+                          Margin="0,0,0,16"/>
+                                  
+                   
+
+                </StackPanel>
+                <StackPanel Grid.Row="1" Margin="32,0" Width="300">
+
+                    <!--seccion Directorio de salida-->
+                    <TextBlock
+                            Margin="0,16,0,16"
+                            FontSize="{StaticResource FontSizeBase400}"
+                            Foreground="{DynamicResource TextPrimaryBrush}"
+                            Text="Parámetros de Protocolo"
+                            FontWeight="{DynamicResource FontWeightSemibold}"
+                            VerticalAlignment="Center"
+                            />                   
+
+                    <axonUI:AxonTextBox Label="Ip"
+                          Text="{Binding Ip}"
+                          Units=""
+                          Margin="0,0,0,16"/>
+                    <axonUI:AxonTextBox Label="Port"
+                          Text="{Binding Port}"
+                          Units=""
+                          Margin="0,0,0,16"/>
+                    <axonUI:AxonTextBox Label="Server App Tittle"
+                          Text="{Binding ServerAppTitle}"
+                          Units=""
+                          Margin="0,0,0,16"/>
+                    <axonUI:AxonTextBox Label="Server AE Qualifier"
+                          Text="{Binding ServerAEQualifier}"
+                          Units=""
+                          Margin="0,0,0,16"/>
+                    <axonUI:AxonTextBox Label="Waiting Time After Int"
+                          Text="{Binding WaitingTimeAfterInt}"
+                          Units="seg"
+                          Margin="0,0,0,16"/>
+                    <axonUI:AxonTextBox Label="Request Timeout"
+                          Text="{Binding RequiestTimeout}"
+                          Units="seg"
+                          Margin="0,0,0,16"/>                  
+
+                </StackPanel>
+            </WrapPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>
