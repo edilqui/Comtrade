@@ -159,7 +159,7 @@
             <!-- HEADER -->
             <Border Grid.Row="0" 
                     Background="{StaticResource SurfaceBrush}"
-                    Padding="16,12"
+                    Height="48"
                     BorderBrush="{StaticResource BorderSubtleBrush}"
                     BorderThickness="0,0,0,1">
                 <Grid>

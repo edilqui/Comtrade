@@ -20,16 +20,11 @@ namespace Axon.Comtrade.Views
     /// <summary>
     /// Interaction logic for DevicesExplorer.xaml
     /// </summary>
-    public partial class DeviceRulesView : UserControl
+    public partial class RenameConfigView : UserControl
     {
-        public DeviceRulesView()
+        public RenameConfigView()
         {
             InitializeComponent();
-        }
-
-        private void OnFolderStructureChanged(object sender, RadioSelectionChangedEventArgs e)
-        {
-
-        }
+        }       
     }
 }

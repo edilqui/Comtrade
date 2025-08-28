@@ -16,13 +16,15 @@ namespace Axon.Comtrade.ViewModel
         public ICommand AddCommand { get; private set; }
         public ICommand DeleteCommand { get; private set; }
 
-        public RenameListViewModel()
+        ComtradeConfiguration ComtradeController { get; set; }
+
+        public RenameListViewModel(ComtradeConfiguration comtradeController)
         {
             InitializeCommands();
             DataItems = new ObservableCollection<RenameItemModel>();
 
             LoadExample();
-
+            ComtradeController = comtradeController;
         }
 
         private void LoadExample()
@@ -51,6 +53,29 @@ namespace Axon.Comtrade.ViewModel
         {
             var Item = new RenameItemModel() { Name = "Rename" + DataItems.Count };
             DataItems.Add(Item);
+        }
+
+        public ICommand ConfigureCommand
+        {
+            get { return new DelegateCommand<RenameItemModel>(OnConfigure); }
+        }
+
+        private RenameItemModel _renameItemSelected;
+
+        public RenameItemModel RenameItemSelected
+        {
+            get { return _renameItemSelected; }
+            set { _renameItemSelected = value; OnPropertyChanged(); }
+        }
+
+
+        private void OnConfigure(RenameItemModel _renameItem)
+        {
+            if (_renameItem != null)
+            {
+                RenameItemSelected = _renameItem;
+                this.ComtradeController.OnMenuItemSelected("renameItemConfig");
+            }
         }
     }
 }

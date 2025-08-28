@@ -90,6 +90,9 @@
     <Compile Include="Views\Configuration\ConfigurationView.xaml.cs">
       <DependentUpon>ConfigurationView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Renamed\RenameConfigView.xaml.cs">
+      <DependentUpon>RenameConfigView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Renamed\RenameListView.xaml.cs">
       <DependentUpon>RenameListView.xaml</DependentUpon>
     </Compile>
@@ -140,6 +143,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Configuration\ConfigurationView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Renamed\RenameConfigView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
