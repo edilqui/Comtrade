@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Axon.Comtrade.Model;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Xml;
 
@@ -10,6 +12,7 @@ public class FolderModel
     public FolderModel Parent { get; set; } // puede ser null en la raíz
 
     public List<FolderModel> Subfolders { get; set; } = new List<FolderModel>();
+    public ObservableCollection<ArchivedFilterModel> ArchivedFilters { get; set; }
 
     public FolderModel(string name)
     {
@@ -17,11 +20,12 @@ public class FolderModel
             throw new ArgumentException("Folder name cannot be null or whitespace.", nameof(name));
 
         Name = name.Trim();
+        ArchivedFilters = new ObservableCollection<ArchivedFilterModel>() { new ArchivedFilterModel() };
     }
 
     public FolderModel()
     {
-
+        ArchivedFilters = new ObservableCollection<ArchivedFilterModel>() { new ArchivedFilterModel() };
     }
 
     // --- Gestión de subcarpetas ---
@@ -159,5 +163,10 @@ public class FolderModel
             var child = node.AddSubfolder(name);
             BuildFromDisk(child, dir);
         }
+    }
+
+    internal void AddFilter()
+    {
+        this.ArchivedFilters.Add(new ArchivedFilterModel());
     }
 }

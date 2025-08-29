@@ -7,6 +7,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using System.Xml.Linq;
 
 namespace Axon.Comtrade.ViewModel
@@ -26,6 +27,8 @@ namespace Axon.Comtrade.ViewModel
         public ObservableCollection<GenericTreeNodeModel> TreeNodes { get; set; }
         public ObservableCollection<FolderModel> FolderModelNodes { get; set; }
 
+
+
         private GenericTreeNodeModel _selectedNode;
         public GenericTreeNodeModel SelectedNode
         {
@@ -33,13 +36,26 @@ namespace Axon.Comtrade.ViewModel
             set
             {
                 _selectedNode = value;
+                if (value.Tag is FolderModel folder)
+                    FolderModelSelected = folder;
                 OnPropertyChanged();
             }
         }
+
+        private FolderModel _folderModelSelected;
+
+        public FolderModel FolderModelSelected
+        {
+            get { return _folderModelSelected; }
+            set { _folderModelSelected = value; OnPropertyChanged(); }
+        }
+
+
         public ArchivedItemModel()
         {
             TreeNodes = new ObservableCollection<GenericTreeNodeModel>();
             FolderModelNodes = new ObservableCollection<FolderModel>();
+
             LoadSampleData();
 
         }
@@ -131,6 +147,23 @@ namespace Axon.Comtrade.ViewModel
 
             node.Children.Add(newNode);
             node.IsExpanded = true;
+        }
+
+
+        public ICommand AddFilterCommand
+        {
+            get { return new DelegateCommand(OnAddFilter); }
+        }
+
+        private void OnAddFilter()
+        {
+            if (SelectedNode != null)
+            {
+                if (SelectedNode.Tag is FolderModel folder)
+                {
+                    folder.AddFilter();
+                }
+            }
         }
     }
 }

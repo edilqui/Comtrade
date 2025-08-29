@@ -61,6 +61,7 @@
     </ApplicationDefinition>
     <Compile Include="Base\CustomItemCombobox.cs" />
     <Compile Include="Base\ISideBar.cs" />
+    <Compile Include="Model\ArchivedFilterModel.cs" />
     <Compile Include="Model\FolderModel.cs" />
     <Compile Include="Model\RenameItemModel.cs" />
     <Compile Include="Model\ProtocolNodeModel.cs" />

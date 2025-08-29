@@ -30,9 +30,9 @@ namespace Axon.Comtrade.Views
 
         private void TreeDir_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            if (DataContext is TopologyTreeViewModel viewModel)
+            if (DataContext is ArchivedListViewModel viewModel)
             {
-                viewModel.SelectedNode = (GenericTreeNodeModel)e.NewValue;
+                viewModel.ArchivedItemSelected.SelectedNode = (GenericTreeNodeModel)e.NewValue;
             }
         }
     }
