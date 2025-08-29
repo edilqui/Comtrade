@@ -61,6 +61,7 @@
     </ApplicationDefinition>
     <Compile Include="Base\CustomItemCombobox.cs" />
     <Compile Include="Base\ISideBar.cs" />
+    <Compile Include="Model\FolderModel.cs" />
     <Compile Include="Model\RenameItemModel.cs" />
     <Compile Include="Model\ProtocolNodeModel.cs" />
     <Compile Include="Model\TopologyNodeModel.cs" />
@@ -73,6 +74,7 @@
     <Compile Include="ViewModel\DeviceListViewModel.cs" />
     <Compile Include="ViewModel\DevicesExplorerViewModel.cs" />
     <Compile Include="ViewModel\DeviceViewModel.cs" />
+    <Compile Include="ViewModel\FoderTreeMapper.cs" />
     <Compile Include="ViewModel\TopologyTreeMapper.cs" />
     <Compile Include="ViewModel\TopologyTreeViewModel.cs" />
     <Compile Include="Views\Archived\ArchivedConfigView.xaml.cs">

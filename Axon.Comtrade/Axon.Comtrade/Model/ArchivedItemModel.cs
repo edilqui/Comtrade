@@ -7,11 +7,14 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace Axon.Comtrade.ViewModel
 {
     public class ArchivedItemModel : BaseViewModel
     {
+        private List<FolderModel> _originalData;
+
         private string _name;
 
         public string Name
@@ -21,6 +24,8 @@ namespace Axon.Comtrade.ViewModel
         }
 
         public ObservableCollection<GenericTreeNodeModel> TreeNodes { get; set; }
+        public ObservableCollection<FolderModel> FolderModelNodes { get; set; }
+
         private GenericTreeNodeModel _selectedNode;
         public GenericTreeNodeModel SelectedNode
         {
@@ -34,40 +39,39 @@ namespace Axon.Comtrade.ViewModel
         public ArchivedItemModel()
         {
             TreeNodes = new ObservableCollection<GenericTreeNodeModel>();
+            FolderModelNodes = new ObservableCollection<FolderModel>();
             LoadSampleData();
 
         }
         private void LoadSampleData()
         {
-            var topologyBahia = new GenericTreeNodeModel
+            var folderSystem = new FolderModel
             {
-                Title = "System",
+                Name = "System",
             };
-            topologyBahia.Children = new ObservableCollection<GenericTreeNodeModel>
+            folderSystem.Subfolders = new List<FolderModel>()
                                 {
-                                    new GenericTreeNodeModel { Title = "Ajustes", Parent = topologyBahia , IconPath = TreeNodeIcons.FolderOutline},
-                                    new GenericTreeNodeModel { Title = "Eventos", Parent = topologyBahia, IconPath = TreeNodeIcons.FolderOutline },
-                                    new GenericTreeNodeModel { Title = "Reportes",Parent = topologyBahia, IconPath = TreeNodeIcons.FolderOutline },
-                                    new GenericTreeNodeModel { Title = "Oscilografías",Parent = topologyBahia, IconPath = TreeNodeIcons.FolderOutline }
+                                    new FolderModel { Name = "Ajustes", Parent = folderSystem },
+                                    new FolderModel { Name = "Eventos", Parent = folderSystem },
+                                    new FolderModel { Name = "Reportes",Parent = folderSystem },
+                                    new FolderModel { Name = "Oscilografías",Parent = folderSystem }
                                 };
 
-            TreeNodes.Add(topologyBahia);
-            LoadTopologyData(TreeNodes);
+
+            LoadTopologyData(new List<FolderModel>() { folderSystem });
         }
 
-        public void LoadTopologyData(ObservableCollection<GenericTreeNodeModel> topologyData)
+        public void LoadTopologyData(List<FolderModel> folderData)
         {
-            //List<GenericTreeNodeModel> temp = new List<GenericTreeNodeModel>();
+            _originalData = folderData;
+            TreeNodes.Clear();
 
-            //foreach (var node in topologyData)
-            //{
-            //    SetupNodeCommands(node);
-            //    temp.Add(node);
-            //}
 
-            foreach (var node in topologyData)
+            var mappedNodes = FoderTreeMapper.MapToTreeView(folderData);
+            foreach (var node in mappedNodes)
             {
                 SetupNodeCommands(node);
+                TreeNodes.Add(node);
             }
         }
 
@@ -92,19 +96,39 @@ namespace Axon.Comtrade.ViewModel
 
         private void DeleteNode(GenericTreeNodeModel node)
         {
-            //throw new NotImplementedException();
+            if (node.Tag is FolderModel folder && folder.Parent != null)
+            {
+                folder.Parent.Subfolders.Remove(folder);
+            }
+
+            // Remover del TreeView
+            if (node.Parent != null)
+            {
+                node.Parent.Children.Remove(node);
+            }
+            //else
+            //{
+            //    TreeNodes.Remove(node);
+            //}
         }
 
         private void AddChildToNode(GenericTreeNodeModel node)
         {
+            var newFolderModel = new FolderModel
+            {
+                Name = $"Nueva Carpeta"
+            };
+
             var newNode = new GenericTreeNodeModel()
             {
-                Title = node.Title + "-" + (node.Children.Count + 1),
+                Title = newFolderModel.Name,
                 Parent = node,
                 Level = node.Level + 1,
                 IconPath = node.IconPath,
+                Tag = newFolderModel
             };
             SetupNodeCommands(newNode);
+
             node.Children.Add(newNode);
             node.IsExpanded = true;
         }
