@@ -1,5 +1,6 @@
 ﻿using Axon.Comtrade.ViewModel;
 using Axon.UI.Components;
+using Axon.UI.Components.TreeNode;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,6 +31,14 @@ namespace Axon.Comtrade.Views
         private void OnFolderStructureChanged(object sender, RadioSelectionChangedEventArgs e)
         {
 
+        }
+
+        private void TreeDir_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        {
+            if (DataContext is ComtradeConfiguration viewModel)
+            {
+                viewModel.DevicesExplorerVieModel.DeviceConfigSelected.ArchivedItemSelected.SelectedNode = (GenericTreeNodeModel)e.NewValue;
+            }
         }
     }
 }

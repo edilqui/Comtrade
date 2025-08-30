@@ -8,14 +8,26 @@
              xmlns:local="clr-namespace:Axon.Comtrade.Views"
              xmlns:buttons="clr-namespace:Axon.UI.Components.Buttons;assembly=Axon.UI.Components" 
              xmlns:axonUI="clr-namespace:Axon.UI.Components;assembly=Axon.UI.Components" 
+             xmlns:customGrid ="clr-namespace:Axon.UI.Components.Datagrid;assembly=Axon.UI.Components"
              xmlns:vm="clr-namespace:Axon.Comtrade.ViewModel"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>        
+    <UserControl.Resources>
+        <!-- Importar los estilos del TreeView -->
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/Axon.UI.Components;component/TreeNode/TreeViewStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
-
-            <WrapPanel   >
-                <StackPanel Grid.Row="1" Margin="{StaticResource MarginLHorizontal}" Width="300">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0" Margin="{StaticResource MarginLHorizontal}" Width="300">
 
                     <!--seccion Directorio de salida-->
                     <TextBlock
@@ -30,9 +42,9 @@
                     <axonUI:AxonComboBox 
                         ShowGroups="False" 
                         Label="Archivado    " 
-                        ItemsSource="{Binding DevicesExplorerVieModel.DeviceConfigSelected.CollectionMode}"
-                        SelectedItem="{Binding DevicesExplorerVieModel.DeviceConfigSelected.CollectionModeSelected}"
-                        DisplayMemberPath="Display"
+                        ItemsSource="{Binding ArchivedListViewModel.DataItems}"
+                        SelectedItem="{Binding DevicesExplorerVieModel.DeviceConfigSelected.ArchivedItemSelected}"
+                        DisplayMemberPath="Name"
                         Margin="0,0,0,16">
                     </axonUI:AxonComboBox>
 
@@ -41,7 +53,7 @@
                 IsChecked="{DynamicResource UnZipFile}"
             CheckedText="Habilitado"
             UncheckedText="Deshabilitado"
-            Margin="0,0,0,16"/>                    
+            Margin="0,0,0,16"/>
 
                     <TextBlock
                             Margin="0,16,0,16"
@@ -77,11 +89,156 @@
                           Text="{Binding WaitingTimeAmongRequest}"
                           Units=""
                           Margin="0,0,0,16"/>
-                                  
-                   
+                    <axonUI:AxonTextBox Label="Dispositivo"
+                          Text="{Binding WaitingTimeAmongRequest}"
+                          Units=""
+                          Margin="0,0,0,16"/>
+                    <axonUI:AxonTextBox Label="Subestación"
+                          Text="{Binding WaitingTimeAmongRequest}"
+                          Units=""
+                          Margin="0,0,0,16"/>
+
 
                 </StackPanel>
-            </WrapPanel>
+                <Grid Grid.Column="1"  DataContext="{Binding DevicesExplorerVieModel.DeviceConfigSelected}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <!--directorio archivado-->
+                    <Border BorderThickness="1,0,1,0" BorderBrush="{DynamicResource BorderBrush}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <Border Margin="16">
+                                <TextBlock Text="Directorio de Salida"
+                                   FontSize="{StaticResource FontSizeBase300}"
+                                   Foreground="{DynamicResource TextPrimaryBrush}"
+                                   FontWeight="{StaticResource FontWeightSemibold}"
+                                   VerticalAlignment="Center"/>
+                            </Border>
+
+                            <Border Grid.Row="1"
+                Background="Transparent"
+                BorderThickness="0" Width="250">
+
+                                <TreeView x:Name="TopologyTreeView" Background="Transparent" BorderThickness="0"
+                          Style="{StaticResource GenericTreeViewStyle}"
+                          ItemsSource="{Binding ArchivedItemSelected.TreeNodes}"
+                          SelectedItemChanged="TreeDir_SelectedItemChanged"
+                          Margin="5"/>
+                            </Border>
+                        </Grid>
+                    </Border>
+
+                    <!--content-->
+                    <Border BorderThickness="0,0,1,0" BorderBrush="{DynamicResource BorderBrush}" Grid.Column="1">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+
+                            <!--filters-->
+                            <Grid Grid.Row="0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <Border Margin="16">
+                                    <Grid>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="Filtros"
+                                               FontSize="{StaticResource FontSizeBase300}"
+                                               Foreground="{DynamicResource TextPrimaryBrush}"
+                                               FontWeight="{StaticResource FontWeightSemibold}"
+                                               VerticalAlignment="Center"/>
+
+                                            <Button Style="{StaticResource SmallButtonStyle}" Padding="8,2,16,2" Margin="16,0"
+                                            Command="{Binding ArchivedItemSelected.AddFilterCommand}">
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="auto"/>
+                                                        <ColumnDefinition/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Viewbox Height="20" Width="20" Margin="0,0,0,0">
+                                                        <Path Data="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" 
+                                                  Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"
+                                                  Width="24" Height="24"/>
+                                                    </Viewbox>
+                                                    <TextBlock Grid.Column="1" Text="Nuevo Filtro" VerticalAlignment="Center"/>
+                                                </Grid>
+                                            </Button>
+
+
+                                        </StackPanel>
+                                        <TextBlock Margin="16,0" Padding="8,4"
+                                               Text="{Binding ArchivedItemSelected.SelectedNode.Title}"
+                                               Background="{DynamicResource TableCellEditSelection}"
+                                               FontSize="{StaticResource FontSizeBase300}"
+                                               Foreground="{DynamicResource TextPrimaryBrush}"
+                                               VerticalAlignment="Center"
+                                               HorizontalAlignment="Center"/>
+                                    </Grid>
+                                </Border>
+
+                                <Border Grid.Row="1" BorderThickness="0,0,0,1" BorderBrush="{DynamicResource BorderBrush}">
+                                    <customGrid:EnhancedCustomDataGrid x:Name="MainDataGrid"
+                                    ShowGrouping="False"
+                                    Background="{DynamicResource TableBackground}"
+                                    Foreground="White"
+                                    BorderBrush="{DynamicResource ColorNeutralStrokeAccessibleBrush}"
+                                    BorderThickness="0"
+                                    GridLinesVisibility="Horizontal"
+                                    HorizontalGridLinesBrush="{DynamicResource TableBorder}"
+                                    ItemsSource="{Binding ArchivedItemSelected.FolderModelSelected.ArchivedFilters}"
+                                    AutoGenerateColumns="False"
+                                    CanUserAddRows="False"
+                                    CanUserDeleteRows="False"
+                                    AlternationCount="1"
+                                    CanUserResizeColumns="True"
+                                    CanUserReorderColumns="True"
+                                    CanUserSortColumns="True">
+
+                                        <!-- Columnas -->
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn Header="Filtros" 
+                                    Binding="{Binding Filter}"
+                                    Width="*"/>
+                                        </DataGrid.Columns>
+                                    </customGrid:EnhancedCustomDataGrid>
+
+                                </Border>
+                            </Grid>
+
+                            <!--vista previa-->
+                            <Grid Grid.Row="1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <Border Margin="16,0" BorderThickness="0,0,0,0" BorderBrush="{DynamicResource BorderBrush}" Padding="0,16">
+                                    <TextBlock Text="Vista Previa"
+                                          
+                                   FontSize="{StaticResource FontSizeBase300}"
+                                   Foreground="{DynamicResource TextPrimaryBrush}"
+                                   FontWeight="{StaticResource FontWeightSemibold}"
+                                   VerticalAlignment="Center"/>
+                                </Border>
+
+                                <Border Grid.Row="1"
+                Background="Transparent"
+                BorderThickness="0" Width="250">
+
+
+                                </Border>
+                            </Grid>
+                        </Grid>
+                    </Border>
+                </Grid>
+            </Grid>
         </ScrollViewer>
     </Grid>
 </UserControl>

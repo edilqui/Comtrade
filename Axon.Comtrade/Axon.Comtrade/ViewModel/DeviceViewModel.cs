@@ -42,6 +42,14 @@ namespace Axon.Comtrade.ViewModel
             OnPropertyChanged("Filtro");
         }
 
+        private ArchivedItemModel _archivedItemSelected;
+        public ArchivedItemModel ArchivedItemSelected
+        {
+            get { return _archivedItemSelected; }
+            set { _archivedItemSelected = value; OnPropertyChanged(); }
+        }
+
+
         public string Name
         {
             get => _name;
@@ -186,7 +194,8 @@ namespace Axon.Comtrade.ViewModel
         public CustomItemCombobox CollectionModeSelected
         {
             get { return _collectionModeSelected; }
-            set { 
+            set
+            {
                 _collectionModeSelected = value;
                 SignalTriggerVisible = (int)value.Value == 1 || (int)value.Value == 3;
             }
